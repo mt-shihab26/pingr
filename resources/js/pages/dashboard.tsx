@@ -1,8 +1,13 @@
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
-import { PendingInvitationsModal, type TDashboardInvitation } from "@/components/screens/teams/pending-invitations-modal";
+import {
+    PendingInvitationsModal,
+    type TDashboardInvitation,
+} from "@/components/screens/teams/pending-invitations-modal";
 import { PlaceholderPattern } from "@/components/ui/placeholder-pattern";
 import { dashboard } from "@/routes";
+import { AppLayout } from "@/components/layouts/app-layout";
+import { usePage } from "@inertiajs/react";
 
 type Props = {
     pendingInvitations?: TDashboardInvitation[];
@@ -13,8 +18,19 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
         pendingInvitations.length > 0,
     );
 
+    const props = usePage().props;
+
     return (
-        <>
+        <AppLayout
+            breadcrumbs={[
+                {
+                    title: "Dashboard",
+                    href: props.currentTeam
+                        ? dashboard(props.currentTeam.slug)
+                        : "/",
+                },
+            ]}
+        >
             <Head title="Dashboard" />
             <PendingInvitationsModal
                 invitations={pendingInvitations}
@@ -33,11 +49,11 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                     <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                 </div>
             </div>
-        </>
+        </AppLayout>
     );
 }
 

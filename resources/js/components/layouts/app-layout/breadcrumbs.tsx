@@ -11,7 +11,7 @@ import {
 import type { InertiaLinkProps } from "@inertiajs/react";
 
 export type TBreadcrumb = {
-    TBreadcrumb: string;
+    title: string;
     href: NonNullable<InertiaLinkProps["href"]>;
 };
 
@@ -29,13 +29,13 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: TBreadcrumb[] }) {
                                     <BreadcrumbItem>
                                         {isLast ? (
                                             <BreadcrumbPage>
-                                                {item.TBreadcrumb}
+                                                {item.title}
                                             </BreadcrumbPage>
                                         ) : (
                                             <BreadcrumbLink
                                                 render={
                                                     <Link href={item.href}>
-                                                        {item.TBreadcrumb}
+                                                        {item.title}
                                                     </Link>
                                                 }
                                             />

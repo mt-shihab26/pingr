@@ -5,6 +5,7 @@ import { CancelInvitationModal } from "@/components/screens/teams/cancel-invitat
 import { DeleteTeamModal } from "@/components/screens/teams/delete-team-modal";
 import { Heading } from "@/components/elements/heading";
 import { InputError } from "@/components/elements/input-error";
+
 import {
     InviteMemberModal,
     type TRoleOption,
@@ -31,6 +32,7 @@ import { edit, index, update } from "@/routes/teams";
 import { update as updateMember } from "@/routes/teams/members";
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
+import { AppLayout } from "@/components/layouts/app-layout";
 
 export type TeamPermissions = {
     canUpdateTeam: boolean;
@@ -94,7 +96,18 @@ export default function TeamEdit({
     };
 
     return (
-        <>
+        <AppLayout
+            breadcrumbs={[
+                {
+                    title: "Teams",
+                    href: index(),
+                },
+                {
+                    title: team.name,
+                    href: edit(team.slug),
+                },
+            ]}
+        >
             <Head title={pageTitle} />
 
             <h1 className="sr-only">{pageTitle}</h1>
@@ -388,19 +401,6 @@ export default function TeamEdit({
                     onOpenChange={setDeleteDialogOpen}
                 />
             ) : null}
-        </>
+        </AppLayout>
     );
 }
-
-TeamEdit.layout = (props: { team: { name: string; slug: string } }) => ({
-    breadcrumbs: [
-        {
-            title: "Teams",
-            href: index(),
-        },
-        {
-            title: props.team.name,
-            href: edit(props.team.slug),
-        },
-    ],
-});
