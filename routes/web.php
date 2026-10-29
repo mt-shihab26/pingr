@@ -1,41 +1,31 @@
 <?php
 
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\TeamSwitcherController;
 use App\Http\Controllers\Dashboard\Settings\AppearanceController;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
 use App\Http\Controllers\Dashboard\Settings\Teams\TeamController;
 use App\Http\Controllers\Dashboard\Settings\Teams\TeamInvitationController;
 use App\Http\Controllers\Dashboard\Settings\Teams\TeamMemberController;
+use App\Http\Controllers\Dashboard\TeamSwitcherController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WellKnownController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Auth\Middleware\RequirePassword;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, "index"])->name('home');
 
 Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passkeys"])->name('well-known.passkeys');
 
-Route::prefix("/dashboard")->group(function () {
-    Route::get('/', function (Request $request) {
-        $user = $request->user();
-        $team = $user->currentTeam ?? $user->personalTeam();
-
-        abort_if(! $team, 403);
-
-        return to_route('dashboard.team.index', ['team' => $team->slug]);
-    })->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix("/dashboard")->middleware("auth")->group(function () {
+    Route::get('/', [DashboardController::class, "redirect"])->middleware('verified')->name('dashboard');
 
     Route::prefix('/{team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
-        Route::get('dashboard', DashboardController::class)->name('dashboard.team.index');
+        Route::get('dashboard', [DashboardController::class, "index"])->name('dashboard.team.index');
     });
 
-    Route::get('/teams', [TeamSwitcherController::class, 'index'])
-        ->middleware(['auth', 'verified'])
-        ->name('dashboard.teams.index');
+    Route::get('/teams', [TeamSwitcherController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.teams.index');
 
     Route::prefix("/settings")->middleware("auth")->group(function () {
         Route::get('/', [ProfileController::class, "redirect"])->name("dashboard.settings.index");
