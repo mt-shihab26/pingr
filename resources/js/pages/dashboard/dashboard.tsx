@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
     PendingInvitationsModal,
     type TDashboardInvitation,
-} from "@/components/screens/teams/pending-invitations-modal";
+} from "@/components/screens/dashboard/teams/pending-invitations-modal";
 import { PlaceholderPattern } from "@/components/ui/placeholder-pattern";
 import { dashboard } from "@/routes";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";

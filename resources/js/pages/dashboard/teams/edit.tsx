@@ -1,16 +1,16 @@
 import { Form, router } from "@inertiajs/react";
 import { ChevronDown, Mail, UserPlus, X } from "lucide-react";
 import { useMemo, useState } from "react";
-import { CancelInvitationModal } from "@/components/screens/teams/cancel-invitation-modal";
-import { DeleteTeamModal } from "@/components/screens/teams/delete-team-modal";
+import { CancelInvitationModal } from "@/components/screens/dashboard/teams/cancel-invitation-modal";
+import { DeleteTeamModal } from "@/components/screens/dashboard/teams/delete-team-modal";
 import { Heading } from "@/components/elements/heading";
 import { InputError } from "@/components/elements/input-error";
 
 import {
     InviteMemberModal,
     type TRoleOption,
-} from "@/components/screens/teams/invite-member-modal";
-import { RemoveMemberModal } from "@/components/screens/teams/remove-member-modal";
+} from "@/components/screens/dashboard/teams/invite-member-modal";
+import { RemoveMemberModal } from "@/components/screens/dashboard/teams/remove-member-modal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ import { edit, index, update } from "@/routes/teams";
 import { update as updateMember } from "@/routes/teams/members";
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
-import { SettingsLayout } from "@/components/screens/settings/shared/settings-layout";
+import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
 
 export type TeamPermissions = {
     canUpdateTeam: boolean;

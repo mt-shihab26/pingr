@@ -1,12 +1,12 @@
 import { Link } from "@inertiajs/react";
 import { Eye, LogOut, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
-import { CreateTeamModal } from "@/components/screens/teams/create-team-modal";
+import { CreateTeamModal } from "@/components/screens/dashboard/teams/create-team-modal";
 import { Heading } from "@/components/elements/heading";
-import { LeaveTeamModal } from "@/components/screens/teams/leave-team-modal";
+import { LeaveTeamModal } from "@/components/screens/dashboard/teams/leave-team-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {SettingsLayout} from "@/components/screens/settings/shared/settings-layout";
+import {SettingsLayout} from "@/components/screens/dashboard/settings/shared/settings-layout";
 
 import {
     Tooltip,

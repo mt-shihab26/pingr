@@ -4,7 +4,7 @@ import { AppLogo } from "./app-logo";
 import { NavFooter } from "./nav-footer";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
-import { TeamSwitcher } from "@/components/screens/teams/team-switcher";
+import { TeamSwitcher } from "@/components/screens/dashboard/teams/team-switcher";
 import {
     Sidebar,
     SidebarContent,

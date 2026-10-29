@@ -5,8 +5,8 @@ import { Heading } from "@/components/elements/heading";
 import {
     PasskeyItem,
     type TPasskey,
-} from "@/components/screens/settings/passkey-item";
-import { PasskeyRegistration } from "@/components/screens/settings/passkey-register";
+} from "@/components/screens/dashboard/settings/passkey-item";
+import { PasskeyRegistration } from "@/components/screens/dashboard/settings/passkey-register";
 
 export type Props = {
     canManagePasskeys?: boolean;

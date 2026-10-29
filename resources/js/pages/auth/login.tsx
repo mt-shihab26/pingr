@@ -4,7 +4,7 @@ import { PasswordInput } from "@/components/elements/password-input";
 import {
     TeamInvitationAlert,
     type TTeamInvitationContext,
-} from "@/components/screens/teams/team-invitation-alert";
+} from "@/components/screens/dashboard/teams/team-invitation-alert";
 import { TextLink } from "@/components/elements/text-link";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,7 +14,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { register } from "@/routes";
 import { store } from "@/routes/login";
 import { request } from "@/routes/password";
-import { PasskeyVerify } from "@/components/screens/settings/passkey-verify";
+import { PasskeyVerify } from "@/components/screens/dashboard/settings/passkey-verify";
 import { AuthLayout } from "@/components/layouts/auth-layout";
 
 type Props = {

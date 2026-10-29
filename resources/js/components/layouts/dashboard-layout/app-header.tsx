@@ -3,7 +3,7 @@ import { BookOpen, Folder, LayoutGrid, Menu, Search } from "lucide-react";
 import { AppLogo } from "./app-logo";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 import { Breadcrumbs, type TBreadcrumb } from "./breadcrumbs";
-import { TeamSwitcher } from "@/components/screens/teams/team-switcher";
+import { TeamSwitcher } from "@/components/screens/dashboard/teams/team-switcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
