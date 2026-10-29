@@ -78,9 +78,9 @@ class HandleInertiaRequests extends Middleware
     /**
      * Get the teams available to the authenticated user.
      *
-     * @return Collection<int, array<string, mixed>>|array{}
+     * @return Collection<int, array{id: int, name: string, slug: string, isPersonal: bool, role: string|null, roleLabel: string|null, isCurrent: bool}>|array{}
      */
-    private function teams(Request $request)
+    private function teams(Request $request): Collection|array
     {
         return $request->user()?->toUserTeams(includeCurrent: true) ?? [];
     }
