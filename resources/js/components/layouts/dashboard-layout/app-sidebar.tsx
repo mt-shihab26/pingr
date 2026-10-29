@@ -8,7 +8,9 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-import { dashboardNavItems, dashboardUrl, resourceLinks } from "@/lib/links";
+import type { TTeam } from "@/types/models";
+
+import { dashboardNavItems, resourceLinks } from "@/lib/links";
 import { useShared } from "@/hooks/use-shared";
 
 import { Link } from "@inertiajs/react";
@@ -16,6 +18,12 @@ import { AppLogo } from "./app-logo";
 import { NavFooter } from "./nav-footer";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
+
+const dashboardUrl = (team: TTeam | null): string => {
+    return team
+        ? route("dashboard.team.overview.index", { team: team.slug })
+        : "/";
+};
 
 export function AppSidebar() {
     const { team } = useShared();

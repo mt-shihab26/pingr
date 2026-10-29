@@ -3,17 +3,21 @@ import type { TTeam } from "@/types/models";
 
 import { FolderGit2, LayoutGrid } from "lucide-react";
 
-export const dashboardUrl = (team: TTeam | null): string => {
-    return team
-        ? route("dashboard.team.overview.index", { team: team.slug })
-        : "/";
-};
-
 export const dashboardNavItems = (team: TTeam | null): TNavItem[] => {
     return [
         {
             title: "Dashboard",
-            href: dashboardUrl(team),
+            href: route("dashboard.team.overview.index", { team: team?.slug }),
+            icon: LayoutGrid,
+        },
+        {
+            title: "Targets",
+            href: route("dashboard.team.targets.index", { team: team?.slug }),
+            icon: LayoutGrid,
+        },
+        {
+            title: "Pages",
+            href: route("dashboard.team.pages.index", { team: team?.slug }),
             icon: LayoutGrid,
         },
     ];

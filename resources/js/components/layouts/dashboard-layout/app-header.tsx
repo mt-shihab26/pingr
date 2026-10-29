@@ -29,12 +29,22 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+
+import type { TTeam } from "@/types/models";
+
 import { UserMenuContent } from "./user-menu-content";
+
 import { useCurrentUrl } from "@/hooks/use-current-url";
 import { cn, toUrl } from "@/lib/utils";
 import { formatInitials } from "@/lib/formats";
 import { useShared } from "@/hooks/use-shared";
-import { dashboardNavItems, dashboardUrl, resourceLinks } from "@/lib/links";
+import { dashboardNavItems, resourceLinks } from "@/lib/links";
+
+const dashboardUrl = (team: TTeam | null): string => {
+    return team
+        ? route("dashboard.team.overview.index", { team: team.slug })
+        : "/";
+};
 
 type Props = {
     breadcrumbs?: TBreadcrumb[];
@@ -168,7 +178,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 <Search className="size-5! opacity-80 group-hover:opacity-100" />
                             </Button>
                             <div className="ml-1 hidden gap-1 lg:flex">
-                                            {resourceLinks.map((item) => (
+                                {resourceLinks.map((item) => (
                                     <TooltipProvider key={item.title} delay={0}>
                                         <Tooltip>
                                             <TooltipTrigger>
@@ -217,7 +227,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 <UserMenuContent user={user} />
                             </DropdownMenuContent>
                         </DropdownMenu>
-
                     </div>
                 </div>
             </div>
