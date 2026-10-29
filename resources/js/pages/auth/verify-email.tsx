@@ -32,7 +32,6 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             {processing && <Spinner />}
                             Resend verification email
                         </Button>
-
                     </>
                 )}
             </Form>

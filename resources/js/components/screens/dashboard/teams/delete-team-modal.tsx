@@ -39,7 +39,9 @@ export function DeleteTeamModal({ team, open, onOpenChange }: Props) {
             <DialogContent>
                 <Form
                     key={String(open)}
-                    action={route("dashboard.teams.destroy", { team: team.slug })}
+                    action={route("dashboard.teams.destroy", {
+                        team: team.slug,
+                    })}
                     method="delete"
                     className="space-y-6"
                     onSuccess={() => handleOpenChange(false)}
