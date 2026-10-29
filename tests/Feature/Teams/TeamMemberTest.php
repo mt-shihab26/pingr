@@ -14,11 +14,11 @@ test('team member roles can be updated by owners', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->patch(route('dashboard.settings.teams.members.update', [$team, $member]), [
+        ->patch(route('dashboard.teams.members.update', [$team, $member]), [
             'role' => TeamRole::Admin->value,
         ]);
 
-    $response->assertRedirect(route('dashboard.settings.teams.edit', $team));
+    $response->assertRedirect(route('dashboard.teams.edit', $team));
 
     expect($team->members()->where('user_id', $member->id)->first()->pivot->role->value)->toEqual(TeamRole::Admin->value);
 });
@@ -35,7 +35,7 @@ test('team member roles cannot be updated by non owners', function () {
 
     $response = $this
         ->actingAs($admin)
-        ->patch(route('dashboard.settings.teams.members.update', [$team, $member]), [
+        ->patch(route('dashboard.teams.members.update', [$team, $member]), [
             'role' => TeamRole::Admin->value,
         ]);
 
@@ -52,9 +52,9 @@ test('team members can be removed by owners', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->delete(route('dashboard.settings.teams.members.destroy', [$team, $member]));
+        ->delete(route('dashboard.teams.members.destroy', [$team, $member]));
 
-    $response->assertRedirect(route('dashboard.settings.teams.edit', $team));
+    $response->assertRedirect(route('dashboard.teams.edit', $team));
 
     expect($member->fresh()->belongsToTeam($team))->toBeFalse();
 });
@@ -71,7 +71,7 @@ test('team members cannot be removed by non owners', function () {
 
     $response = $this
         ->actingAs($admin)
-        ->delete(route('dashboard.settings.teams.members.destroy', [$team, $member]));
+        ->delete(route('dashboard.teams.members.destroy', [$team, $member]));
 
     $response->assertForbidden();
 });
@@ -84,7 +84,7 @@ test('team owner cannot be removed', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->delete(route('dashboard.settings.teams.members.destroy', [$team, $owner]));
+        ->delete(route('dashboard.teams.members.destroy', [$team, $owner]));
 
     $response->assertForbidden();
 
@@ -101,7 +101,7 @@ test('team member role cannot be set to owner', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->patch(route('dashboard.settings.teams.members.update', [$team, $member]), [
+        ->patch(route('dashboard.teams.members.update', [$team, $member]), [
             'role' => TeamRole::Owner->value,
         ]);
 
@@ -123,7 +123,7 @@ test('removed member current team is set to personal team', function () {
 
     $this
         ->actingAs($owner)
-        ->delete(route('dashboard.settings.teams.members.destroy', [$team, $member]));
+        ->delete(route('dashboard.teams.members.destroy', [$team, $member]));
 
     expect($member->fresh()->current_team_id)->toEqual($personalTeam->id);
 });

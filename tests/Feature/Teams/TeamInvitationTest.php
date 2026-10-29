@@ -17,12 +17,12 @@ test('team invitations can be created', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->post(route('dashboard.settings.teams.invitations.store', $team), [
+        ->post(route('dashboard.teams.invitations.store', $team), [
             'email' => 'invited@example.com',
             'role' => TeamRole::Member->value,
         ]);
 
-    $response->assertRedirect(route('dashboard.settings.teams.edit', $team));
+    $response->assertRedirect(route('dashboard.teams.edit', $team));
 
     $this->assertDatabaseHas('team_invitations', [
         'team_id' => $team->id,
@@ -80,12 +80,12 @@ test('team invitations can be created by admins', function () {
 
     $response = $this
         ->actingAs($admin)
-        ->post(route('dashboard.settings.teams.invitations.store', $team), [
+        ->post(route('dashboard.teams.invitations.store', $team), [
             'email' => 'invited@example.com',
             'role' => TeamRole::Member->value,
         ]);
 
-    $response->assertRedirect(route('dashboard.settings.teams.edit', $team));
+    $response->assertRedirect(route('dashboard.teams.edit', $team));
 });
 
 test('existing team members cannot be invited', function () {
@@ -100,7 +100,7 @@ test('existing team members cannot be invited', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->post(route('dashboard.settings.teams.invitations.store', $team), [
+        ->post(route('dashboard.teams.invitations.store', $team), [
             'email' => 'member@example.com',
             'role' => TeamRole::Member->value,
         ]);
@@ -123,7 +123,7 @@ test('duplicate invitations cannot be created', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->post(route('dashboard.settings.teams.invitations.store', $team), [
+        ->post(route('dashboard.teams.invitations.store', $team), [
             'email' => 'invited@example.com',
             'role' => TeamRole::Member->value,
         ]);
@@ -141,7 +141,7 @@ test('team invitations cannot be created by members', function () {
 
     $response = $this
         ->actingAs($member)
-        ->post(route('dashboard.settings.teams.invitations.store', $team), [
+        ->post(route('dashboard.teams.invitations.store', $team), [
             'email' => 'invited@example.com',
             'role' => TeamRole::Member->value,
         ]);
@@ -162,9 +162,9 @@ test('team invitations can be cancelled by owners', function () {
 
     $response = $this
         ->actingAs($owner)
-        ->delete(route('dashboard.settings.teams.invitations.destroy', [$team, $invitation]));
+        ->delete(route('dashboard.teams.invitations.destroy', [$team, $invitation]));
 
-    $response->assertRedirect(route('dashboard.settings.teams.edit', $team));
+    $response->assertRedirect(route('dashboard.teams.edit', $team));
 
     $this->assertDatabaseMissing('team_invitations', [
         'id' => $invitation->id,
@@ -187,7 +187,7 @@ test('team invitations can be accepted', function () {
 
     $response = $this
         ->actingAs($invitedUser)
-        ->post(route('invitations.accept', $invitation));
+        ->post(route('dashboard.teams.invitations.accept', $invitation));
 
     $response->assertRedirect(route('dashboard.team.index', ['team' => $team->slug]));
     $response->assertInertiaFlash('toast', ['type' => 'success', 'message' => 'Invitation accepted.']);
@@ -211,7 +211,7 @@ test('team invitations can be declined by the invited user', function () {
 
     $response = $this
         ->actingAs($invitedUser)
-        ->delete(route('invitations.decline', $invitation));
+        ->delete(route('dashboard.teams.invitations.decline', $invitation));
 
     $response->assertRedirect(route('dashboard.team.index', ['team' => $invitedUser->personalTeam()->slug]));
 
@@ -235,7 +235,7 @@ test('team invitations cannot be declined by uninvited user', function () {
 
     $response = $this
         ->actingAs($uninvitedUser)
-        ->delete(route('invitations.decline', $invitation));
+        ->delete(route('dashboard.teams.invitations.decline', $invitation));
 
     $response->assertSessionHasErrors('invitation');
 
@@ -259,7 +259,7 @@ test('accepted team invitations cannot be declined', function () {
 
     $response = $this
         ->actingAs($invitedUser)
-        ->delete(route('invitations.decline', $invitation));
+        ->delete(route('dashboard.teams.invitations.decline', $invitation));
 
     $response->assertSessionHasErrors('invitation');
 
@@ -283,7 +283,7 @@ test('team invitations cannot be accepted by uninvited user', function () {
 
     $response = $this
         ->actingAs($uninvitedUser)
-        ->post(route('invitations.accept', $invitation));
+        ->post(route('dashboard.teams.invitations.accept', $invitation));
 
     $response->assertSessionHasErrors('invitation');
 
@@ -305,7 +305,7 @@ test('expired invitations cannot be accepted', function () {
 
     $response = $this
         ->actingAs($invitedUser)
-        ->post(route('invitations.accept', $invitation));
+        ->post(route('dashboard.teams.invitations.accept', $invitation));
 
     $response->assertSessionHasErrors('invitation');
 

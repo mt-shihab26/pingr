@@ -70,7 +70,7 @@ export default function TeamsIndex({ teams }: Props) {
                                         onClick={() =>
                                             router.post(
                                                 route(
-                                                    "dashboard.settings.teams.switch",
+                                                    "dashboard.teams.switch",
                                                     { team: listedTeam.slug },
                                                 ),
                                             )
@@ -95,7 +95,7 @@ export default function TeamsIndex({ teams }: Props) {
                                         render={
                                             <Link
                                                 href={route(
-                                                    "dashboard.settings.teams.edit",
+                                                    "dashboard.teams.edit",
                                                     { team: listedTeam.slug },
                                                 )}
                                             />

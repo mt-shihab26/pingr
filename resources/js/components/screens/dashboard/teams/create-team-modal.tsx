@@ -41,7 +41,7 @@ export function CreateTeamModal({ children }: { children: ReactElement }) {
             <DialogContent>
                 <Form
                     key={String(open)}
-                    action={route("dashboard.settings.teams.store")}
+                    action={route("dashboard.teams.store")}
                     method="post"
                     className="space-y-6"
                     onSuccess={() => setOpen(false)}

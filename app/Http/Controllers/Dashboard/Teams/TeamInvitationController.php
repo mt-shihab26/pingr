@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Settings\Teams;
+namespace App\Http\Controllers\Dashboard\Teams;
 
 use App\Enums\TeamRole;
 use App\Http\Controllers\Controller;
@@ -36,7 +36,7 @@ class TeamInvitationController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Invitation sent.')]);
 
-        return to_route('dashboard.settings.teams.edit', ['team' => $team->slug]);
+        return to_route('dashboard.teams.edit', ['team' => $team->slug]);
     }
 
     /**
@@ -52,7 +52,7 @@ class TeamInvitationController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Invitation cancelled.')]);
 
-        return to_route('dashboard.settings.teams.edit', ['team' => $team->slug]);
+        return to_route('dashboard.teams.edit', ['team' => $team->slug]);
     }
 
     /**

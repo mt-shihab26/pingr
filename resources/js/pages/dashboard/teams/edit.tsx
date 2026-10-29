@@ -1,5 +1,5 @@
-import { Form, router } from "@inertiajs/react";
-import { ChevronDown, Mail, UserPlus, X } from "lucide-react";
+import { Form, Link, router } from "@inertiajs/react";
+import { ArrowLeft, ChevronDown, Mail, UserPlus, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CancelInvitationModal } from "@/components/screens/dashboard/teams/cancel-invitation-modal";
 import { DeleteTeamModal } from "@/components/screens/dashboard/teams/delete-team-modal";
@@ -30,7 +30,8 @@ import {
 } from "@/components/ui/tooltip";
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
-import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
+import { DashboardLayout } from "@/components/layouts/dashboard-layout";
+import { Breadcrumbs } from "@/components/layouts/dashboard-layout/breadcrumbs";
 
 export type TeamPermissions = {
     canUpdateTeam: boolean;
@@ -78,7 +79,7 @@ export default function TeamEdit({
 
     const updateMemberRole = (member: TTeamMember, newRole: string) => {
         router.visit(
-            route("dashboard.settings.teams.members.update", { team: team.slug, user: member.id }),
+            route("dashboard.teams.members.update", { team: team.slug, user: member.id }),
             {
                 data: { role: newRole },
                 preserveScroll: true,
@@ -97,20 +98,31 @@ export default function TeamEdit({
     };
 
     return (
-        <SettingsLayout
-            title={pageTitle}
-            breadcrumbs={[
-                {
-                    title: "Teams",
-                    href: route("dashboard.settings.teams.index"),
-                },
-                {
-                    title: team.name,
-                    href: route("dashboard.settings.teams.edit", { team: team.slug }),
-                },
-            ]}
-        >
-            <div className="flex flex-col space-y-10">
+        <DashboardLayout title={pageTitle}>
+            <div className="mx-auto flex w-full max-w-5xl items-center gap-4 px-4 pt-6">
+                <Link
+                    href={route("dashboard.teams.index")}
+                    className="inline-flex shrink-0 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                    <ArrowLeft className="size-4" />
+                    Back to teams
+                </Link>
+                <Breadcrumbs
+                    breadcrumbs={[
+                        {
+                            title: "Teams",
+                            href: route("dashboard.teams.index"),
+                        },
+                        {
+                            title: team.name,
+                            href: route("dashboard.teams.edit", {
+                                team: team.slug,
+                            }),
+                        },
+                    ]}
+                />
+            </div>
+            <div className="mx-auto w-full max-w-5xl space-y-10 px-4 py-6">
                 <div className="space-y-6">
                     {permissions.canUpdateTeam ? (
                         <>
@@ -121,7 +133,7 @@ export default function TeamEdit({
                             />
 
                             <Form
-                                action={route("dashboard.settings.teams.update", {
+                                action={route("dashboard.teams.update", {
                                     team: team.slug,
                                 })}
                                 method="patch"
@@ -402,6 +414,6 @@ export default function TeamEdit({
                     onOpenChange={setDeleteDialogOpen}
                 />
             ) : null}
-        </SettingsLayout>
+        </DashboardLayout>
     );
 }

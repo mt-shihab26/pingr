@@ -4,10 +4,9 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\Settings\AppearanceController;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
-use App\Http\Controllers\Dashboard\Settings\Teams\TeamController;
-use App\Http\Controllers\Dashboard\Settings\Teams\TeamInvitationController;
-use App\Http\Controllers\Dashboard\Settings\Teams\TeamMemberController;
-use App\Http\Controllers\Dashboard\TeamSwitcherController;
+use App\Http\Controllers\Dashboard\Teams\TeamController;
+use App\Http\Controllers\Dashboard\Teams\TeamInvitationController;
+use App\Http\Controllers\Dashboard\Teams\TeamMemberController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WellKnownController;
 use App\Http\Middleware\EnsureTeamMembership;
@@ -18,55 +17,61 @@ Route::get('/', [HomeController::class, "index"])->name('home');
 
 Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passkeys"])->name('well-known.passkeys');
 
-Route::prefix("/dashboard")->middleware("auth")->group(function () {
-    Route::get('/', [DashboardController::class, "redirect"])->middleware('verified')->name('dashboard');
+Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [DashboardController::class, "redirect"])->name('dashboard');
 
-    Route::prefix('/{team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
+    Route::prefix('/{team}')->middleware(EnsureTeamMembership::class)->group(function () {
         Route::get('dashboard', [DashboardController::class, "index"])->name('dashboard.team.index');
     });
 
-    Route::get('/teams', [TeamSwitcherController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.teams.index');
+    Route::prefix('/teams')->group(function () {
+        Route::get('/', [TeamController::class, 'index'])->name('dashboard.teams.index');
+        Route::post('/', [TeamController::class, 'store'])->name('dashboard.teams.store');
 
-    Route::prefix("/settings")->middleware("auth")->group(function () {
-        Route::get('/', [ProfileController::class, "redirect"])->name("dashboard.settings.index");
-
-        Route::prefix("/profile")->group(function () {
-            Route::get('/', [ProfileController::class, 'edit'])->name('dashboard.settings.profile.edit');
-            Route::patch('/', [ProfileController::class, 'update'])->name('dashboard.settings.profile.update');
-            Route::delete('/', [ProfileController::class, 'destroy'])->middleware("verified")->name('dashboard.settings.profile.destroy');
+        Route::prefix('/invitations')->withoutMiddleware('verified')->group(function () {
+            Route::post('/{invitation}/accept', [TeamInvitationController::class, 'accept'])->name('dashboard.teams.invitations.accept');
+            Route::delete('/{invitation}', [TeamInvitationController::class, 'decline'])->name('dashboard.teams.invitations.decline');
         });
 
-        Route::prefix("/security")->middleware('verified')->group(function () {
+        Route::prefix('/{team}')->middleware(EnsureTeamMembership::class)->group(function () {
+            Route::get('/', [TeamController::class, 'edit'])->name('dashboard.teams.edit');
+            Route::patch('/', [TeamController::class, 'update'])->name('dashboard.teams.update');
+            Route::delete('/', [TeamController::class, 'destroy'])->name('dashboard.teams.destroy');
+            Route::post('/switch', [TeamController::class, 'switch'])->name('dashboard.teams.switch');
+            Route::delete('/leave', [TeamController::class, 'leave'])->name('dashboard.teams.leave');
+
+            Route::patch('/members/{user}', [TeamMemberController::class, 'update'])->name('dashboard.teams.members.update');
+            Route::delete('/members/{user}', [TeamMemberController::class, 'destroy'])->name('dashboard.teams.members.destroy');
+
+            Route::post('/invitations', [TeamInvitationController::class, 'store'])->name('dashboard.teams.invitations.store');
+            Route::delete('/invitations/{invitation}', [TeamInvitationController::class, 'destroy'])->name('dashboard.teams.invitations.destroy');
+        });
+    });
+
+    Route::prefix("/settings")->group(function () {
+        Route::get('/', [ProfileController::class, "redirect"])
+            ->withoutMiddleware('verified')
+            ->name("dashboard.settings.index");
+
+        Route::prefix("/profile")->group(function () {
+            Route::get('/', [ProfileController::class, 'edit'])
+                ->withoutMiddleware('verified')
+                ->name('dashboard.settings.profile.edit');
+            Route::patch('/', [ProfileController::class, 'update'])
+                ->withoutMiddleware('verified')
+                ->name('dashboard.settings.profile.update');
+            Route::delete('/', [ProfileController::class, 'destroy'])->name('dashboard.settings.profile.destroy');
+        });
+
+        Route::prefix("/security")->group(function () {
             Route::get('/', [SecurityController::class, 'edit'])->middleware(RequirePassword::class)->name('dashboard.settings.security.edit');
             Route::put('/password', [SecurityController::class, 'update'])->middleware('throttle:6,1')->name('dashboard.settings.security.password.update');
         });
 
-        Route::prefix("/teams")->middleware('verified')->group(function () {
-            Route::get('/', [TeamController::class, 'index'])->name('dashboard.settings.teams.index');
-            Route::post('/', [TeamController::class, 'store'])->name('dashboard.settings.teams.store');
-
-            Route::prefix("/{team}")->middleware(EnsureTeamMembership::class)->group(function () {
-                Route::get('/', [TeamController::class, 'edit'])->name('dashboard.settings.teams.edit');
-                Route::patch('/', [TeamController::class, 'update'])->name('dashboard.settings.teams.update');
-                Route::delete('/', [TeamController::class, 'destroy'])->name('dashboard.settings.teams.destroy');
-                Route::post('/switch', [TeamController::class, 'switch'])->name('dashboard.settings.teams.switch');
-                Route::delete('/leave', [TeamController::class, 'leave'])->name('dashboard.settings.teams.leave');
-
-                Route::patch('/members/{user}', [TeamMemberController::class, 'update'])->name('dashboard.settings.teams.members.update');
-                Route::delete('/members/{user}', [TeamMemberController::class, 'destroy'])->name('dashboard.settings.teams.members.destroy');
-
-                Route::post('/invitations', [TeamInvitationController::class, 'store'])->name('dashboard.settings.teams.invitations.store');
-                Route::delete('/invitations/{invitation}', [TeamInvitationController::class, 'destroy'])->name('dashboard.settings.teams.invitations.destroy');
-            });
-        });
-
-        Route::prefix("/invitations")->group(function () {
-            Route::post('/{invitation}/accept', [TeamInvitationController::class, 'accept'])->name('invitations.accept');
-            Route::delete('/{invitation}', [TeamInvitationController::class, 'decline'])->name('invitations.decline');
-        });
-
         Route::prefix('/appearance')->group(function () {
-            Route::get('/', [AppearanceController::class, 'edit'])->name('dashboard.settings.appearance.edit');
+            Route::get('/', [AppearanceController::class, 'edit'])
+                ->withoutMiddleware('verified')
+                ->name('dashboard.settings.appearance.edit');
         });
 
     });

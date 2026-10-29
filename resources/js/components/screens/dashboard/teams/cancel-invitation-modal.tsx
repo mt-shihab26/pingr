@@ -33,7 +33,7 @@ export function CancelInvitationModal({
         }
 
         router.visit(
-            route("dashboard.settings.teams.invitations.destroy", {
+            route("dashboard.teams.invitations.destroy", {
                 team: team.slug,
                 invitation: invitation.code,
             }),

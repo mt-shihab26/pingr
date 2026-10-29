@@ -5,12 +5,12 @@ use App\Models\Team;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 
-test('the dashboard.settings.teams.index page can be rendered', function () {
+test('the dashboard.teams.index page can be rendered', function () {
     $user = User::factory()->create();
 
     $response = $this
         ->actingAs($user)
-        ->get(route('dashboard.settings.teams.index'));
+        ->get(route('dashboard.teams.index'));
 
     $response->assertOk();
 });
@@ -20,7 +20,7 @@ test('teams can be created', function () {
 
     $response = $this
         ->actingAs($user)
-        ->post(route('dashboard.settings.teams.store'), [
+        ->post(route('dashboard.teams.store'), [
             'name' => 'Test Team',
         ]);
 
@@ -41,7 +41,7 @@ test('team slug uses next available suffix', function () {
 
     $this
         ->actingAs($user)
-        ->post(route('dashboard.settings.teams.store'), [
+        ->post(route('dashboard.teams.store'), [
             'name' => 'Acme',
         ]);
 
@@ -59,12 +59,12 @@ test('the team edit page can be rendered', function () {
 
     $response = $this
         ->actingAs($user)
-        ->get(route('dashboard.settings.teams.edit', $team));
+        ->get(route('dashboard.teams.edit', $team));
 
     $response
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->component('dashboard.settings.teams.edit')
+            ->component('dashboard.teams.edit')
             ->where('members.0.role', TeamRole::Owner->value)
             ->where('members.0.role_label', TeamRole::Owner->label()),
         );
@@ -78,11 +78,11 @@ test('teams can be updated by owners', function () {
 
     $response = $this
         ->actingAs($user)
-        ->patch(route('dashboard.settings.teams.update', $team), [
+        ->patch(route('dashboard.teams.update', $team), [
             'name' => 'Updated Name',
         ]);
 
-    $response->assertRedirect(route('dashboard.settings.teams.edit', $team->fresh()));
+    $response->assertRedirect(route('dashboard.teams.edit', $team->fresh()));
 
     $this->assertDatabaseHas('teams', [
         'id' => $team->id,
@@ -100,7 +100,7 @@ test('teams cannot be updated by members', function () {
 
     $response = $this
         ->actingAs($member)
-        ->patch(route('dashboard.settings.teams.update', $team), [
+        ->patch(route('dashboard.teams.update', $team), [
             'name' => 'Updated Name',
         ]);
 
@@ -115,7 +115,7 @@ test('teams can be deleted by owners', function () {
 
     $response = $this
         ->actingAs($user)
-        ->delete(route('dashboard.settings.teams.destroy', $team), [
+        ->delete(route('dashboard.teams.destroy', $team), [
             'name' => $team->name,
         ]);
 
@@ -134,7 +134,7 @@ test('team deletion requires name confirmation', function () {
 
     $response = $this
         ->actingAs($user)
-        ->delete(route('dashboard.settings.teams.destroy', $team), [
+        ->delete(route('dashboard.teams.destroy', $team), [
             'name' => 'Wrong Name',
         ]);
 
@@ -162,7 +162,7 @@ test('deleting current team switches to alphabetically first remaining team', fu
 
     $response = $this
         ->actingAs($user)
-        ->delete(route('dashboard.settings.teams.destroy', $zuluTeam), [
+        ->delete(route('dashboard.teams.destroy', $zuluTeam), [
             'name' => $zuluTeam->name,
         ]);
 
@@ -185,7 +185,7 @@ test('deleting current team falls back to personal team when alphabetically firs
 
     $response = $this
         ->actingAs($user)
-        ->delete(route('dashboard.settings.teams.destroy', $team), [
+        ->delete(route('dashboard.teams.destroy', $team), [
             'name' => $team->name,
         ]);
 
@@ -208,7 +208,7 @@ test('deleting non current team leaves current team unchanged', function () {
 
     $response = $this
         ->actingAs($user)
-        ->delete(route('dashboard.settings.teams.destroy', $team), [
+        ->delete(route('dashboard.teams.destroy', $team), [
             'name' => $team->name,
         ]);
 
@@ -233,7 +233,7 @@ test('members can leave non personal teams', function () {
         ->actingAs($member)
         ->delete(route('', $team));
 
-    $response->assertRedirect(route('dashboard.settings.teams.index'));
+    $response->assertRedirect(route('dashboard.teams.index'));
     $response->assertInertiaFlash('toast', ['type' => 'success', 'message' => "You left the team \"{$team->name}\""]);
 
     expect($member->fresh()->belongsToTeam($team))->toBeFalse();
@@ -259,7 +259,7 @@ test('leaving current team switches to alphabetically first remaining team', fun
         ->actingAs($member)
         ->delete(route('', $zuluTeam));
 
-    $response->assertRedirect(route('dashboard.settings.teams.index'));
+    $response->assertRedirect(route('dashboard.teams.index'));
 
     expect($member->fresh()->belongsToTeam($zuluTeam))->toBeFalse();
     expect($member->fresh()->current_team_id)->toEqual($alphaTeam->id);
@@ -317,7 +317,7 @@ test('deleting team switches other affected users to their personal team', funct
 
     $response = $this
         ->actingAs($owner)
-        ->delete(route('dashboard.settings.teams.destroy', $team), [
+        ->delete(route('dashboard.teams.destroy', $team), [
             'name' => $team->name,
         ]);
 
@@ -333,7 +333,7 @@ test('personal teams cannot be deleted', function () {
 
     $response = $this
         ->actingAs($user)
-        ->delete(route('dashboard.settings.teams.destroy', $personalTeam), [
+        ->delete(route('dashboard.teams.destroy', $personalTeam), [
             'name' => $personalTeam->name,
         ]);
 
@@ -355,7 +355,7 @@ test('teams cannot be deleted by non owners', function () {
 
     $response = $this
         ->actingAs($member)
-        ->delete(route('dashboard.settings.teams.destroy', $team), [
+        ->delete(route('dashboard.teams.destroy', $team), [
             'name' => $team->name,
         ]);
 
@@ -370,7 +370,7 @@ test('users can switch teams', function () {
 
     $response = $this
         ->actingAs($user)
-        ->post(route('dashboard.settings.teams.switch', $team));
+        ->post(route('dashboard.teams.switch', $team));
 
     $response->assertRedirect();
 
@@ -383,13 +383,13 @@ test('users cannot switch to team they dont belong to', function () {
 
     $response = $this
         ->actingAs($user)
-        ->post(route('dashboard.settings.teams.switch', $team));
+        ->post(route('dashboard.teams.switch', $team));
 
     $response->assertForbidden();
 });
 
 test('guests cannot access teams', function () {
-    $response = $this->get(route('dashboard.settings.teams.index'));
+    $response = $this->get(route('dashboard.teams.index'));
 
     $response->assertRedirect(route('login'));
 });

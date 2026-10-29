@@ -41,7 +41,7 @@ export function UserMenuContent({ user }: Props) {
                         onClick={cleanup}
                     >
                         <Users className="mr-2" />
-                        Switch team
+                        Teams
                     </Link>
                 }
             />
@@ -62,10 +62,7 @@ export function UserMenuContent({ user }: Props) {
                 />
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-                onClick={handleLogout}
-                data-test="logout-button"
-            >
+            <DropdownMenuItem onClick={handleLogout} data-test="logout-button">
                 <LogOut className="mr-2" />
                 Log out
             </DropdownMenuItem>

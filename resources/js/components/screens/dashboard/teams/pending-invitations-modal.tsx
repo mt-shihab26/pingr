@@ -35,7 +35,7 @@ export function PendingInvitationsModal({
 
     const acceptInvitation = (invitation: TDashboardInvitation) => {
         router.visit(
-            route("invitations.accept", { invitation: invitation.code }),
+            route("dashboard.teams.invitations.accept", { invitation: invitation.code }),
             {
                 onStart: () => setProcessingCode(invitation.code),
                 onFinish: () => setProcessingCode(null),
@@ -45,7 +45,7 @@ export function PendingInvitationsModal({
 
     const declineInvitation = (invitation: TDashboardInvitation) => {
         router.visit(
-            route("invitations.decline", { invitation: invitation.code }),
+            route("dashboard.teams.invitations.decline", { invitation: invitation.code }),
             {
                 onStart: () => setProcessingCode(invitation.code),
                 onFinish: () => setProcessingCode(null),

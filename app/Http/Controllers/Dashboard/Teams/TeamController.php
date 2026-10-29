@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Settings\Teams;
+namespace App\Http\Controllers\Dashboard\Teams;
 
 use App\Actions\Teams\CreateTeam;
 use App\Enums\TeamRole;
@@ -19,14 +19,12 @@ use Inertia\Response;
 class TeamController extends Controller
 {
     /**
-     * Display a listing of the user's teams.
+     * Display the teams the user can switch between.
      */
     public function index(Request $request): Response
     {
-        $user = $request->user();
-
-        return Inertia::render('dashboard/settings/teams/index', [
-            'teams' => $user->toUserTeams(includeCurrent: true),
+        return Inertia::render('dashboard/teams/index', [
+            'teams' => $request->user()->toUserTeams(includeCurrent: true),
         ]);
     }
 
@@ -39,7 +37,7 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Team created.')]);
 
-        return to_route('dashboard.settings.teams.edit', ['team' => $team->slug]);
+        return to_route('dashboard.teams.edit', ['team' => $team->slug]);
     }
 
     /**
@@ -49,7 +47,7 @@ class TeamController extends Controller
     {
         $user = $request->user();
 
-        return Inertia::render('dashboard/settings/teams/edit', [
+        return Inertia::render('dashboard/teams/edit', [
             'team' => [
                 'id' => $team->id,
                 'name' => $team->name,
@@ -101,7 +99,7 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Team updated.')]);
 
-        return to_route('dashboard.settings.teams.edit', ['team' => $team->slug]);
+        return to_route('dashboard.teams.edit', ['team' => $team->slug]);
     }
 
     /**
@@ -144,7 +142,7 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('You left the team ":name"', ['name' => $team->name])]);
 
-        return to_route('dashboard.settings.teams.index');
+        return to_route('dashboard.teams.index');
     }
 
     /**
@@ -173,6 +171,6 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Team deleted.')]);
 
-        return to_route('dashboard.settings.teams.index');
+        return to_route('dashboard.teams.index');
     }
 }
