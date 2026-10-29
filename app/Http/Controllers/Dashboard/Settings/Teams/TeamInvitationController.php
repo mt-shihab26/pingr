@@ -77,7 +77,11 @@ class TeamInvitationController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Invitation accepted.')]);
 
-        return to_route('dashboard');
+        $team = $user->currentTeam ?? $user->personalTeam();
+
+        abort_if(! $team, 403);
+
+        return to_route('dashboard', ['current_team' => $team->slug]);
     }
 
     /**
@@ -85,10 +89,16 @@ class TeamInvitationController extends Controller
      */
     public function decline(RespondToTeamInvitationRequest $request, TeamInvitation $invitation): RedirectResponse
     {
+        $user = $request->user();
+
         $invitation->delete();
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Invitation declined.')]);
 
-        return to_route('dashboard');
+        $team = $user->currentTeam ?? $user->personalTeam();
+
+        abort_if(! $team, 403);
+
+        return to_route('dashboard', ['current_team' => $team->slug]);
     }
 }
