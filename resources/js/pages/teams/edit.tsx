@@ -1,12 +1,12 @@
 import { Form, Head, router } from "@inertiajs/react";
 import { ChevronDown, Mail, UserPlus, X } from "lucide-react";
 import { useMemo, useState } from "react";
-import CancelInvitationModal from "@/components/elements/cancel-invitation-modal";
-import DeleteTeamModal from "@/components/elements/delete-team-modal";
-import Heading from "@/components/elements/heading";
-import InputError from "@/components/elements/input-error";
-import InviteMemberModal from "@/components/elements/invite-member-modal";
-import RemoveMemberModal from "@/components/elements/remove-member-modal";
+import { CancelInvitationModal } from "@/components/screens/teams/cancel-invitation-modal";
+import { DeleteTeamModal } from "@/components/screens/teams/delete-team-modal";
+import { Heading } from "@/components/elements/heading";
+import { InputError } from "@/components/elements/input-error";
+import { InviteMemberModal } from "@/components/screens/teams/invite-member-modal";
+import { RemoveMemberModal } from "@/components/screens/teams/remove-member-modal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useInitials } from "@/hooks/use-initials";
 import { edit, index, update } from "@/routes/teams";
 import { update as updateMember } from "@/routes/teams/members";
 import type {
@@ -34,6 +33,7 @@ import type {
     TeamMember,
     TeamPermissions,
 } from "@/types";
+import { formatInitials } from "@/lib/formats";
 
 type Props = {
     team: Team;
@@ -50,8 +50,6 @@ export default function TeamEdit({
     permissions,
     availableRoles,
 }: Props) {
-    const getInitials = useInitials();
-
     const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [removeMemberDialogOpen, setRemoveMemberDialogOpen] = useState(false);
@@ -182,7 +180,7 @@ export default function TeamEdit({
                                             />
                                         ) : null}
                                         <AvatarFallback>
-                                            {getInitials(member.name)}
+                                            {formatInitials(member.name)}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div>
@@ -199,16 +197,18 @@ export default function TeamEdit({
                                     {member.role !== "owner" &&
                                     permissions.canUpdateMember ? (
                                         <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    variant="outline"
-                                                    size="sm"
-                                                    data-test="member-role-trigger"
-                                                >
-                                                    {member.role_label}
-                                                    <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
+                                            <DropdownMenuTrigger
+                                                render={
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        data-test="member-role-trigger"
+                                                    >
+                                                        {member.role_label}
+                                                        <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                }
+                                            />
                                             <DropdownMenuContent>
                                                 {availableRoles.map((role) => (
                                                     <DropdownMenuItem
@@ -236,20 +236,22 @@ export default function TeamEdit({
                                     permissions.canRemoveMember ? (
                                         <TooltipProvider>
                                             <Tooltip>
-                                                <TooltipTrigger asChild>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        data-test="member-remove-button"
-                                                        onClick={() =>
-                                                            confirmRemoveMember(
-                                                                member,
-                                                            )
-                                                        }
-                                                    >
-                                                        <X className="h-4 w-4" />
-                                                    </Button>
-                                                </TooltipTrigger>
+                                                <TooltipTrigger
+                                                    render={
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            data-test="member-remove-button"
+                                                            onClick={() =>
+                                                                confirmRemoveMember(
+                                                                    member,
+                                                                )
+                                                            }
+                                                        >
+                                                            <X className="h-4 w-4" />
+                                                        </Button>
+                                                    }
+                                                />
                                                 <TooltipContent>
                                                     <p>Remove member</p>
                                                 </TooltipContent>
@@ -294,20 +296,22 @@ export default function TeamEdit({
                                     {permissions.canCancelInvitation ? (
                                         <TooltipProvider>
                                             <Tooltip>
-                                                <TooltipTrigger asChild>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        data-test="invitation-cancel-button"
-                                                        onClick={() =>
-                                                            confirmCancelInvitation(
-                                                                invitation,
-                                                            )
-                                                        }
-                                                    >
-                                                        <X className="h-4 w-4" />
-                                                    </Button>
-                                                </TooltipTrigger>
+                                                <TooltipTrigger
+                                                    render={
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            data-test="invitation-cancel-button"
+                                                            onClick={() =>
+                                                                confirmCancelInvitation(
+                                                                    invitation,
+                                                                )
+                                                            }
+                                                        >
+                                                            <X className="h-4 w-4" />
+                                                        </Button>
+                                                    }
+                                                />
                                                 <TooltipContent>
                                                     <p>Cancel invitation</p>
                                                 </TooltipContent>

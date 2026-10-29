@@ -1,6 +1,6 @@
 import { Form, Head } from "@inertiajs/react";
-import InputError from "@/components/elements/input-error";
-import PasswordInput from "@/components/elements/password-input";
+import { InputError } from "@/components/elements/input-error";
+import { PasswordInput } from "@/components/elements/password-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
@@ -9,7 +9,7 @@ import {
     index as confirmOptions,
     store as confirmStore,
 } from "@/actions/Laravel/Passkeys/Http/Controllers/PasskeyConfirmationController";
-import PasskeyVerify from "@/components/elements/passkey-verify";
+import { PasskeyVerify } from "@/components/screens/settings/passkey-verify";
 
 export default function ConfirmPassword() {
     return (

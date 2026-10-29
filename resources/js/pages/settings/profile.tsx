@@ -1,9 +1,9 @@
 import { Form, Head, usePage } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 import ProfileController from "@/actions/App/Http/Controllers/Settings/ProfileController";
-import DeleteUser from "@/components/elements/delete-user";
-import Heading from "@/components/elements/heading";
-import InputError from "@/components/elements/input-error";
+import { DeleteUser } from "@/components/screens/settings/delete-user";
+import { Heading } from "@/components/elements/heading";
+import { InputError } from "@/components/elements/input-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
