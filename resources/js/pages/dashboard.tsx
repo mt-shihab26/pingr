@@ -5,7 +5,7 @@ import {
 } from "@/components/screens/teams/pending-invitations-modal";
 import { PlaceholderPattern } from "@/components/ui/placeholder-pattern";
 import { dashboard } from "@/routes";
-import { AppLayout } from "@/components/layouts/app-layout";
+import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { usePage } from "@inertiajs/react";
 
 type Props = {
@@ -20,7 +20,7 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
     const props = usePage().props;
 
     return (
-        <AppLayout
+        <DashboardLayout
             title="Dashboard"
             breadcrumbs={[
                 {
@@ -52,6 +52,6 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
                     <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                 </div>
             </div>
-        </AppLayout>
+        </DashboardLayout>
     );
 }

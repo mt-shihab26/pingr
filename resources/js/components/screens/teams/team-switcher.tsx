@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
@@ -108,32 +109,34 @@ export function TeamSwitcher({ inHeader = false }: TeamSwitcherProps) {
                 align={inHeader ? "end" : "start"}
                 sideOffset={inHeader ? undefined : 4}
             >
-                <DropdownMenuLabel className="text-xs text-muted-foreground">
-                    Teams
-                </DropdownMenuLabel>
-                {teams.map((team) => (
-                    <DropdownMenuItem
-                        key={team.id}
-                        data-test="team-switcher-item"
-                        className={
-                            inHeader
-                                ? "cursor-pointer gap-2"
-                                : "cursor-pointer gap-2 p-2"
-                        }
-                        onSelect={() => switchTeam(team)}
-                    >
-                        {team.name}
-                        {currentTeam?.id === team.id && (
-                            <Check
-                                className={
-                                    inHeader
-                                        ? "ml-auto size-4"
-                                        : "ml-auto h-4 w-4"
-                                }
-                            />
-                        )}
-                    </DropdownMenuItem>
-                ))}
+                <DropdownMenuGroup>
+                    <DropdownMenuLabel className="text-xs text-muted-foreground">
+                        Teams
+                    </DropdownMenuLabel>
+                    {teams.map((team) => (
+                        <DropdownMenuItem
+                            key={team.id}
+                            data-test="team-switcher-item"
+                            className={
+                                inHeader
+                                    ? "cursor-pointer gap-2"
+                                    : "cursor-pointer gap-2 p-2"
+                            }
+                            onSelect={() => switchTeam(team)}
+                        >
+                            {team.name}
+                            {currentTeam?.id === team.id && (
+                                <Check
+                                    className={
+                                        inHeader
+                                            ? "ml-auto size-4"
+                                            : "ml-auto h-4 w-4"
+                                    }
+                                />
+                            )}
+                        </DropdownMenuItem>
+                    ))}
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <CreateTeamModal>
                     <DropdownMenuItem

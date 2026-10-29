@@ -2,9 +2,9 @@ import type { TBreadcrumb } from "./breadcrumbs";
 import type { ReactNode } from "react";
 
 import { Head } from "@inertiajs/react";
-import { AppSidebarLayout } from "./app-sidebar-layout";
+import { AppHeaderLayout } from "./app-header-layout";
 
-export function AppLayout({
+export function DashboardLayout({
     title,
     breadcrumbs = [],
     children,
@@ -14,10 +14,10 @@ export function AppLayout({
     children: ReactNode;
 }) {
     return (
-        <AppSidebarLayout breadcrumbs={breadcrumbs}>
+        <AppHeaderLayout breadcrumbs={breadcrumbs}>
             <Head title={title} />
             <h1 className="sr-only">{title}</h1>
             {children}
-        </AppSidebarLayout>
+        </AppHeaderLayout>
     );
 }

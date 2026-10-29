@@ -11,7 +11,7 @@ import type { Props as ManagePasskeysProps } from "@/components/screens/settings
 import { ManagePasskeys } from "@/components/screens/settings/manage-passkeys";
 import type { Props as ManageTwoFactorProps } from "@/components/screens/settings/manage-two-factor";
 import { ManageTwoFactor } from "@/components/screens/settings/manage-two-factor";
-import { SettingsLayout } from "@/components/layouts/settings-layout";
+import { SettingsLayout } from "@/components/screens/settings/shared/settings-layout";
 
 type Props = {
     passwordRules: string;

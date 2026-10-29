@@ -9,9 +9,9 @@ import { edit } from "@/routes/profile";
 import { edit as editSecurity } from "@/routes/security";
 import { index as teams } from "@/routes/teams";
 import type { TNavItem } from "@/types/utils";
-import { AppLayout } from "../app-layout";
+import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import type { ReactNode } from "react";
-import type { TBreadcrumb } from "../app-layout/breadcrumbs";
+import type { TBreadcrumb } from "@/components/layouts/dashboard-layout/breadcrumbs";
 
 const sidebarNavItems: TNavItem[] = [
     {
@@ -48,7 +48,7 @@ export function SettingsLayout({
     const { isCurrentOrParentUrl } = useCurrentUrl();
 
     return (
-        <AppLayout title={title} breadcrumbs={breadcrumbs}>
+        <DashboardLayout title={title} breadcrumbs={breadcrumbs}>
             <div className="px-4 py-6">
                 <Heading
                     title="Settings"
@@ -93,6 +93,6 @@ export function SettingsLayout({
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </DashboardLayout>
     );
 }

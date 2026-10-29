@@ -6,7 +6,7 @@ import { Heading } from "@/components/elements/heading";
 import { LeaveTeamModal } from "@/components/screens/teams/leave-team-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {SettingsLayout} from "@/components/layouts/settings-layout";
+import {SettingsLayout} from "@/components/screens/settings/shared/settings-layout";
 
 import {
     Tooltip,

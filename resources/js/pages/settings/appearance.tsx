@@ -1,6 +1,6 @@
 import { Heading } from "@/components/elements/heading";
 import { edit as editAppearance } from "@/routes/appearance";
-import { SettingsLayout } from "@/components/layouts/settings-layout";
+import { SettingsLayout } from "@/components/screens/settings/shared/settings-layout";
 
 import type { LucideIcon } from "lucide-react";
 import { Monitor, Moon, Sun } from "lucide-react";

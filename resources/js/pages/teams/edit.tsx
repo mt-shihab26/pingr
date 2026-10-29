@@ -32,7 +32,7 @@ import { edit, index, update } from "@/routes/teams";
 import { update as updateMember } from "@/routes/teams/members";
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
-import { SettingsLayout } from "@/components/layouts/settings-layout";
+import { SettingsLayout } from "@/components/screens/settings/shared/settings-layout";
 
 export type TeamPermissions = {
     canUpdateTeam: boolean;
