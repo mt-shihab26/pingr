@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { DeleteUser } from "@/components/screens/dashboard/settings/delete-user";
-import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
+import { SettingsLayout } from "@/components/screens/dashboard/settings/settings-layout";
 
 export default function Profile({
     mustVerifyEmail,

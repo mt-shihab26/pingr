@@ -1,5 +1,5 @@
 import { Heading } from "@/components/elements/heading";
-import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
+import { SettingsLayout } from "@/components/screens/dashboard/settings/settings-layout";
 
 import type { LucideIcon } from "lucide-react";
 import { Monitor, Moon, Sun } from "lucide-react";

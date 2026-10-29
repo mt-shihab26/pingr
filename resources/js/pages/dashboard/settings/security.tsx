@@ -9,7 +9,7 @@ import type { Props as ManagePasskeysProps } from "@/components/screens/dashboar
 import { ManagePasskeys } from "@/components/screens/dashboard/settings/manage-passkeys";
 import type { Props as ManageTwoFactorProps } from "@/components/screens/dashboard/settings/manage-two-factor";
 import { ManageTwoFactor } from "@/components/screens/dashboard/settings/manage-two-factor";
-import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
+import { SettingsLayout } from "@/components/screens/dashboard/settings/settings-layout";
 
 type Props = {
     passwordRules: string;

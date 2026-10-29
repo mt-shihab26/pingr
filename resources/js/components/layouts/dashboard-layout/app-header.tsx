@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { AppLogo } from "./app-logo";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 import { Breadcrumbs, type TBreadcrumb } from "./breadcrumbs";
@@ -34,23 +34,11 @@ import { useCurrentUrl } from "@/hooks/use-current-url";
 import { cn, toUrl } from "@/lib/utils";
 import { formatInitials } from "@/lib/formats";
 import { useShared } from "@/hooks/use-shared";
+import { dashboardNavItems, dashboardUrl, resourceLinks } from "@/lib/links";
 
 type Props = {
     breadcrumbs?: TBreadcrumb[];
 };
-
-const rightNavItems = [
-    {
-        title: "Repository",
-        href: "https://github.com/laravel/react-starter-kit",
-        icon: Folder,
-    },
-    {
-        title: "Documentation",
-        href: "https://laravel.com/docs/starter-kits#react",
-        icon: BookOpen,
-    },
-];
 
 const activeItemStyles =
     "text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100";
@@ -58,15 +46,8 @@ const activeItemStyles =
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const { user, team } = useShared();
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
-    const dashboardUrl = team ? route("dashboard.team.overview.index", { team: team.slug }) : "/";
-
-    const mainNavItems = [
-        {
-            title: "Dashboard",
-            href: dashboardUrl,
-            icon: LayoutGrid,
-        },
-    ];
+    const dashboardHref = dashboardUrl(team);
+    const mainNavItems = dashboardNavItems(team);
 
     return (
         <>
@@ -114,7 +95,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                         </div>
 
                                         <div className="flex flex-col space-y-4">
-                                            {rightNavItems.map((item) => (
+                                            {resourceLinks.map((item) => (
                                                 <a
                                                     key={item.title}
                                                     href={toUrl(item.href)}
@@ -136,7 +117,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     </div>
 
                     <Link
-                        href={dashboardUrl}
+                        href={dashboardHref}
                         prefetch
                         className="flex items-center space-x-2"
                     >
@@ -187,7 +168,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 <Search className="size-5! opacity-80 group-hover:opacity-100" />
                             </Button>
                             <div className="ml-1 hidden gap-1 lg:flex">
-                                {rightNavItems.map((item) => (
+                                            {resourceLinks.map((item) => (
                                     <TooltipProvider key={item.title} delay={0}>
                                         <Tooltip>
                                             <TooltipTrigger>

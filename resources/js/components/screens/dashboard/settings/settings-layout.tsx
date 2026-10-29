@@ -4,33 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCurrentUrl } from "@/hooks/use-current-url";
 import { cn, toUrl } from "@/lib/utils";
-import type { TNavItem } from "@/types/utils";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import type { ReactNode } from "react";
 import type { TBreadcrumb } from "@/components/layouts/dashboard-layout/breadcrumbs";
-
-const sidebarNavItems: TNavItem[] = [
-    {
-        title: "Profile",
-        href: route("dashboard.settings.profile.edit"),
-        icon: null,
-    },
-    {
-        title: "Security",
-        href: route("dashboard.settings.security.edit"),
-        icon: null,
-    },
-    {
-        title: "Teams",
-        href: route("dashboard.teams.index"),
-        icon: null,
-    },
-    {
-        title: "Appearance",
-        href: route("dashboard.settings.appearance.edit"),
-        icon: null,
-    },
-];
+import { settingsNavItems } from "@/lib/links";
 
 export function SettingsLayout({
     title,
@@ -57,7 +34,7 @@ export function SettingsLayout({
                             className="flex flex-col space-y-1 space-x-0"
                             aria-label="Settings"
                         >
-                            {sidebarNavItems.map((item, index) => (
+                            {settingsNavItems.map((item, index) => (
                                 <Button
                                     key={`${toUrl(item.href)}-${index}`}
                                     size="sm"
