@@ -35,3 +35,20 @@ void createInertiaApp({
 });
 
 initializeTheme();
+
+// Patch Inertia's error modal iframe to allow clipboard-write (dev only).
+// @inertiajs/core uses sandbox="allow-scripts" which blocks the Clipboard API;
+// allow-same-origin lets the iframe inherit the parent's permissions policy.
+if (import.meta.env.DEV && typeof window !== "undefined") {
+    const observer = new MutationObserver(() => {
+        const iframe = document.querySelector(
+            "#inertia-error-dialog iframe",
+        ) as HTMLIFrameElement | null;
+        if (iframe && iframe.getAttribute("sandbox") === "allow-scripts") {
+            const content = iframe.srcdoc;
+            iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+            iframe.srcdoc = content;
+        }
+    });
+    observer.observe(document.body, { childList: true });
+}
