@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Teams;
+namespace App\Http\Controllers\Dashboard\Teams;
 
 use App\Actions\Teams\CreateTeam;
 use App\Enums\TeamRole;
@@ -26,7 +26,7 @@ class TeamController extends Controller
     {
         $user = $request->user();
 
-        return Inertia::render('teams/index', [
+        return Inertia::render('dashboard/teams/index', [
             'teams' => $user->toUserTeams(includeCurrent: true),
         ]);
     }
@@ -50,7 +50,7 @@ class TeamController extends Controller
     {
         $user = $request->user();
 
-        return Inertia::render('teams/edit', [
+        return Inertia::render('dashboard/teams/edit', [
             'team' => [
                 'id' => $team->id,
                 'name' => $team->name,

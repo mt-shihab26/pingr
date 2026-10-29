@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Settings\ProfileController;
-use App\Http\Controllers\Settings\SecurityController;
-use App\Http\Controllers\Teams\TeamController;
-use App\Http\Controllers\Teams\TeamInvitationController;
-use App\Http\Controllers\Teams\TeamMemberController;
+use App\Http\Controllers\Dashboard\Settings\ProfileController;
+use App\Http\Controllers\Dashboard\Settings\SecurityController;
+use App\Http\Controllers\Dashboard\Teams\TeamController;
+use App\Http\Controllers\Dashboard\Teams\TeamInvitationController;
+use App\Http\Controllers\Dashboard\Teams\TeamMemberController;
+use App\Http\Controllers\WellKnownController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Support\Facades\Route;
