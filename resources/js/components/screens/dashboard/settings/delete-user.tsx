@@ -17,7 +17,6 @@ import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
 import { Button } from "@/components/ui/button";
 
-
 export function DeleteUser() {
     const passwordInput = useRef<HTMLInputElement>(null);
 

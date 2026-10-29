@@ -11,7 +11,6 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-
 export type TDashboardInvitation = {
     code: string;
     inviterName: string;
@@ -35,22 +34,28 @@ export function PendingInvitationsModal({
     const [processingCode, setProcessingCode] = useState<string | null>(null);
 
     const acceptInvitation = (invitation: TDashboardInvitation) => {
-        router.visit(route("invitations.accept", { invitation: invitation.code }), {
-            onStart: () => setProcessingCode(invitation.code),
-            onFinish: () => setProcessingCode(null),
-        });
+        router.visit(
+            route("invitations.accept", { invitation: invitation.code }),
+            {
+                onStart: () => setProcessingCode(invitation.code),
+                onFinish: () => setProcessingCode(null),
+            },
+        );
     };
 
     const declineInvitation = (invitation: TDashboardInvitation) => {
-        router.visit(route("invitations.decline", { invitation: invitation.code }), {
-            onStart: () => setProcessingCode(invitation.code),
-            onFinish: () => setProcessingCode(null),
-            onSuccess: () => {
-                if (invitations.length === 1) {
-                    onOpenChange(false);
-                }
+        router.visit(
+            route("invitations.decline", { invitation: invitation.code }),
+            {
+                onStart: () => setProcessingCode(invitation.code),
+                onFinish: () => setProcessingCode(null),
+                onSuccess: () => {
+                    if (invitations.length === 1) {
+                        onOpenChange(false);
+                    }
+                },
             },
-        });
+        );
     };
 
     return (

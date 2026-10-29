@@ -32,11 +32,17 @@ export function CancelInvitationModal({
             return;
         }
 
-        router.visit(route("teams.invitations.destroy", { team: team.slug, invitation: invitation.code }), {
-            onStart: () => setProcessing(true),
-            onFinish: () => setProcessing(false),
-            onSuccess: () => onOpenChange(false),
-        });
+        router.visit(
+            route("teams.invitations.destroy", {
+                team: team.slug,
+                invitation: invitation.code,
+            }),
+            {
+                onStart: () => setProcessing(true),
+                onFinish: () => setProcessing(false),
+                onSuccess: () => onOpenChange(false),
+            },
+        );
     };
 
     return (

@@ -11,7 +11,6 @@ import { Label } from "@/components/ui/label";
 import { DeleteUser } from "@/components/screens/dashboard/settings/delete-user";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
 
-
 export default function Profile({
     mustVerifyEmail,
     status,
@@ -95,7 +94,9 @@ export default function Profile({
                                         <p className="-mt-4 text-sm text-muted-foreground">
                                             Your email address is unverified.{" "}
                                             <Link
-                                                href={route("verification.send")}
+                                                href={route(
+                                                    "verification.send",
+                                                )}
                                                 as="button"
                                                 className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                             >

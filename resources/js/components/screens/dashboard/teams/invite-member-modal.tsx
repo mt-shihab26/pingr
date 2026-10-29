@@ -57,7 +57,9 @@ export function InviteMemberModal({
             <DialogContent>
                 <Form
                     key={String(open)}
-                    action={route("teams.invitations.store", { team: team.slug })}
+                    action={route("teams.invitations.store", {
+                        team: team.slug,
+                    })}
                     method="post"
                     className="space-y-6"
                     onSuccess={() => onOpenChange(false)}

@@ -15,7 +15,10 @@ export default function ConfirmPassword() {
         >
             <PasskeyVerify
                 routes={{
-                    options: { url: route("passkey.confirm-options"), method: "get" },
+                    options: {
+                        url: route("passkey.confirm-options"),
+                        method: "get",
+                    },
                     submit: { url: route("passkey.confirm"), method: "post" },
                 }}
                 label="Confirm with passkey"
@@ -23,7 +26,11 @@ export default function ConfirmPassword() {
                 separator="Or confirm with password"
             />
 
-            <Form action={route("password.confirm.store")} method="post" resetOnSuccess={["password"]}>
+            <Form
+                action={route("password.confirm.store")}
+                method="post"
+                resetOnSuccess={["password"]}
+            >
                 {({ processing, errors }) => (
                     <div className="space-y-6">
                         <div className="grid gap-2">

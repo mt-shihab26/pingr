@@ -119,7 +119,12 @@ export default function TeamsIndex({ teams }: Props) {
                                                             data-test="team-view-button"
                                                             render={
                                                                 <Link
-                                                                    href={route("teams.edit", { team: team.slug })}
+                                                                    href={route(
+                                                                        "teams.edit",
+                                                                        {
+                                                                            team: team.slug,
+                                                                        },
+                                                                    )}
                                                                 >
                                                                     <Eye className="h-4 w-4" />
                                                                 </Link>
@@ -141,7 +146,12 @@ export default function TeamsIndex({ teams }: Props) {
                                                             data-test="team-edit-button"
                                                             render={
                                                                 <Link
-                                                                    href={route("teams.edit", { team: team.slug })}
+                                                                    href={route(
+                                                                        "teams.edit",
+                                                                        {
+                                                                            team: team.slug,
+                                                                        },
+                                                                    )}
                                                                 >
                                                                     <Pencil className="h-4 w-4" />
                                                                 </Link>

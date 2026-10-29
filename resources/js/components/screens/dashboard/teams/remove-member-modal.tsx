@@ -27,11 +27,17 @@ export function RemoveMemberModal({ team, member, open, onOpenChange }: Props) {
             return;
         }
 
-        router.visit(route("teams.members.destroy", { team: team.slug, user: member.id }), {
-            onStart: () => setProcessing(true),
-            onFinish: () => setProcessing(false),
-            onSuccess: () => onOpenChange(false),
-        });
+        router.visit(
+            route("teams.members.destroy", {
+                team: team.slug,
+                user: member.id,
+            }),
+            {
+                onStart: () => setProcessing(true),
+                onFinish: () => setProcessing(false),
+                onSuccess: () => onOpenChange(false),
+            },
+        );
     };
 
     return (

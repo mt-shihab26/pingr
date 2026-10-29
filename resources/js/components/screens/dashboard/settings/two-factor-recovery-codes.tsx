@@ -80,7 +80,9 @@ export function TwoFactorRecoveryCodes({
 
                     {canRegenerateCodes && (
                         <Form
-                            action={route("two-factor.regenerate-recovery-codes")}
+                            action={route(
+                                "two-factor.regenerate-recovery-codes",
+                            )}
                             method="post"
                             options={{ preserveScroll: true }}
                             onSuccess={fetchRecoveryCodes}

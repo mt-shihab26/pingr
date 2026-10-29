@@ -59,7 +59,10 @@ export function ManageTwoFactor(props: Props) {
                     </p>
 
                     <div className="relative inline">
-                        <Form action={route("two-factor.disable")} method="delete">
+                        <Form
+                            action={route("two-factor.disable")}
+                            method="delete"
+                        >
                             {({ processing }) => (
                                 <Button
                                     variant="destructive"

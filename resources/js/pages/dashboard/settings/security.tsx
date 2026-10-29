@@ -40,7 +40,9 @@ export default function Security(props: Props) {
                 />
 
                 <Form
-                    action={route("dashboard.settings.security.password.update")}
+                    action={route(
+                        "dashboard.settings.security.password.update",
+                    )}
                     method="put"
                     options={{
                         preserveScroll: true,

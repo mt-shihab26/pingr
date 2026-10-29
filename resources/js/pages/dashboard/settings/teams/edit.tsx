@@ -77,10 +77,13 @@ export default function TeamEdit({
     );
 
     const updateMemberRole = (member: TTeamMember, newRole: string) => {
-        router.visit(route("teams.members.update", { team: team.slug, user: member.id }), {
-            data: { role: newRole },
-            preserveScroll: true,
-        });
+        router.visit(
+            route("teams.members.update", { team: team.slug, user: member.id }),
+            {
+                data: { role: newRole },
+                preserveScroll: true,
+            },
+        );
     };
 
     const confirmRemoveMember = (member: TTeamMember) => {
@@ -118,7 +121,9 @@ export default function TeamEdit({
                             />
 
                             <Form
-                                action={route("teams.update", { team: team.slug })}
+                                action={route("teams.update", {
+                                    team: team.slug,
+                                })}
                                 method="patch"
                                 className="space-y-6"
                             >
