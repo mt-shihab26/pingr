@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/react";
 
 export default function Welcome() {
     const { user, team } = useShared();
-    const dashboardUrl = team ? route("dashboard", { team: team.slug }) : "/";
+    const dashboardUrl = team ? route("dashboard.team.index", { team: team.slug }) : "/";
 
     return (
         <>

@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WellKnownController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Auth\Middleware\RequirePassword;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, "index"])->name('home');
@@ -18,8 +19,17 @@ Route::get('/', [HomeController::class, "index"])->name('home');
 Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passkeys"])->name('well-known.passkeys');
 
 Route::prefix("/dashboard")->group(function () {
+    Route::get('/', function (Request $request) {
+        $user = $request->user();
+        $team = $user->currentTeam ?? $user->personalTeam();
+
+        abort_if(! $team, 403);
+
+        return to_route('dashboard.team.index', ['team' => $team->slug]);
+    })->middleware(['auth', 'verified'])->name('dashboard');
+
     Route::prefix('/{team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
-        Route::get('dashboard', DashboardController::class)->name('dashboard');
+        Route::get('dashboard', DashboardController::class)->name('dashboard.team.index');
     });
 
     Route::prefix("/settings")->middleware("auth")->group(function () {

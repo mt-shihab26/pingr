@@ -11,7 +11,9 @@ trait RedirectsToCurrentTeam
     {
         $team = $this->currentTeam($request);
 
-        return "/{$team->slug}{$redirect}";
+        return $redirect === '/dashboard'
+            ? route('dashboard.team.index', ['team' => $team->slug], absolute: false)
+            : $redirect;
     }
 
     protected function currentTeam(Request $request): Team

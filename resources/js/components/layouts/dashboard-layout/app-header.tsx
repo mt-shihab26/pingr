@@ -3,7 +3,6 @@ import { BookOpen, Folder, LayoutGrid, Menu, Search } from "lucide-react";
 import { AppLogo } from "./app-logo";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 import { Breadcrumbs, type TBreadcrumb } from "./breadcrumbs";
-import { TeamSwitcher } from "./team-switcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,7 +58,7 @@ const activeItemStyles =
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const { user, team } = useShared();
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
-    const dashboardUrl = team ? route("dashboard", { team: team.slug }) : "/";
+    const dashboardUrl = team ? route("dashboard.team.index", { team: team.slug }) : "/";
 
     const mainNavItems = [
         {
@@ -238,7 +237,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             </DropdownMenuContent>
                         </DropdownMenu>
 
-                        <TeamSwitcher inHeader />
                     </div>
                 </div>
             </div>

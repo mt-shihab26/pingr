@@ -7,6 +7,7 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { UserInfo } from "./user-info";
+import { TeamSwitcher } from "./team-switcher";
 import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
 import type { TUser } from "@/types/models";
 
@@ -31,6 +32,8 @@ export function UserMenuContent({ user }: Props) {
                     </div>
                 </DropdownMenuLabel>
             </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <TeamSwitcher />
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem

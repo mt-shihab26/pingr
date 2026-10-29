@@ -25,7 +25,7 @@ export default function Dashboard({
                 {
                     title: "Dashboard",
                     href: team
-                        ? route("dashboard", {
+                        ? route("dashboard.team.index", {
                               team: team.slug,
                           })
                         : "/",

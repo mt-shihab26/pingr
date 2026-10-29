@@ -16,12 +16,11 @@ import { AppLogo } from "./app-logo";
 import { NavFooter } from "./nav-footer";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
-import { TeamSwitcher } from "./team-switcher";
 
 export function AppSidebar() {
     const { team } = useShared();
 
-    const dashboardUrl = team ? route("dashboard", { team: team.slug }) : "/";
+    const dashboardUrl = team ? route("dashboard.team.index", { team: team.slug }) : "/";
 
     const mainNavItems = [
         {
@@ -57,11 +56,6 @@ export function AppSidebar() {
                                 </Link>
                             }
                         />
-                    </SidebarMenuItem>
-                </SidebarMenu>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <TeamSwitcher />
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
