@@ -32,11 +32,27 @@ export default defineConfig({
     ]),
     server: {
         watch: {
-            ignored: ["**/.agents/**", "**/.claude/**", "**/.cursor/**", "**/.junie/**", "**/vendor/**"],
+            ignored: [
+                "**/.agents/**",
+                "**/.claude/**",
+                "**/.cursor/**",
+                "**/.junie/**",
+                "**/vendor/**",
+            ],
         },
     },
     lint: {
-        ignorePatterns: ["vendor/**", "node_modules/**", "public/**", "bootstrap/ssr/**", "tailwind.config.js", "resources/js/actions/**", "resources/js/components/ui/*", "resources/js/routes/**", "resources/js/wayfinder/**"],
+        ignorePatterns: [
+            "vendor/**",
+            "node_modules/**",
+            "public/**",
+            "bootstrap/ssr/**",
+            "tailwind.config.js",
+            "resources/js/actions/**",
+            "resources/js/components/ui/*",
+            "resources/js/routes/**",
+            "resources/js/wayfinder/**",
+        ],
         options: {
             denyWarnings: true,
             typeAware: true,
@@ -49,7 +65,12 @@ export default defineConfig({
         semi: true,
         singleAttributePerLine: false,
         htmlWhitespaceSensitivity: "css",
-        ignorePatterns: [".github/**", "composer.json", "resources/js/components/ui/*", "resources/views/mail/*"],
+        ignorePatterns: [
+            ".github/**",
+            "composer.json",
+            "resources/js/components/ui/*",
+            "resources/views/mail/*",
+        ],
         sortTailwindcss: {
             functions: ["clsx", "cn", "cva"],
             stylesheet: "resources/css/app.css",

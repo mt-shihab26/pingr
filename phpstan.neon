@@ -11,3 +11,9 @@ parameters:
         - routes/
 
     level: 7
+
+    parallel:
+        jobSize: 20
+        maximumNumberOfProcesses: 4
+        minimumNumberOfJobsPerProcess: 2
+        processTimeout: 900.0
