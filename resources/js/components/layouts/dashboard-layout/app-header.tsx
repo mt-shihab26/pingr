@@ -60,7 +60,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     const { auth, currentTeam } = page.props;
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
     const dashboardUrl = currentTeam
-        ? route("dashboard", { current_team: currentTeam.slug })
+        ? route("dashboard", { team: currentTeam.slug })
         : "/";
 
     const mainNavItems = [

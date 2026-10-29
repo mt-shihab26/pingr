@@ -26,7 +26,7 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
                     title: "Dashboard",
                     href: props.currentTeam
                         ? route("dashboard", {
-                              current_team: props.currentTeam.slug,
+                              team: props.currentTeam.slug,
                           })
                         : "/",
                 },

@@ -81,7 +81,7 @@ class TeamInvitationController extends Controller
 
         abort_if(! $team, 403);
 
-        return to_route('dashboard', ['current_team' => $team->slug]);
+        return to_route('dashboard', ['team' => $team->slug]);
     }
 
     /**
@@ -99,6 +99,6 @@ class TeamInvitationController extends Controller
 
         abort_if(! $team, 403);
 
-        return to_route('dashboard', ['current_team' => $team->slug]);
+        return to_route('dashboard', ['team' => $team->slug]);
     }
 }

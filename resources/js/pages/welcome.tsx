@@ -3,7 +3,7 @@ import { Head, Link, usePage } from "@inertiajs/react";
 export default function Welcome() {
     const { auth, currentTeam } = usePage().props;
     const dashboardUrl = currentTeam
-        ? route("dashboard", { current_team: currentTeam.slug })
+        ? route("dashboard", { team: currentTeam.slug })
         : "/";
 
     return (

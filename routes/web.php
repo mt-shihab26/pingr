@@ -18,7 +18,7 @@ Route::get('/', [HomeController::class, "index"])->name('home');
 Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passkeys"])->name('well-known.passkeys');
 
 Route::prefix("/dashboard")->group(function () {
-    Route::prefix('/{current_team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
+    Route::prefix('/{team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
         Route::get('dashboard', DashboardController::class)->name('dashboard');
     });
 
