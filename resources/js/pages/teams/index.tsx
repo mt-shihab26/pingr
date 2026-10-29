@@ -1,9 +1,9 @@
 import { Head, Link } from "@inertiajs/react";
 import { Eye, LogOut, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
-import CreateTeamModal from "@/components/create-team-modal";
-import Heading from "@/components/heading";
-import LeaveTeamModal from "@/components/leave-team-modal";
+import CreateTeamModal from "@/components/elements/create-team-modal";
+import Heading from "@/components/elements/heading";
+import LeaveTeamModal from "@/components/elements/leave-team-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

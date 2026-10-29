@@ -1,9 +1,9 @@
 import { Link, usePage } from "@inertiajs/react";
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from "lucide-react";
-import AppLogo from "@/components/app-logo";
-import AppLogoIcon from "@/components/app-logo-icon";
-import { Breadcrumbs } from "@/components/breadcrumbs";
-import { TeamSwitcher } from "@/components/team-switcher";
+import AppLogo from "@/components/elements/app-logo";
+import AppLogoIcon from "@/components/elements/app-logo-icon";
+import { Breadcrumbs } from "@/components/elements/breadcrumbs";
+import { TeamSwitcher } from "@/components/elements/team-switcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +30,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { UserMenuContent } from "@/components/user-menu-content";
+import { UserMenuContent } from "@/components/elements/user-menu-content";
 import { useCurrentUrl } from "@/hooks/use-current-url";
 import { useInitials } from "@/hooks/use-initials";
 import { cn, toUrl } from "@/lib/utils";
