@@ -18,7 +18,7 @@ export default function Profile({
     mustVerifyEmail: boolean;
     status?: string;
 }) {
-    const { auth } = usePage().props;
+    const { auth2: auth } = usePage().props;
 
     return (
         <SettingsLayout

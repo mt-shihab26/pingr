@@ -16,7 +16,7 @@ import { UserMenuContent } from "./user-menu-content";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export function NavUser() {
-    const { auth, currentTeam } = usePage().props;
+    const { auth2: auth, team: currentTeam } = usePage().props;
     const { state } = useSidebar();
     const isMobile = useIsMobile();
 

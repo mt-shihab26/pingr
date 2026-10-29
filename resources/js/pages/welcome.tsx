@@ -1,7 +1,7 @@
 import { Head, Link, usePage } from "@inertiajs/react";
 
 export default function Welcome() {
-    const { auth, currentTeam } = usePage().props;
+    const { auth2: auth, team: currentTeam } = usePage().props;
     const dashboardUrl = currentTeam
         ? route("dashboard", { team: currentTeam.slug })
         : "/";

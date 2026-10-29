@@ -21,7 +21,7 @@ type TeamSwitcherProps = {
 export function TeamSwitcher({ inHeader = false }: TeamSwitcherProps) {
     const page = usePage();
     const isMobile = useIsMobile();
-    const currentTeam = page.props.currentTeam;
+    const currentTeam = page.props.team;
     const teams = page.props.teams ?? [];
 
     const switchTeam = (team: TTeam) => {

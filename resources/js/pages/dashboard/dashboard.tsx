@@ -24,9 +24,9 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
             breadcrumbs={[
                 {
                     title: "Dashboard",
-                    href: props.currentTeam
+                    href: props.team
                         ? route("dashboard", {
-                              team: props.currentTeam.slug,
+                              team: props.team.slug,
                           })
                         : "/",
                 },

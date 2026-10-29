@@ -17,8 +17,8 @@ import {
 
 export function AppSidebar() {
     const page = usePage();
-    const dashboardUrl = page.props.currentTeam
-        ? route("dashboard", { team: page.props.currentTeam.slug })
+    const dashboardUrl = page.props.team
+        ? route("dashboard", { team: page.props.team.slug })
         : "/";
 
     const mainNavItems = [

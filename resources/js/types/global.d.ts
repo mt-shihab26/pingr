@@ -14,14 +14,13 @@ declare module "react" {
 declare module "@inertiajs/core" {
     export interface InertiaConfig {
         sharedPageProps: {
-            name: string;
-            auth: {
+            shared: {
+                name: string;
                 user: TUser;
+                sidebar: boolean;
+                team: TTeam | null;
+                teams: TTeam[];
             };
-            sidebarOpen: boolean;
-            currentTeam: TTeam | null;
-            teams: TTeam[];
-            [key: string]: unknown;
         };
     }
 }
