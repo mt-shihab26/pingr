@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\TeamSwitcherController;
 use App\Http\Controllers\Dashboard\Settings\AppearanceController;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
@@ -31,6 +32,10 @@ Route::prefix("/dashboard")->group(function () {
     Route::prefix('/{team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
         Route::get('dashboard', DashboardController::class)->name('dashboard.team.index');
     });
+
+    Route::get('/teams', [TeamSwitcherController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('dashboard.teams.index');
 
     Route::prefix("/settings")->middleware("auth")->group(function () {
         Route::get('/', [ProfileController::class, "redirect"])->name("dashboard.settings.index");

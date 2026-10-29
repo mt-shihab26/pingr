@@ -1,5 +1,5 @@
 import { Link, router } from "@inertiajs/react";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut, Settings, Users } from "lucide-react";
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
@@ -7,7 +7,6 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { UserInfo } from "./user-info";
-import { TeamSwitcher } from "./team-switcher";
 import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
 import type { TUser } from "@/types/models";
 
@@ -21,6 +20,7 @@ export function UserMenuContent({ user }: Props) {
     const handleLogout = () => {
         cleanup();
         router.flushAll();
+        router.post(route("logout"));
     };
 
     return (
@@ -33,7 +33,18 @@ export function UserMenuContent({ user }: Props) {
                 </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <TeamSwitcher />
+            <DropdownMenuItem
+                render={
+                    <Link
+                        className="block w-full cursor-pointer"
+                        href={route("dashboard.teams.index")}
+                        onClick={cleanup}
+                    >
+                        <Users className="mr-2" />
+                        Switch team
+                    </Link>
+                }
+            />
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem
@@ -52,20 +63,12 @@ export function UserMenuContent({ user }: Props) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-                render={
-                    <Link
-                        className="block w-full cursor-pointer"
-                        href={route("logout")}
-                        method="post"
-                        as="button"
-                        onClick={handleLogout}
-                        data-test="logout-button"
-                    >
-                        <LogOut className="mr-2" />
-                        Log out
-                    </Link>
-                }
-            />
+                onClick={handleLogout}
+                data-test="logout-button"
+            >
+                <LogOut className="mr-2" />
+                Log out
+            </DropdownMenuItem>
         </>
     );
 }

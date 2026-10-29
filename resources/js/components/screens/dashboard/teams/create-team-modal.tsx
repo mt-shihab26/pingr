@@ -1,5 +1,10 @@
 import { Form } from "@inertiajs/react";
-import type { PropsWithChildren } from "react";
+import {
+    cloneElement,
+    type MouseEvent,
+    type MouseEventHandler,
+    type ReactElement,
+} from "react";
 import { useState } from "react";
 import { InputError } from "@/components/elements/input-error";
 import { Button } from "@/components/ui/button";
@@ -11,17 +16,28 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function CreateTeamModal({ children }: PropsWithChildren) {
+export function CreateTeamModal({ children }: { children: ReactElement }) {
     const [open, setOpen] = useState(false);
+    const triggerElement = children as ReactElement<{
+        onClick?: MouseEventHandler;
+    }>;
+    const trigger = cloneElement(triggerElement, {
+        onClick: (event: MouseEvent) => {
+            triggerElement.props.onClick?.(event);
+
+            if (!event.defaultPrevented) {
+                setOpen(true);
+            }
+        },
+    });
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger render={<>{children}</>} />
+            {trigger}
             <DialogContent>
                 <Form
                     key={String(open)}

@@ -113,7 +113,7 @@ class TeamController extends Controller
 
         $request->user()->switchTeam($team);
 
-        return back();
+        return to_route('dashboard.team.index', ['team' => $team->slug]);
     }
 
     /**
