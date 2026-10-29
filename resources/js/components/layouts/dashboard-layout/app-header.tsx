@@ -1,9 +1,9 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from "lucide-react";
 import { AppLogo } from "./app-logo";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 import { Breadcrumbs, type TBreadcrumb } from "./breadcrumbs";
-import { TeamSwitcher } from "@/components/screens/dashboard/teams/team-switcher";
+import { TeamSwitcher } from "./team-switcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,6 +34,7 @@ import { UserMenuContent } from "./user-menu-content";
 import { useCurrentUrl } from "@/hooks/use-current-url";
 import { cn, toUrl } from "@/lib/utils";
 import { formatInitials } from "@/lib/formats";
+import { useShared } from "@/hooks/use-shared";
 
 type Props = {
     breadcrumbs?: TBreadcrumb[];
@@ -56,12 +57,9 @@ const activeItemStyles =
     "text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100";
 
 export function AppHeader({ breadcrumbs = [] }: Props) {
-    const page = usePage();
-    const { auth2: auth, team: currentTeam } = page.props;
+    const { user, team } = useShared();
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
-    const dashboardUrl = currentTeam
-        ? route("dashboard", { team: currentTeam.slug })
-        : "/";
+    const dashboardUrl = team ? route("dashboard", { team: team.slug }) : "/";
 
     const mainNavItems = [
         {
@@ -225,18 +223,18 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                     >
                                         <Avatar className="size-8 overflow-hidden rounded-full">
                                             <AvatarImage
-                                                src={auth.user.avatar}
-                                                alt={auth.user.name}
+                                                src={user.avatar}
+                                                alt={user.name}
                                             />
                                             <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                                {formatInitials(auth.user.name)}
+                                                {formatInitials(user.name)}
                                             </AvatarFallback>
                                         </Avatar>
                                     </Button>
                                 }
                             />
                             <DropdownMenuContent className="w-56" align="end">
-                                <UserMenuContent user={auth.user} />
+                                <UserMenuContent user={user} />
                             </DropdownMenuContent>
                         </DropdownMenu>
 

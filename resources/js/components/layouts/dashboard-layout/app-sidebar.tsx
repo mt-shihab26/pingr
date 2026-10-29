@@ -1,10 +1,3 @@
-import { Link, usePage } from "@inertiajs/react";
-import { BookOpen, FolderGit2, LayoutGrid } from "lucide-react";
-import { AppLogo } from "./app-logo";
-import { NavFooter } from "./nav-footer";
-import { NavMain } from "./nav-main";
-import { NavUser } from "./nav-user";
-import { TeamSwitcher } from "@/components/screens/dashboard/teams/team-switcher";
 import {
     Sidebar,
     SidebarContent,
@@ -15,11 +8,20 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
+import { useShared } from "@/hooks/use-shared";
+
+import { Link } from "@inertiajs/react";
+import { BookOpen, FolderGit2, LayoutGrid } from "lucide-react";
+import { AppLogo } from "./app-logo";
+import { NavFooter } from "./nav-footer";
+import { NavMain } from "./nav-main";
+import { NavUser } from "./nav-user";
+import { TeamSwitcher } from "./team-switcher";
+
 export function AppSidebar() {
-    const page = usePage();
-    const dashboardUrl = page.props.team
-        ? route("dashboard", { team: page.props.team.slug })
-        : "/";
+    const { team } = useShared();
+
+    const dashboardUrl = team ? route("dashboard", { team: team.slug }) : "/";
 
     const mainNavItems = [
         {

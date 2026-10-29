@@ -1,6 +1,9 @@
-import { Link, usePage } from "@inertiajs/react";
-import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 import type { ReactNode } from "react";
+
+import { useShared } from "@/hooks/use-shared";
+
+import { Link } from "@inertiajs/react";
+import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 
 export function AuthSplitLayout({
     children,
@@ -11,7 +14,7 @@ export function AuthSplitLayout({
     title: string;
     description?: string;
 }) {
-    const { name } = usePage().props;
+    const { name } = useShared();
 
     return (
         <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">

@@ -1,9 +1,9 @@
-import { usePage } from "@inertiajs/react";
+import { useShared } from "@/hooks/use-shared";
 
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 
 export function AppLogo() {
-    const { name } = usePage().props;
+    const { name } = useShared();
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { usePage } from "@inertiajs/react";
+import { useShared } from "@/hooks/use-shared";
 
 import { Form } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
@@ -18,7 +18,7 @@ export default function Profile({
     mustVerifyEmail: boolean;
     status?: string;
 }) {
-    const { auth2: auth } = usePage().props;
+    const { user } = useShared();
 
     return (
         <SettingsLayout
@@ -30,8 +30,6 @@ export default function Profile({
                 },
             ]}
         >
-            <h1 className="sr-only">Profile settings</h1>
-
             <div className="space-y-6">
                 <Heading
                     variant="small"
@@ -55,7 +53,7 @@ export default function Profile({
                                 <Input
                                     id="name"
                                     className="mt-1 block w-full"
-                                    defaultValue={auth.user.name}
+                                    defaultValue={user.name}
                                     name="name"
                                     required
                                     autoComplete="name"
@@ -75,7 +73,7 @@ export default function Profile({
                                     id="email"
                                     type="email"
                                     className="mt-1 block w-full"
-                                    defaultValue={auth.user.email}
+                                    defaultValue={user.email}
                                     name="email"
                                     required
                                     autoComplete="username"
@@ -89,7 +87,7 @@ export default function Profile({
                             </div>
 
                             {mustVerifyEmail &&
-                                auth.user.email_verified_at === null && (
+                                user.email_verified_at === null && (
                                     <div>
                                         <p className="-mt-4 text-sm text-muted-foreground">
                                             Your email address is unverified.{" "}

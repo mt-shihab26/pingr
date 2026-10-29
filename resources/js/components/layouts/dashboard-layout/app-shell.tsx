@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { usePage } from "@inertiajs/react";
+import { useShared } from "@/hooks/use-shared";
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export function AppShell({ children, variant = "sidebar" }: Props) {
-    const isOpen = usePage().props.sidebar;
+    const { sidebar } = useShared();
 
     if (variant === "header") {
         return (
@@ -20,5 +20,5 @@ export function AppShell({ children, variant = "sidebar" }: Props) {
         );
     }
 
-    return <SidebarProvider defaultOpen={isOpen}>{children}</SidebarProvider>;
+    return <SidebarProvider defaultOpen={sidebar}>{children}</SidebarProvider>;
 }

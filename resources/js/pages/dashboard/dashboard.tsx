@@ -1,22 +1,22 @@
+import type { TDashboardInvitation } from "@/components/screens/dashboard/teams/pending-invitations-modal";
+
 import { useState } from "react";
-import {
-    PendingInvitationsModal,
-    type TDashboardInvitation,
-} from "@/components/screens/dashboard/teams/pending-invitations-modal";
+import { useShared } from "@/hooks/use-shared";
+
+import { PendingInvitationsModal } from "@/components/screens/dashboard/teams/pending-invitations-modal";
 import { PlaceholderPattern } from "@/components/ui/placeholder-pattern";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
-import { usePage } from "@inertiajs/react";
 
-type Props = {
+export default function Dashboard({
+    pendingInvitations = [],
+}: {
     pendingInvitations?: TDashboardInvitation[];
-};
-
-export default function Dashboard({ pendingInvitations = [] }: Props) {
+}) {
     const [showInvitations, setShowInvitations] = useState(
         pendingInvitations.length > 0,
     );
 
-    const props = usePage().props;
+    const { team } = useShared();
 
     return (
         <DashboardLayout
@@ -24,9 +24,9 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
             breadcrumbs={[
                 {
                     title: "Dashboard",
-                    href: props.team
+                    href: team
                         ? route("dashboard", {
-                              team: props.team.slug,
+                              team: team.slug,
                           })
                         : "/",
                 },
