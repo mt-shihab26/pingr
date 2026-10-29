@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class DashboardController extends Controller
+class OverviewController extends Controller
 {
     /**
      * Redirect to dashboard index page
@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
         abort_if(! $team, 403);
 
-        return redirect()->route('dashboard.team.index', $team);
+        return redirect()->route('dashboard.team.overview.index', $team);
     }
 
     public function index(Request $request): Response

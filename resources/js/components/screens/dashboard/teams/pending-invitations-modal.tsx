@@ -74,7 +74,7 @@ export function PendingInvitationsModal({
                         <div
                             key={invitation.code}
                             data-test="pending-invitation-row"
-                            className="rounded-lg border p-4"
+                            className="rounded-none border p-4"
                         >
                             <div className="space-y-1">
                                 <p className="font-medium">

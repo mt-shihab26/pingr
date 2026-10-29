@@ -42,7 +42,7 @@ export default function TeamsIndex({ teams }: Props) {
                             <div
                                 key={listedTeam.id}
                                 data-test="team-row"
-                                className="flex flex-wrap items-center justify-between gap-4 rounded-lg border p-4"
+                                className="flex flex-wrap items-center justify-between gap-4 rounded-none border p-4"
                             >
                                 <div className="flex items-center gap-3">
                                     <Users className="size-5 text-muted-foreground" />

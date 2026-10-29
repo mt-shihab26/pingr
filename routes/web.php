@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\OverviewController;
 use App\Http\Controllers\Dashboard\Settings\AppearanceController;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
@@ -18,10 +18,10 @@ Route::get('/', [HomeController::class, "index"])->name('home');
 Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passkeys"])->name('well-known.passkeys');
 
 Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [DashboardController::class, "redirect"])->name('dashboard');
+    Route::get('/', [OverviewController::class, "redirect"])->withoutMiddleware("verified")->name('dashboard.index');
 
     Route::prefix('/{team}')->middleware(EnsureTeamMembership::class)->group(function () {
-        Route::get('dashboard', [DashboardController::class, "index"])->name('dashboard.team.index');
+        Route::get('dashboard', [OverviewController::class, "index"])->name('dashboard.team.overview.index');
     });
 
     Route::prefix('/teams')->group(function () {
@@ -49,17 +49,11 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
     });
 
     Route::prefix("/settings")->group(function () {
-        Route::get('/', [ProfileController::class, "redirect"])
-            ->withoutMiddleware('verified')
-            ->name("dashboard.settings.index");
+        Route::get('/', [ProfileController::class, "redirect"])->withoutMiddleware('verified')->name("dashboard.settings.index");
 
         Route::prefix("/profile")->group(function () {
-            Route::get('/', [ProfileController::class, 'edit'])
-                ->withoutMiddleware('verified')
-                ->name('dashboard.settings.profile.edit');
-            Route::patch('/', [ProfileController::class, 'update'])
-                ->withoutMiddleware('verified')
-                ->name('dashboard.settings.profile.update');
+            Route::get('/', [ProfileController::class, 'edit'])->withoutMiddleware('verified')->name('dashboard.settings.profile.edit');
+            Route::patch('/', [ProfileController::class, 'update'])->withoutMiddleware('verified')->name('dashboard.settings.profile.update');
             Route::delete('/', [ProfileController::class, 'destroy'])->name('dashboard.settings.profile.destroy');
         });
 
@@ -69,9 +63,7 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
         });
 
         Route::prefix('/appearance')->group(function () {
-            Route::get('/', [AppearanceController::class, 'edit'])
-                ->withoutMiddleware('verified')
-                ->name('dashboard.settings.appearance.edit');
+            Route::get('/', [AppearanceController::class, 'edit'])->withoutMiddleware('verified')->name('dashboard.settings.appearance.edit');
         });
 
     });

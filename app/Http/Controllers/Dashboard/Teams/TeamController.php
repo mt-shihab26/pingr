@@ -37,7 +37,7 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Team created.')]);
 
-        return to_route('dashboard.teams.edit', ['team' => $team->slug]);
+        return redirect()->route('dashboard.teams.edit', ['team' => $team->slug]);
     }
 
     /**
@@ -99,7 +99,7 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Team updated.')]);
 
-        return to_route('dashboard.teams.edit', ['team' => $team->slug]);
+        return redirect()->route('dashboard.teams.edit', ['team' => $team->slug]);
     }
 
     /**
@@ -111,7 +111,7 @@ class TeamController extends Controller
 
         $request->user()->switchTeam($team);
 
-        return to_route('dashboard.team.index', ['team' => $team->slug]);
+        return redirect()->route('dashboard.teams.index');
     }
 
     /**
@@ -142,7 +142,7 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('You left the team ":name"', ['name' => $team->name])]);
 
-        return to_route('dashboard.teams.index');
+        return redirect()->route('dashboard.teams.index');
     }
 
     /**
@@ -171,6 +171,6 @@ class TeamController extends Controller
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Team deleted.')]);
 
-        return to_route('dashboard.teams.index');
+        return redirect()->route('dashboard.teams.index');
     }
 }

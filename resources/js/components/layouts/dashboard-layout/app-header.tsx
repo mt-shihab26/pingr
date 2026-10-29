@@ -58,7 +58,7 @@ const activeItemStyles =
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const { user, team } = useShared();
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
-    const dashboardUrl = team ? route("dashboard.team.index", { team: team.slug }) : "/";
+    const dashboardUrl = team ? route("dashboard.team.overview.index", { team: team.slug }) : "/";
 
     const mainNavItems = [
         {

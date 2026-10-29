@@ -20,7 +20,7 @@ import { NavUser } from "./nav-user";
 export function AppSidebar() {
     const { team } = useShared();
 
-    const dashboardUrl = team ? route("dashboard.team.index", { team: team.slug }) : "/";
+    const dashboardUrl = team ? route("dashboard.team.overview.index", { team: team.slug }) : "/";
 
     const mainNavItems = [
         {
