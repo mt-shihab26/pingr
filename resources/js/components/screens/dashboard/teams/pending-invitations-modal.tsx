@@ -1,7 +1,3 @@
-import { router } from "@inertiajs/react";
-import { useState } from "react";
-import TeamInvitationController from "@/actions/App/Http/Controllers/Teams/TeamInvitationController";
-import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -9,6 +5,13 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+
+import { router } from "@inertiajs/react";
+import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+
+import TeamInvitationController from "@/actions/App/Http/Controllers/Dashboard/Settings/Teams/TeamInvitationController";
 
 export type TDashboardInvitation = {
     code: string;

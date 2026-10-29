@@ -1,15 +1,19 @@
-import { Form, usePage } from "@inertiajs/react";
+import { edit } from "@/routes/dashboard/settings/profile";
+import { usePage } from "@inertiajs/react";
+import { send } from "@/routes/verification";
+
+import { Form } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
-import ProfileController from "@/actions/App/Http/Controllers/Settings/ProfileController";
-import { DeleteUser } from "@/components/screens/dashboard/settings/delete-user";
 import { Heading } from "@/components/elements/heading";
 import { InputError } from "@/components/elements/input-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { edit } from "@/routes/profile";
-import { send } from "@/routes/verification";
+
+import { DeleteUser } from "@/components/screens/dashboard/settings/delete-user";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
+
+import ProfileController from "@/actions/App/Http/Controllers/Dashboard/Settings/ProfileController";
 
 export default function Profile({
     mustVerifyEmail,

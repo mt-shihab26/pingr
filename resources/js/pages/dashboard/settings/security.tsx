@@ -1,6 +1,5 @@
 import { Form } from "@inertiajs/react";
 import { useRef } from "react";
-import SecurityController from "@/actions/App/Http/Controllers/Settings/SecurityController";
 import { Heading } from "@/components/elements/heading";
 import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
@@ -12,6 +11,7 @@ import { ManagePasskeys } from "@/components/screens/dashboard/settings/manage-p
 import type { Props as ManageTwoFactorProps } from "@/components/screens/dashboard/settings/manage-two-factor";
 import { ManageTwoFactor } from "@/components/screens/dashboard/settings/manage-two-factor";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
+import SecurityController from "@/actions/App/Http/Controllers/Dashboard/Settings/SecurityController";
 
 type Props = {
     passwordRules: string;

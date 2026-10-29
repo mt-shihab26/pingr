@@ -15,6 +15,14 @@ use Inertia\Response;
 class ProfileController extends Controller
 {
     /**
+     * Redirect to dashboard.settings.profile.edit page
+     */
+    public function redirect(): RedirectResponse
+    {
+        return redirect()->route("dashboard.settings.profile.edit");
+    }
+
+    /**
      * Show the user's profile settings page.
      */
     public function edit(Request $request): Response
@@ -38,9 +46,9 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('Profile updated.')]);
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('dashboard.settings.profile.updated.')]);
 
-        return to_route('profile.edit');
+        return to_route('dashboard.settings.profile.edit');
     }
 
     /**
