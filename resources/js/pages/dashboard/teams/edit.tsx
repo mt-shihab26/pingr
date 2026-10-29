@@ -79,7 +79,10 @@ export default function TeamEdit({
 
     const updateMemberRole = (member: TTeamMember, newRole: string) => {
         router.visit(
-            route("dashboard.teams.members.update", { team: team.slug, user: member.id }),
+            route("dashboard.teams.members.update", {
+                team: team.slug,
+                user: member.id,
+            }),
             {
                 data: { role: newRole },
                 preserveScroll: true,
