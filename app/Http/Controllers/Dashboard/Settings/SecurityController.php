@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Dashboard\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Settings\PasswordUpdateRequest;
-use App\Http\Requests\Settings\TwoFactorAuthenticationRequest;
+use App\Http\Requests\Dashboard\Settings\PasswordUpdateRequest;
+use App\Http\Requests\Dashboard\Settings\TwoFactorAuthenticationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;

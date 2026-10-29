@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard\Teams;
 
 use App\Enums\TeamRole;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Teams\UpdateTeamMemberRequest;
+use App\Http\Requests\Dashboard\Teams\UpdateTeamMemberRequest;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;

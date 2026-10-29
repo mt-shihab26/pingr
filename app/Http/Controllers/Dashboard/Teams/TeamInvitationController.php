@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Dashboard\Teams;
 
 use App\Enums\TeamRole;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Teams\CreateTeamInvitationRequest;
-use App\Http\Requests\Teams\RespondToTeamInvitationRequest;
+use App\Http\Requests\Dashboard\Teams\CreateTeamInvitationRequest;
+use App\Http\Requests\Dashboard\Teams\RespondToTeamInvitationRequest;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Notifications\Teams\TeamInvitation as TeamInvitationNotification;

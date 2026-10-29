@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Teams;
+namespace App\Http\Requests\Dashboard\Teams;
 
 use App\Rules\ValidTeamInvitation;
 use Illuminate\Contracts\Validation\ValidationRule;
