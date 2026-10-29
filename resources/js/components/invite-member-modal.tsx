@@ -1,7 +1,7 @@
-import { Form } from '@inertiajs/react';
-import { useState } from 'react';
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
+import { Form } from "@inertiajs/react";
+import { useState } from "react";
+import InputError from "@/components/input-error";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogClose,
@@ -10,18 +10,18 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
-import { store as storeInvitation } from '@/routes/teams/invitations';
-import type { RoleOption, Team } from '@/types';
+} from "@/components/ui/select";
+import { store as storeInvitation } from "@/routes/teams/invitations";
+import type { RoleOption, Team } from "@/types";
 
 type Props = {
     team: Team;
@@ -36,13 +36,13 @@ export default function InviteMemberModal({
     open,
     onOpenChange,
 }: Props) {
-    const [inviteRole, setInviteRole] = useState<RoleOption['value']>('member');
+    const [inviteRole, setInviteRole] = useState<RoleOption["value"]>("member");
 
     const handleOpenChange = (nextOpen: boolean) => {
         onOpenChange(nextOpen);
 
         if (!nextOpen) {
-            setInviteRole('member');
+            setInviteRole("member");
         }
     };
 
@@ -86,7 +86,7 @@ export default function InviteMemberModal({
                                         value={inviteRole}
                                         onValueChange={(value) =>
                                             setInviteRole(
-                                                value as RoleOption['value'],
+                                                value as RoleOption["value"],
                                             )
                                         }
                                     >

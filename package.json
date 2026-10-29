@@ -53,6 +53,9 @@
         "@rolldown/plugin-babel": "^0.2.4",
         "@types/node": "^26.6.6",
         "babel-plugin-react-compiler": "^1.0.0",
+        "prettier": "^3.9.6",
+        "prettier-plugin-blade": "^3.3.3",
+        "prettier-plugin-tailwindcss": "^0.8.1",
         "vite-plus": "1.4.0"
     },
     "optionalDependencies": {

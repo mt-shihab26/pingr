@@ -18,9 +18,7 @@
         "skipLibCheck": true,
         "jsx": "react-jsx",
         "paths": {
-            "@/*": [
-                "./resources/js/*"
-            ]
+            "@/*": ["./resources/js/*"]
         }
     }
 }

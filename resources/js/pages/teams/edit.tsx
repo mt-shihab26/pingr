@@ -1,39 +1,39 @@
-import { Form, Head, router } from '@inertiajs/react';
-import { ChevronDown, Mail, UserPlus, X } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import CancelInvitationModal from '@/components/cancel-invitation-modal';
-import DeleteTeamModal from '@/components/delete-team-modal';
-import Heading from '@/components/heading';
-import InputError from '@/components/input-error';
-import InviteMemberModal from '@/components/invite-member-modal';
-import RemoveMemberModal from '@/components/remove-member-modal';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Form, Head, router } from "@inertiajs/react";
+import { ChevronDown, Mail, UserPlus, X } from "lucide-react";
+import { useMemo, useState } from "react";
+import CancelInvitationModal from "@/components/cancel-invitation-modal";
+import DeleteTeamModal from "@/components/delete-team-modal";
+import Heading from "@/components/heading";
+import InputError from "@/components/input-error";
+import InviteMemberModal from "@/components/invite-member-modal";
+import RemoveMemberModal from "@/components/remove-member-modal";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { useInitials } from '@/hooks/use-initials';
-import { edit, index, update } from '@/routes/teams';
-import { update as updateMember } from '@/routes/teams/members';
+} from "@/components/ui/tooltip";
+import { useInitials } from "@/hooks/use-initials";
+import { edit, index, update } from "@/routes/teams";
+import { update as updateMember } from "@/routes/teams/members";
 import type {
     RoleOption,
     Team,
     TeamInvitation,
     TeamMember,
     TeamPermissions,
-} from '@/types';
+} from "@/types";
 
 type Props = {
     team: Team;
@@ -151,8 +151,8 @@ export default function TeamEdit({
                             title="Team members"
                             description={
                                 permissions.canCreateInvitation
-                                    ? 'Manage who belongs to this team'
-                                    : ''
+                                    ? "Manage who belongs to this team"
+                                    : ""
                             }
                         />
 
@@ -196,7 +196,7 @@ export default function TeamEdit({
                                 </div>
 
                                 <div className="flex items-center gap-2">
-                                    {member.role !== 'owner' &&
+                                    {member.role !== "owner" &&
                                     permissions.canUpdateMember ? (
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
@@ -232,7 +232,7 @@ export default function TeamEdit({
                                         </Badge>
                                     )}
 
-                                    {member.role !== 'owner' &&
+                                    {member.role !== "owner" &&
                                     permissions.canRemoveMember ? (
                                         <TooltipProvider>
                                             <Tooltip>
@@ -384,7 +384,7 @@ export default function TeamEdit({
 TeamEdit.layout = (props: { team: { name: string; slug: string } }) => ({
     breadcrumbs: [
         {
-            title: 'Teams',
+            title: "Teams",
             href: index(),
         },
         {

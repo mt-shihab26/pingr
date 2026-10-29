@@ -1,6 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useInitials } from '@/hooks/use-initials';
-import type { Team, User } from '@/types';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useInitials } from "@/hooks/use-initials";
+import type { Team, User } from "@/types";
 
 export function UserInfo({
     user,
@@ -12,7 +12,7 @@ export function UserInfo({
     team?: Team | null;
 }) {
     const getInitials = useInitials();
-    const showAvatar = Boolean(user.avatar && user.avatar !== '');
+    const showAvatar = Boolean(user.avatar && user.avatar !== "");
 
     return (
         <>

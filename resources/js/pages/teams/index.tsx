@@ -1,19 +1,19 @@
-import { Head, Link } from '@inertiajs/react';
-import { Eye, LogOut, Pencil, Plus } from 'lucide-react';
-import { useState } from 'react';
-import CreateTeamModal from '@/components/create-team-modal';
-import Heading from '@/components/heading';
-import LeaveTeamModal from '@/components/leave-team-modal';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Head, Link } from "@inertiajs/react";
+import { Eye, LogOut, Pencil, Plus } from "lucide-react";
+import { useState } from "react";
+import CreateTeamModal from "@/components/create-team-modal";
+import Heading from "@/components/heading";
+import LeaveTeamModal from "@/components/leave-team-modal";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { edit, index } from '@/routes/teams';
-import type { Team } from '@/types';
+} from "@/components/ui/tooltip";
+import { edit, index } from "@/routes/teams";
+import type { Team } from "@/types";
 
 type Props = {
     teams: Team[];
@@ -52,7 +52,7 @@ export default function TeamsIndex({ teams }: Props) {
                 <div className="space-y-3">
                     {teams.map((team) => {
                         const canLeaveTeam =
-                            !team.isPersonal && team.role !== 'owner';
+                            !team.isPersonal && team.role !== "owner";
 
                         return (
                             <div
@@ -102,7 +102,7 @@ export default function TeamsIndex({ teams }: Props) {
                                             </Tooltip>
                                         ) : null}
 
-                                        {team.role === 'member' ? (
+                                        {team.role === "member" ? (
                                             <Tooltip>
                                                 <TooltipTrigger asChild>
                                                     <Button
@@ -173,7 +173,7 @@ export default function TeamsIndex({ teams }: Props) {
 TeamsIndex.layout = {
     breadcrumbs: [
         {
-            title: 'Teams',
+            title: "Teams",
             href: index(),
         },
     ],

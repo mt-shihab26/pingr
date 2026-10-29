@@ -1,7 +1,7 @@
-import { Form } from '@inertiajs/react';
-import { useState } from 'react';
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
+import { Form } from "@inertiajs/react";
+import { useState } from "react";
+import InputError from "@/components/input-error";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogClose,
@@ -10,11 +10,11 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { destroy } from '@/routes/teams';
-import type { Team } from '@/types';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { destroy } from "@/routes/teams";
+import type { Team } from "@/types";
 
 type Props = {
     team: Team;
@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default function DeleteTeamModal({ team, open, onOpenChange }: Props) {
-    const [confirmationName, setConfirmationName] = useState('');
+    const [confirmationName, setConfirmationName] = useState("");
 
     const canDeleteTeam = confirmationName === team.name;
 
@@ -31,7 +31,7 @@ export default function DeleteTeamModal({ team, open, onOpenChange }: Props) {
         onOpenChange(nextOpen);
 
         if (!nextOpen) {
-            setConfirmationName('');
+            setConfirmationName("");
         }
     };
 
@@ -50,7 +50,7 @@ export default function DeleteTeamModal({ team, open, onOpenChange }: Props) {
                                 <DialogTitle>Are you sure?</DialogTitle>
                                 <DialogDescription>
                                     This action cannot be undone. This will
-                                    permanently delete the team{' '}
+                                    permanently delete the team{" "}
                                     <strong>"{team.name}"</strong>.
                                 </DialogDescription>
                             </DialogHeader>

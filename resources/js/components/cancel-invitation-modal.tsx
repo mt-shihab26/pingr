@@ -1,6 +1,6 @@
-import { router } from '@inertiajs/react';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { router } from "@inertiajs/react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogClose,
@@ -9,9 +9,9 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { destroy as destroyInvitation } from '@/routes/teams/invitations';
-import type { Team, TeamInvitation } from '@/types';
+} from "@/components/ui/dialog";
+import { destroy as destroyInvitation } from "@/routes/teams/invitations";
+import type { Team, TeamInvitation } from "@/types";
 
 type Props = {
     team: Team;
@@ -46,7 +46,7 @@ export default function CancelInvitationModal({
                 <DialogHeader>
                     <DialogTitle>Cancel invitation</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to cancel the invitation for{' '}
+                        Are you sure you want to cancel the invitation for{" "}
                         <strong>{invitation?.email}</strong>?
                     </DialogDescription>
                 </DialogHeader>
