@@ -8,7 +8,7 @@ use App\Http\Requests\Dashboard\Teams\CreateTeamInvitationRequest;
 use App\Http\Requests\Dashboard\Teams\RespondToTeamInvitationRequest;
 use App\Models\Team;
 use App\Models\TeamInvitation;
-use App\Notifications\Teams\TeamInvitation as TeamInvitationNotification;
+use App\Notifications\TeamInvitation as TeamInvitationNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
