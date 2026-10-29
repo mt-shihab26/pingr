@@ -31,7 +31,7 @@ class DashboardController extends Controller
                 ],
             ]);
 
-        return Inertia::render('dashboard', [
+        return Inertia::render('dashboard/dashboard', [
             'pendingInvitations' => $pendingInvitations,
         ]);
     }
