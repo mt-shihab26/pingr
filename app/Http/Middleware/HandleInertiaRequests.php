@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,19 +36,52 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $user = $request->user();
-
         return [
             ...parent::share($request),
-            'name' => config('app.name'),
-            'auth' => [
-                'user' => $user,
+            "shared" => [
+                'name' => config('app.name'),
+                'user' => $request->user(),
+                'sidebar' => $this->sidebar($request),
+                'team' => fn () => $this->team($request),
+                'teams' => fn () => $this->teams($request),
             ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'currentTeam' => fn () => $user
-                ? (($team = $user->currentTeam ?? $user->personalTeam()) ? $user->toUserTeam($team) : null)
-                : null,
-            'teams' => fn () => $user?->toUserTeams(includeCurrent: true) ?? [],
+
         ];
+    }
+
+    /**
+     * Determine whether the sidebar should start open.
+     */
+    private function sidebar(Request $request): bool
+    {
+        return ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true';
+    }
+
+    /**
+     * Get the current team, falling back to the user's personal team.
+     *
+     * @return array<string, mixed>|null
+     */
+    private function team(Request $request): ?array
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return null;
+        }
+
+        $team = $user->currentTeam ?? $user->personalTeam();
+
+        return $team ? $user->toUserTeam($team) : null;
+    }
+
+    /**
+     * Get the teams available to the authenticated user.
+     *
+     * @return Collection<int, array<string, mixed>>|array{}
+     */
+    private function teams(Request $request)
+    {
+        return $request->user()?->toUserTeams(includeCurrent: true) ?? [];
     }
 }
