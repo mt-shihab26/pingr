@@ -26,7 +26,7 @@ export function LeaveTeamModal({ team, open, onOpenChange }: Props) {
             return;
         }
 
-        router.visit(route("teams.leave", { team: team.slug }), {
+        router.visit(route("dashboard.settings.teams.leave", { team: team.slug }), {
             onStart: () => setProcessing(true),
             onFinish: () => setProcessing(false),
             onSuccess: () => onOpenChange(false),

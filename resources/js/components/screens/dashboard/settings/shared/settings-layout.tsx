@@ -22,7 +22,7 @@ const sidebarNavItems: TNavItem[] = [
     },
     {
         title: "Teams",
-        href: route("teams.index"),
+        href: route("dashboard.settings.teams.index"),
         icon: null,
     },
     {

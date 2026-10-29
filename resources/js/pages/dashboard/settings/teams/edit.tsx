@@ -78,7 +78,7 @@ export default function TeamEdit({
 
     const updateMemberRole = (member: TTeamMember, newRole: string) => {
         router.visit(
-            route("teams.members.update", { team: team.slug, user: member.id }),
+            route("dashboard.settings.teams.members.update", { team: team.slug, user: member.id }),
             {
                 data: { role: newRole },
                 preserveScroll: true,
@@ -102,11 +102,11 @@ export default function TeamEdit({
             breadcrumbs={[
                 {
                     title: "Teams",
-                    href: route("teams.index"),
+                    href: route("dashboard.settings.teams.index"),
                 },
                 {
                     title: team.name,
-                    href: route("teams.edit", { team: team.slug }),
+                    href: route("dashboard.settings.teams.edit", { team: team.slug }),
                 },
             ]}
         >
@@ -121,7 +121,7 @@ export default function TeamEdit({
                             />
 
                             <Form
-                                action={route("teams.update", {
+                                action={route("dashboard.settings.teams.update", {
                                     team: team.slug,
                                 })}
                                 method="patch"

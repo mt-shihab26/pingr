@@ -18,7 +18,7 @@ Route::get('/', [HomeController::class, "index"])->name('home');
 Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passkeys"])->name('well-known.passkeys');
 
 Route::prefix("/dashboard")->group(function () {
-    Route::prefix('{current_team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
+    Route::prefix('/{current_team}')->middleware(['auth', 'verified', EnsureTeamMembership::class])->group(function () {
         Route::get('dashboard', DashboardController::class)->name('dashboard');
     });
 
@@ -36,34 +36,34 @@ Route::prefix("/dashboard")->group(function () {
             Route::put('/password', [SecurityController::class, 'update'])->middleware('throttle:6,1')->name('dashboard.settings.security.password.update');
         });
 
-        Route::middleware(['auth', 'verified'])->group(function () {
-            Route::get('settings/teams', [TeamController::class, 'index'])->name('teams.index');
-            Route::post('settings/teams', [TeamController::class, 'store'])->name('teams.store');
+        Route::prefix("/teams")->middleware('verified')->group(function () {
+            Route::get('/', [TeamController::class, 'index'])->name('dashboard.settings.teams.index');
+            Route::post('/', [TeamController::class, 'store'])->name('dashboard.settings.teams.store');
 
-            Route::middleware(EnsureTeamMembership::class)->group(function () {
-                Route::get('settings/teams/{team}', [TeamController::class, 'edit'])->name('teams.edit');
-                Route::patch('settings/teams/{team}', [TeamController::class, 'update'])->name('teams.update');
-                Route::delete('settings/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
-                Route::post('settings/teams/{team}/switch', [TeamController::class, 'switch'])->name('teams.switch');
-                Route::delete('settings/teams/{team}/leave', [TeamController::class, 'leave'])->name('teams.leave');
+            Route::prefix("/{team}")->middleware(EnsureTeamMembership::class)->group(function () {
+                Route::get('/', [TeamController::class, 'edit'])->name('dashboard.settings.teams.edit');
+                Route::patch('/', [TeamController::class, 'update'])->name('dashboard.settings.teams.update');
+                Route::delete('/', [TeamController::class, 'destroy'])->name('dashboard.settings.teams.destroy');
+                Route::post('/switch', [TeamController::class, 'switch'])->name('dashboard.settings.teams.switch');
+                Route::delete('/leave', [TeamController::class, 'leave'])->name('dashboard.settings.teams.leave');
 
-                Route::patch('settings/teams/{team}/members/{user}', [TeamMemberController::class, 'update'])->name('teams.members.update');
-                Route::delete('settings/teams/{team}/members/{user}', [TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
+                Route::patch('/members/{user}', [TeamMemberController::class, 'update'])->name('dashboard.settings.teams.members.update');
+                Route::delete('/members/{user}', [TeamMemberController::class, 'destroy'])->name('dashboard.settings.teams.members.destroy');
 
-                Route::post('settings/teams/{team}/invitations', [TeamInvitationController::class, 'store'])->name('teams.invitations.store');
-                Route::delete('settings/teams/{team}/invitations/{invitation}', [TeamInvitationController::class, 'destroy'])->name('teams.invitations.destroy');
+                Route::post('/invitations', [TeamInvitationController::class, 'store'])->name('dashboard.settings.teams.invitations.store');
+                Route::delete('/invitations/{invitation}', [TeamInvitationController::class, 'destroy'])->name('dashboard.settings.teams.invitations.destroy');
             });
+        });
+
+        Route::prefix("/invitations")->group(function () {
+            Route::post('/{invitation}/accept', [TeamInvitationController::class, 'accept'])->name('invitations.accept');
+            Route::delete('/{invitation}', [TeamInvitationController::class, 'decline'])->name('invitations.decline');
         });
 
         Route::prefix('/appearance')->group(function () {
             Route::get('/', [AppearanceController::class, 'edit'])->name('dashboard.settings.appearance.edit');
         });
 
-    });
-
-    Route::middleware(['auth'])->group(function () {
-        Route::post('invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])->name('invitations.accept');
-        Route::delete('invitations/{invitation}', [TeamInvitationController::class, 'decline'])->name('invitations.decline');
     });
 
 });

@@ -3,7 +3,6 @@ import { Eye, LogOut, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { CreateTeamModal } from "@/components/screens/dashboard/teams/create-team-modal";
 import { Heading } from "@/components/elements/heading";
-import { LeaveTeamModal } from "@/components/screens/dashboard/teams/leave-team-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
@@ -15,6 +14,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { TTeam } from "@/types/models";
+import { LeaveTeamModal } from "@/components/screens/dashboard/teams/leave-team-modal";
 
 type Props = {
     teams: TTeam[];
@@ -35,7 +35,7 @@ export default function TeamsIndex({ teams }: Props) {
             breadcrumbs={[
                 {
                     title: "Teams",
-                    href: route("teams.index"),
+                    href: route("dashboard.settings.teams.index"),
                 },
             ]}
         >
@@ -120,7 +120,7 @@ export default function TeamsIndex({ teams }: Props) {
                                                             render={
                                                                 <Link
                                                                     href={route(
-                                                                        "teams.edit",
+                                                                        "dashboard.settings.teams.edit",
                                                                         {
                                                                             team: team.slug,
                                                                         },
@@ -147,7 +147,7 @@ export default function TeamsIndex({ teams }: Props) {
                                                             render={
                                                                 <Link
                                                                     href={route(
-                                                                        "teams.edit",
+                                                                        "dashboard.settings.teams.edit",
                                                                         {
                                                                             team: team.slug,
                                                                         },

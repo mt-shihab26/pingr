@@ -27,7 +27,7 @@ export function TeamSwitcher({ inHeader = false }: TeamSwitcherProps) {
     const switchTeam = (team: TTeam) => {
         const previousTeamSlug = currentTeam?.slug;
 
-        router.visit(route("teams.switch", { team: team.slug }), {
+        router.visit(route("dashboard.settings.teams.switch", { team: team.slug }), {
             onFinish: () => {
                 if (!previousTeamSlug || typeof window === "undefined") {
                     router.reload();

@@ -28,7 +28,7 @@ export function RemoveMemberModal({ team, member, open, onOpenChange }: Props) {
         }
 
         router.visit(
-            route("teams.members.destroy", {
+            route("dashboard.settings.teams.members.destroy", {
                 team: team.slug,
                 user: member.id,
             }),

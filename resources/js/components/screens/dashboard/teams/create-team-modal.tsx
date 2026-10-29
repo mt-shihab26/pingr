@@ -25,7 +25,7 @@ export function CreateTeamModal({ children }: PropsWithChildren) {
             <DialogContent>
                 <Form
                     key={String(open)}
-                    action={route("teams.store")}
+                    action={route("dashboard.settings.teams.store")}
                     method="post"
                     className="space-y-6"
                     onSuccess={() => setOpen(false)}
