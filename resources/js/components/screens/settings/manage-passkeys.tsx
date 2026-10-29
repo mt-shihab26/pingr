@@ -2,13 +2,15 @@ import { router } from "@inertiajs/react";
 import { KeyRound } from "lucide-react";
 import { destroy } from "@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController";
 import { Heading } from "@/components/elements/heading";
-import { PasskeyItem } from "@/components/screens/settings/passkey-item";
+import {
+    PasskeyItem,
+    type TPasskey,
+} from "@/components/screens/settings/passkey-item";
 import { PasskeyRegistration } from "@/components/screens/settings/passkey-register";
-import type { Passkey } from "@/types/auth";
 
 export type Props = {
     canManagePasskeys?: boolean;
-    passkeys?: Passkey[];
+    passkeys?: TPasskey[];
 };
 
 const EmptyState = () => {

@@ -1,13 +1,17 @@
 import { Link, usePage } from "@inertiajs/react";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 import { home } from "@/routes";
-import type { AuthLayoutProps } from "@/types";
+import type { ReactNode } from "react";
 
 export function AuthSplitLayout({
     children,
     title,
     description,
-}: AuthLayoutProps) {
+}: {
+    children: ReactNode;
+    title: string;
+    description?: string;
+}) {
     const { name } = usePage().props;
 
     return (

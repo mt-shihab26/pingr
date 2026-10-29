@@ -9,11 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { login } from "@/routes";
 import { store } from "@/routes/register";
-import type { TeamInvitationContext } from "@/types";
+import { type TTeamInvitationContext } from "@/components/screens/teams/team-invitation-alert";
 
 type Props = {
     passwordRules: string;
-    teamInvitation?: TeamInvitationContext | null;
+    teamInvitation?: TTeamInvitationContext | null;
 };
 
 export default function Register({ passwordRules, teamInvitation }: Props) {

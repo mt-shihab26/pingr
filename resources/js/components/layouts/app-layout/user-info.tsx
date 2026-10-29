@@ -1,17 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useInitials } from "@/hooks/use-initials";
-import type { Team, User } from "@/types";
+import type { TTeam, TUser } from "@/types/models";
+
+import { formatInitials } from "@/lib/formats";
 
 export function UserInfo({
     user,
     showEmail = false,
     team = null,
 }: {
-    user: User;
+    user: TUser;
     showEmail?: boolean;
-    team?: Team | null;
+    team?: TTeam | null;
 }) {
-    const getInitials = useInitials();
     const showAvatar = Boolean(user.avatar && user.avatar !== "");
 
     return (
@@ -21,7 +21,7 @@ export function UserInfo({
                     <AvatarImage src={user.avatar} alt={user.name} />
                 ) : null}
                 <AvatarFallback className="rounded-lg text-black dark:text-white">
-                    {getInitials(user.name)}
+                    {formatInitials(user.name)}
                 </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">

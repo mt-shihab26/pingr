@@ -12,13 +12,16 @@
         "noEmit": true,
         "isolatedModules": true,
         "esModuleInterop": true,
+        "verbatimModuleSyntax": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "noImplicitAny": true,
         "skipLibCheck": true,
         "jsx": "react-jsx",
         "paths": {
-            "@/*": ["./resources/js/*"]
+            "@/*": [
+                "./resources/js/*"
+            ]
         }
     }
 }

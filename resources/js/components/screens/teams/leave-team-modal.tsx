@@ -11,10 +11,10 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { leave as leaveTeamAction } from "@/routes/teams";
-import type { Team } from "@/types";
+import type { TTeam } from "@/types/models";
 
 type Props = {
-    team: Team | null;
+    team: TTeam | null;
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };

@@ -5,7 +5,10 @@ import { CancelInvitationModal } from "@/components/screens/teams/cancel-invitat
 import { DeleteTeamModal } from "@/components/screens/teams/delete-team-modal";
 import { Heading } from "@/components/elements/heading";
 import { InputError } from "@/components/elements/input-error";
-import { InviteMemberModal } from "@/components/screens/teams/invite-member-modal";
+import {
+    InviteMemberModal,
+    type TRoleOption,
+} from "@/components/screens/teams/invite-member-modal";
 import { RemoveMemberModal } from "@/components/screens/teams/remove-member-modal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -26,21 +29,25 @@ import {
 } from "@/components/ui/tooltip";
 import { edit, index, update } from "@/routes/teams";
 import { update as updateMember } from "@/routes/teams/members";
-import type {
-    RoleOption,
-    Team,
-    TeamInvitation,
-    TeamMember,
-    TeamPermissions,
-} from "@/types";
 import { formatInitials } from "@/lib/formats";
+import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
+
+export type TeamPermissions = {
+    canUpdateTeam: boolean;
+    canDeleteTeam: boolean;
+    canAddMember: boolean;
+    canUpdateMember: boolean;
+    canRemoveMember: boolean;
+    canCreateInvitation: boolean;
+    canCancelInvitation: boolean;
+};
 
 type Props = {
-    team: Team;
-    members: TeamMember[];
-    invitations: TeamInvitation[];
+    team: TTeam;
+    members: TTeamMember[];
+    invitations: TTeamInvitation[];
     permissions: TeamPermissions;
-    availableRoles: RoleOption[];
+    availableRoles: TRoleOption[];
 };
 
 export default function TeamEdit({
@@ -53,13 +60,13 @@ export default function TeamEdit({
     const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [removeMemberDialogOpen, setRemoveMemberDialogOpen] = useState(false);
-    const [memberToRemove, setMemberToRemove] = useState<TeamMember | null>(
+    const [memberToRemove, setMemberToRemove] = useState<TTeamMember | null>(
         null,
     );
     const [cancelInvitationDialogOpen, setCancelInvitationDialogOpen] =
         useState(false);
     const [invitationToCancel, setInvitationToCancel] =
-        useState<TeamInvitation | null>(null);
+        useState<TTeamInvitation | null>(null);
 
     const pageTitle = useMemo(
         () =>
@@ -69,19 +76,19 @@ export default function TeamEdit({
         [permissions.canUpdateTeam, team.name],
     );
 
-    const updateMemberRole = (member: TeamMember, newRole: string) => {
+    const updateMemberRole = (member: TTeamMember, newRole: string) => {
         router.visit(updateMember([team.slug, member.id]), {
             data: { role: newRole },
             preserveScroll: true,
         });
     };
 
-    const confirmRemoveMember = (member: TeamMember) => {
+    const confirmRemoveMember = (member: TTeamMember) => {
         setMemberToRemove(member);
         setRemoveMemberDialogOpen(true);
     };
 
-    const confirmCancelInvitation = (invitation: TeamInvitation) => {
+    const confirmCancelInvitation = (invitation: TTeamInvitation) => {
         setInvitationToCancel(invitation);
         setCancelInvitationDialogOpen(true);
     };

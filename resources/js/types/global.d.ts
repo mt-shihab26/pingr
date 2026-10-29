@@ -1,5 +1,4 @@
-import type { Auth } from "@/types/auth";
-import type { Team } from "@/types/teams";
+import type { TUser, TTeam } from "./models";
 
 declare module "react" {
     interface InputHTMLAttributes<T> {
@@ -11,10 +10,12 @@ declare module "@inertiajs/core" {
     export interface InertiaConfig {
         sharedPageProps: {
             name: string;
-            auth: Auth;
+            auth: {
+                user: TUser;
+            };
             sidebarOpen: boolean;
-            currentTeam: Team | null;
-            teams: Team[];
+            currentTeam: TTeam | null;
+            teams: TTeam[];
             [key: string]: unknown;
         };
     }

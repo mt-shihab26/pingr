@@ -21,11 +21,18 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { store as storeInvitation } from "@/routes/teams/invitations";
-import type { RoleOption, Team } from "@/types";
+import type { TTeamRole } from "@/types/enums";
+import type { TTeam } from "@/types/models";
+
+
+export type TRoleOption = {
+    value: TTeamRole;
+    label: string;
+};
 
 type Props = {
-    team: Team;
-    availableRoles: RoleOption[];
+    team: TTeam;
+    availableRoles: TRoleOption[];
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };
@@ -36,7 +43,7 @@ export function InviteMemberModal({
     open,
     onOpenChange,
 }: Props) {
-    const [inviteRole, setInviteRole] = useState<RoleOption["value"]>("member");
+    const [inviteRole, setInviteRole] = useState<TRoleOption["value"]>("member");
 
     const handleOpenChange = (nextOpen: boolean) => {
         onOpenChange(nextOpen);
@@ -86,7 +93,7 @@ export function InviteMemberModal({
                                         value={inviteRole}
                                         onValueChange={(value) =>
                                             setInviteRole(
-                                                value as RoleOption["value"],
+                                                value as TRoleOption["value"],
                                             )
                                         }
                                     >

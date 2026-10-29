@@ -15,7 +15,6 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { dashboard } from "@/routes";
-import type { TNavItem } from "@/types";
 
 export function AppSidebar() {
     const page = usePage();
@@ -23,7 +22,7 @@ export function AppSidebar() {
         ? dashboard(page.props.currentTeam.slug)
         : "/";
 
-    const mainNavItems: TNavItem[] = [
+    const mainNavItems = [
         {
             title: "Dashboard",
             href: dashboardUrl,
@@ -31,7 +30,7 @@ export function AppSidebar() {
         },
     ];
 
-    const footerNavItems: TNavItem[] = [
+    const footerNavItems = [
         {
             title: "Repository",
             href: "https://github.com/laravel/react-starter-kit",

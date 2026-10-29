@@ -14,10 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { destroy } from "@/routes/teams";
-import type { Team } from "@/types";
+import type { TTeam } from "@/types/models";
 
 type Props = {
-    team: Team;
+    team: TTeam;
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };

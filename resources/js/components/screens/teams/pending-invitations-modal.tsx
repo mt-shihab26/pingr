@@ -9,10 +9,19 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import type { DashboardInvitation } from "@/types";
+
+export type TDashboardInvitation = {
+    code: string;
+    inviterName: string;
+    team: {
+        name: string;
+        slug: string;
+    };
+};
+
 
 type Props = {
-    invitations: DashboardInvitation[];
+    invitations: TDashboardInvitation[];
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };
@@ -24,14 +33,14 @@ export function PendingInvitationsModal({
 }: Props) {
     const [processingCode, setProcessingCode] = useState<string | null>(null);
 
-    const acceptInvitation = (invitation: DashboardInvitation) => {
+    const acceptInvitation = (invitation: TDashboardInvitation) => {
         router.visit(TeamInvitationController.accept(invitation), {
             onStart: () => setProcessingCode(invitation.code),
             onFinish: () => setProcessingCode(null),
         });
     };
 
-    const declineInvitation = (invitation: DashboardInvitation) => {
+    const declineInvitation = (invitation: TDashboardInvitation) => {
         router.visit(TeamInvitationController.decline(invitation), {
             onStart: () => setProcessingCode(invitation.code),
             onFinish: () => setProcessingCode(null),

@@ -8,7 +8,12 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import type { TBreadcrumb } from "@/types/navigation";
+import type { InertiaLinkProps } from "@inertiajs/react";
+
+export type TBreadcrumb = {
+    TBreadcrumb: string;
+    href: NonNullable<InertiaLinkProps["href"]>;
+};
 
 export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: TBreadcrumb[] }) {
     return (
@@ -24,13 +29,13 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: TBreadcrumb[] }) {
                                     <BreadcrumbItem>
                                         {isLast ? (
                                             <BreadcrumbPage>
-                                                {item.title}
+                                                {item.TBreadcrumb}
                                             </BreadcrumbPage>
                                         ) : (
                                             <BreadcrumbLink
                                                 render={
                                                     <Link href={item.href}>
-                                                        {item.title}
+                                                        {item.TBreadcrumb}
                                                     </Link>
                                                 }
                                             />

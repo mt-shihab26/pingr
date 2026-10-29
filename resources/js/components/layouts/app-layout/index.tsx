@@ -1,4 +1,4 @@
-import type { TBreadcrumb } from "@/types";
+import type { TBreadcrumb } from "./breadcrumbs";
 
 import { AppSidebarLayout } from "./app-sidebar-layout";
 

@@ -10,7 +10,7 @@ import { edit as editAppearance } from "@/routes/appearance";
 import { edit } from "@/routes/profile";
 import { edit as editSecurity } from "@/routes/security";
 import { index as teams } from "@/routes/teams";
-import type { TNavItem } from "@/types";
+import type { TNavItem } from "@/types/utils";
 
 const sidebarNavItems: TNavItem[] = [
     {

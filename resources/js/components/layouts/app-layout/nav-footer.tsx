@@ -7,7 +7,16 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { toUrl } from "@/lib/utils";
-import type { TNavItem } from "@/types/navigation";
+
+import type { InertiaLinkProps } from "@inertiajs/react";
+import type { LucideIcon } from "lucide-react";
+
+type TNavItem = {
+    title: string;
+    href: NonNullable<InertiaLinkProps["href"]>;
+    icon?: LucideIcon | null;
+    isActive?: boolean;
+};
 
 export function NavFooter({
     items,

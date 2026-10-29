@@ -11,11 +11,11 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { destroy as destroyInvitation } from "@/routes/teams/invitations";
-import type { Team, TeamInvitation } from "@/types";
+import type { TTeam, TTeamInvitation } from "@/types/models";
 
 type Props = {
-    team: Team;
-    invitation: TeamInvitation | null;
+    team: TTeam;
+    invitation: TTeamInvitation | null;
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };

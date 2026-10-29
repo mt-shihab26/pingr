@@ -1,12 +1,11 @@
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
-import { PendingInvitationsModal } from "@/components/screens/teams/pending-invitations-modal";
+import { PendingInvitationsModal, type TDashboardInvitation } from "@/components/screens/teams/pending-invitations-modal";
 import { PlaceholderPattern } from "@/components/ui/placeholder-pattern";
 import { dashboard } from "@/routes";
-import type { DashboardInvitation } from "@/types";
 
 type Props = {
-    pendingInvitations?: DashboardInvitation[];
+    pendingInvitations?: TDashboardInvitation[];
 };
 
 export default function Dashboard({ pendingInvitations = [] }: Props) {

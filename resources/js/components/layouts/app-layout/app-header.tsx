@@ -2,7 +2,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from "lucide-react";
 import { AppLogo } from "./app-logo";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
-import { Breadcrumbs } from "./breadcrumbs";
+import { Breadcrumbs, type TBreadcrumb } from "./breadcrumbs";
 import { TeamSwitcher } from "@/components/screens/teams/team-switcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -32,16 +32,15 @@ import {
 } from "@/components/ui/tooltip";
 import { UserMenuContent } from "./user-menu-content";
 import { useCurrentUrl } from "@/hooks/use-current-url";
-import { useInitials } from "@/hooks/use-initials";
 import { cn, toUrl } from "@/lib/utils";
 import { dashboard } from "@/routes";
-import type { TBreadcrumb, TNavItem } from "@/types";
+import { formatInitials } from "@/lib/formats";
 
 type Props = {
     breadcrumbs?: TBreadcrumb[];
 };
 
-const rightNavItems: TNavItem[] = [
+const rightNavItems = [
     {
         title: "Repository",
         href: "https://github.com/laravel/react-starter-kit",
@@ -60,11 +59,10 @@ const activeItemStyles =
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
     const { auth, currentTeam } = page.props;
-    const getInitials = useInitials();
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
     const dashboardUrl = currentTeam ? dashboard(currentTeam.slug) : "/";
 
-    const mainNavItems: TNavItem[] = [
+    const mainNavItems = [
         {
             title: "Dashboard",
             href: dashboardUrl,
@@ -230,7 +228,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                                 alt={auth.user.name}
                                             />
                                             <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                                {getInitials(auth.user.name)}
+                                                {formatInitials(auth.user.name)}
                                             </AvatarFallback>
                                         </Avatar>
                                     </Button>

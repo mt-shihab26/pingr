@@ -13,17 +13,17 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { edit, index } from "@/routes/teams";
-import type { Team } from "@/types";
+import type { TTeam } from "@/types/models";
 
 type Props = {
-    teams: Team[];
+    teams: TTeam[];
 };
 
 export default function TeamsIndex({ teams }: Props) {
     const [leaveTeamDialogOpen, setLeaveTeamDialogOpen] = useState(false);
-    const [teamLeaving, setTeamLeaving] = useState<Team | null>(null);
+    const [teamLeaving, setTeamLeaving] = useState<TTeam | null>(null);
 
-    const openLeaveTeamDialog = (team: Team) => {
+    const openLeaveTeamDialog = (team: TTeam) => {
         setTeamLeaving(team);
         setLeaveTeamDialogOpen(true);
     };
