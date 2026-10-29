@@ -24,7 +24,6 @@ import { store as storeInvitation } from "@/routes/teams/invitations";
 import type { TTeamRole } from "@/types/enums";
 import type { TTeam } from "@/types/models";
 
-
 export type TRoleOption = {
     value: TTeamRole;
     label: string;
@@ -43,7 +42,8 @@ export function InviteMemberModal({
     open,
     onOpenChange,
 }: Props) {
-    const [inviteRole, setInviteRole] = useState<TRoleOption["value"]>("member");
+    const [inviteRole, setInviteRole] =
+        useState<TRoleOption["value"]>("member");
 
     const handleOpenChange = (nextOpen: boolean) => {
         onOpenChange(nextOpen);

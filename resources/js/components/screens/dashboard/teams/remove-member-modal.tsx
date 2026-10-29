@@ -20,12 +20,7 @@ type Props = {
     onOpenChange: (open: boolean) => void;
 };
 
-export function RemoveMemberModal({
-    team,
-    member,
-    open,
-    onOpenChange,
-}: Props) {
+export function RemoveMemberModal({ team, member, open, onOpenChange }: Props) {
     const [processing, setProcessing] = useState(false);
 
     const removeMember = () => {

@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
 use App\Http\Controllers\Dashboard\Teams\TeamController;
 use App\Http\Controllers\Dashboard\Teams\TeamInvitationController;
 use App\Http\Controllers\Dashboard\Teams\TeamMemberController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WellKnownController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Auth\Middleware\RequirePassword;

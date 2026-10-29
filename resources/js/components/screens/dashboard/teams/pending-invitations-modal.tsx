@@ -19,7 +19,6 @@ export type TDashboardInvitation = {
     };
 };
 
-
 type Props = {
     invitations: TDashboardInvitation[];
     open: boolean;

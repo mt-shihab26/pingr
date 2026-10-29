@@ -8,11 +8,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -161,7 +161,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     /**
      * Get the user's teams as a collection of arrays.
      *
-     * @return \Illuminate\Support\Collection<int, array{id: int, name: string, slug: string, isPersonal: bool, role: ?string, roleLabel: ?string, isCurrent: bool}>
+     * @return SupportCollection<int, array{id: int, name: string, slug: string, isPersonal: bool, role: ?string, roleLabel: ?string, isCurrent: bool}>
      */
     public function toUserTeams(bool $includeCurrent = false): SupportCollection
     {
