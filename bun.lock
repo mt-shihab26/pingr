@@ -52,7 +52,6 @@
         "vite": "npm:@voidzero-dev/vite-plus-core@1.4.0",
       },
       "devDependencies": {
-        "@laravel/vite-plugin-wayfinder": "^0.1.11",
         "@rolldown/plugin-babel": "^0.2.4",
         "@types/node": "^26.6.6",
         "babel-plugin-react-compiler": "^1.0.0",
@@ -161,8 +160,6 @@
     "@laravel/multiplex": ["@laravel/multiplex@0.4.5", "", { "dependencies": { "ansi-styles": "^7.0.0", "commander": "^15.0.0", "ink": "^7.1.0", "react": "^19.2.7", "string-width": "^8.2.2", "wrap-ansi": "^10.0.0" }, "os": [ "linux", "darwin", ], "bin": { "multiplex": "dist/cli.js" } }, "sha512-NhDhj4b1/+6j1xYnonzx3vZa39CAUUM7iCAN0xZ5jjcYw3GKORtiXXb0XwXW74wyeVJ25vAvXzfIhy4MXmmzCw=="],
 
     "@laravel/passkeys": ["@laravel/passkeys@0.4.0", "", { "dependencies": { "@simplewebauthn/browser": "^13.0.0" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0", "svelte": "^5.0.0", "vue": "^3.3.0" }, "optionalPeers": ["react", "svelte", "vue"] }, "sha512-59UHJHZPrIT8f5hFQJUR1EXhazWZTg3DcJefxSfA3aRj6xu40I/lYDveUY4oL2/h/crq9jjptSKykZDDold7aA=="],
-
-    "@laravel/vite-plugin-wayfinder": ["@laravel/vite-plugin-wayfinder@0.1.11", "", {}, "sha512-KU7g7+2aVs3OzvdD9RtZaIwh2Bydk/bCzjFDz8G+G6QfloTJpmgF9jTJrrlyqGspi8DhgNYGzSReMwHQKY2OCg=="],
 
     "@modelcontextprotocol/core": ["@modelcontextprotocol/core@2.4.0", "", { "dependencies": { "zod": "^4.2.0" } }, "sha512-z8QBKqdfXLPzkLQuG4xp8hrVEMm1PZ1IgxMN2sMbJiFiAKOWXnAzogXn2W4aqIBlP1ea6U5yiqVquvUNM1Cj6Q=="],
 

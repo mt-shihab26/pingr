@@ -14,7 +14,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { edit, index } from "@/routes/teams";
 import type { TTeam } from "@/types/models";
 
 type Props = {
@@ -36,7 +35,7 @@ export default function TeamsIndex({ teams }: Props) {
             breadcrumbs={[
                 {
                     title: "Teams",
-                    href: index(),
+                    href: route("teams.index"),
                 },
             ]}
         >
@@ -120,9 +119,7 @@ export default function TeamsIndex({ teams }: Props) {
                                                             data-test="team-view-button"
                                                             render={
                                                                 <Link
-                                                                    href={edit(
-                                                                        team.slug,
-                                                                    )}
+                                                                    href={route("teams.edit", { team: team.slug })}
                                                                 >
                                                                     <Eye className="h-4 w-4" />
                                                                 </Link>
@@ -144,9 +141,7 @@ export default function TeamsIndex({ teams }: Props) {
                                                             data-test="team-edit-button"
                                                             render={
                                                                 <Link
-                                                                    href={edit(
-                                                                        team.slug,
-                                                                    )}
+                                                                    href={route("teams.edit", { team: team.slug })}
                                                                 >
                                                                     <Pencil className="h-4 w-4" />
                                                                 </Link>

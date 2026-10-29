@@ -11,7 +11,6 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import TeamInvitationController from "@/actions/App/Http/Controllers/Dashboard/Settings/Teams/TeamInvitationController";
 
 export type TDashboardInvitation = {
     code: string;
@@ -36,14 +35,14 @@ export function PendingInvitationsModal({
     const [processingCode, setProcessingCode] = useState<string | null>(null);
 
     const acceptInvitation = (invitation: TDashboardInvitation) => {
-        router.visit(TeamInvitationController.accept(invitation), {
+        router.visit(route("invitations.accept", { invitation: invitation.code }), {
             onStart: () => setProcessingCode(invitation.code),
             onFinish: () => setProcessingCode(null),
         });
     };
 
     const declineInvitation = (invitation: TDashboardInvitation) => {
-        router.visit(TeamInvitationController.decline(invitation), {
+        router.visit(route("invitations.decline", { invitation: invitation.code }), {
             onStart: () => setProcessingCode(invitation.code),
             onFinish: () => setProcessingCode(null),
             onSuccess: () => {

@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserInfo } from "./user-info";
 import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
-import { logout } from "@/routes";
-import { edit } from "@/routes/dashboard/settings/profile";
 import type { TUser } from "@/types/models";
 
 type Props = {
@@ -39,7 +37,7 @@ export function UserMenuContent({ user }: Props) {
                     render={
                         <Link
                             className="block w-full cursor-pointer"
-                            href={edit()}
+                            href={route("dashboard.settings.profile.edit")}
                             prefetch
                             onClick={cleanup}
                         >
@@ -54,7 +52,7 @@ export function UserMenuContent({ user }: Props) {
                 render={
                     <Link
                         className="block w-full cursor-pointer"
-                        href={logout()}
+                        href={route("logout")}
                         as="button"
                         onClick={handleLogout}
                         data-test="logout-button"

@@ -10,7 +10,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { destroy as destroyInvitation } from "@/routes/teams/invitations";
 import type { TTeam, TTeamInvitation } from "@/types/models";
 
 type Props = {
@@ -33,7 +32,7 @@ export function CancelInvitationModal({
             return;
         }
 
-        router.visit(destroyInvitation([team.slug, invitation.code]), {
+        router.visit(route("teams.invitations.destroy", { team: team.slug, invitation: invitation.code }), {
             onStart: () => setProcessing(true),
             onFinish: () => setProcessing(false),
             onSuccess: () => onOpenChange(false),

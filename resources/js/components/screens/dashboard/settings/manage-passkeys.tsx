@@ -1,6 +1,5 @@
 import { router } from "@inertiajs/react";
 import { KeyRound } from "lucide-react";
-import { destroy } from "@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController";
 import { Heading } from "@/components/elements/heading";
 import {
     PasskeyItem,
@@ -31,7 +30,7 @@ export function ManagePasskeys(props: Props) {
     const passkeys = props.passkeys ?? [];
 
     const handleDelete = (id: number, onError: () => void) => {
-        router.delete(destroy.url(id), {
+        router.delete(route("passkey.destroy", { passkey: id }), {
             preserveScroll: true,
             onError,
         });

@@ -28,8 +28,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { edit, index, update } from "@/routes/teams";
-import { update as updateMember } from "@/routes/teams/members";
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
@@ -79,7 +77,7 @@ export default function TeamEdit({
     );
 
     const updateMemberRole = (member: TTeamMember, newRole: string) => {
-        router.visit(updateMember([team.slug, member.id]), {
+        router.visit(route("teams.members.update", { team: team.slug, user: member.id }), {
             data: { role: newRole },
             preserveScroll: true,
         });
@@ -101,11 +99,11 @@ export default function TeamEdit({
             breadcrumbs={[
                 {
                     title: "Teams",
-                    href: index(),
+                    href: route("teams.index"),
                 },
                 {
                     title: team.name,
-                    href: edit(team.slug),
+                    href: route("teams.edit", { team: team.slug }),
                 },
             ]}
         >
@@ -120,7 +118,8 @@ export default function TeamEdit({
                             />
 
                             <Form
-                                {...update.form(team.slug)}
+                                action={route("teams.update", { team: team.slug })}
+                                method="patch"
                                 className="space-y-6"
                             >
                                 {({ errors, processing }) => (

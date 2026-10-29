@@ -1,5 +1,4 @@
 import { Heading } from "@/components/elements/heading";
-import { edit as editAppearance } from "@/routes/appearance";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
 
 import type { LucideIcon } from "lucide-react";
@@ -55,7 +54,7 @@ export default function Appearance() {
             breadcrumbs={[
                 {
                     title: "Appearance settings",
-                    href: editAppearance(),
+                    href: route("dashboard.settings.appearance.edit"),
                 },
             ]}
         >

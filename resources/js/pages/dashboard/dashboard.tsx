@@ -4,7 +4,6 @@ import {
     type TDashboardInvitation,
 } from "@/components/screens/dashboard/teams/pending-invitations-modal";
 import { PlaceholderPattern } from "@/components/ui/placeholder-pattern";
-import { dashboard } from "@/routes";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { usePage } from "@inertiajs/react";
 
@@ -26,7 +25,7 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
                 {
                     title: "Dashboard",
                     href: props.currentTeam
-                        ? dashboard(props.currentTeam.slug)
+                        ? route("dashboard", { current_team: props.currentTeam.slug })
                         : "/",
                 },
             ]}

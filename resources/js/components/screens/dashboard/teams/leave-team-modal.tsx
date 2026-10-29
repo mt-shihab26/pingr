@@ -10,7 +10,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { leave as leaveTeamAction } from "@/routes/teams";
 import type { TTeam } from "@/types/models";
 
 type Props = {
@@ -27,7 +26,7 @@ export function LeaveTeamModal({ team, open, onOpenChange }: Props) {
             return;
         }
 
-        router.visit(leaveTeamAction(team.slug), {
+        router.visit(route("teams.leave", { team: team.slug }), {
             onStart: () => setProcessing(true),
             onFinish: () => setProcessing(false),
             onSuccess: () => onOpenChange(false),

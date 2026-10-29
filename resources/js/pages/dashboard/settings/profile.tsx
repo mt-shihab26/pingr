@@ -1,6 +1,4 @@
-import { edit } from "@/routes/dashboard/settings/profile";
 import { usePage } from "@inertiajs/react";
-import { send } from "@/routes/verification";
 
 import { Form } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
@@ -13,7 +11,6 @@ import { Label } from "@/components/ui/label";
 import { DeleteUser } from "@/components/screens/dashboard/settings/delete-user";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
 
-import ProfileController from "@/actions/App/Http/Controllers/Dashboard/Settings/ProfileController";
 
 export default function Profile({
     mustVerifyEmail,
@@ -30,7 +27,7 @@ export default function Profile({
             breadcrumbs={[
                 {
                     title: "Profile settings",
-                    href: edit(),
+                    href: route("dashboard.settings.profile.edit"),
                 },
             ]}
         >
@@ -44,7 +41,8 @@ export default function Profile({
                 />
 
                 <Form
-                    {...ProfileController.update.form()}
+                    action={route("dashboard.settings.profile.update")}
+                    method="patch"
                     options={{
                         preserveScroll: true,
                     }}
@@ -97,7 +95,7 @@ export default function Profile({
                                         <p className="-mt-4 text-sm text-muted-foreground">
                                             Your email address is unverified.{" "}
                                             <Link
-                                                href={send()}
+                                                href={route("verification.send")}
                                                 as="button"
                                                 className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                             >

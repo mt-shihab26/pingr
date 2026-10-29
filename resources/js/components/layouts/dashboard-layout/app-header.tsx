@@ -33,7 +33,6 @@ import {
 import { UserMenuContent } from "./user-menu-content";
 import { useCurrentUrl } from "@/hooks/use-current-url";
 import { cn, toUrl } from "@/lib/utils";
-import { dashboard } from "@/routes";
 import { formatInitials } from "@/lib/formats";
 
 type Props = {
@@ -60,7 +59,9 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
     const { auth, currentTeam } = page.props;
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
-    const dashboardUrl = currentTeam ? dashboard(currentTeam.slug) : "/";
+    const dashboardUrl = currentTeam
+        ? route("dashboard", { current_team: currentTeam.slug })
+        : "/";
 
     const mainNavItems = [
         {

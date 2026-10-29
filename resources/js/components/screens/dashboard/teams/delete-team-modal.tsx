@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { destroy } from "@/routes/teams";
 import type { TTeam } from "@/types/models";
 
 type Props = {
@@ -40,7 +39,8 @@ export function DeleteTeamModal({ team, open, onOpenChange }: Props) {
             <DialogContent>
                 <Form
                     key={String(open)}
-                    {...destroy.form(team.slug)}
+                    action={route("teams.destroy", { team: team.slug })}
+                    method="delete"
                     className="space-y-6"
                     onSuccess={() => handleOpenChange(false)}
                 >

@@ -17,7 +17,6 @@ import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
 import { Button } from "@/components/ui/button";
 
-import ProfileController from "@/actions/App/Http/Controllers/Dashboard/Settings/ProfileController";
 
 export function DeleteUser() {
     const passwordInput = useRef<HTMLInputElement>(null);
@@ -60,7 +59,8 @@ export function DeleteUser() {
                         </DialogDescription>
 
                         <Form
-                            {...ProfileController.destroy.form()}
+                            action={route("dashboard.settings.profile.destroy")}
+                            method="delete"
                             options={{
                                 preserveScroll: true,
                             }}

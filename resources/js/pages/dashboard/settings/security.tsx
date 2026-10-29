@@ -5,13 +5,11 @@ import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { edit } from "@/routes/security";
 import type { Props as ManagePasskeysProps } from "@/components/screens/dashboard/settings/manage-passkeys";
 import { ManagePasskeys } from "@/components/screens/dashboard/settings/manage-passkeys";
 import type { Props as ManageTwoFactorProps } from "@/components/screens/dashboard/settings/manage-two-factor";
 import { ManageTwoFactor } from "@/components/screens/dashboard/settings/manage-two-factor";
 import { SettingsLayout } from "@/components/screens/dashboard/settings/shared/settings-layout";
-import SecurityController from "@/actions/App/Http/Controllers/Dashboard/Settings/SecurityController";
 
 type Props = {
     passwordRules: string;
@@ -28,7 +26,7 @@ export default function Security(props: Props) {
             breadcrumbs={[
                 {
                     title: "Security settings",
-                    href: edit(),
+                    href: route("dashboard.settings.security.edit"),
                 },
             ]}
         >
@@ -42,7 +40,8 @@ export default function Security(props: Props) {
                 />
 
                 <Form
-                    {...SecurityController.update.form()}
+                    action={route("dashboard.settings.security.password.update")}
+                    method="put"
                     options={{
                         preserveScroll: true,
                     }}

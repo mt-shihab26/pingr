@@ -4,10 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCurrentUrl } from "@/hooks/use-current-url";
 import { cn, toUrl } from "@/lib/utils";
-import { edit as editAppearance } from "@/routes/appearance";
-import { edit } from "@/routes/dashboard/settings/profile";
-import { edit as editSecurity } from "@/routes/security";
-import { index as teams } from "@/routes/teams";
 import type { TNavItem } from "@/types/utils";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import type { ReactNode } from "react";
@@ -16,22 +12,22 @@ import type { TBreadcrumb } from "@/components/layouts/dashboard-layout/breadcru
 const sidebarNavItems: TNavItem[] = [
     {
         title: "Profile",
-        href: edit(),
+        href: route("dashboard.settings.profile.edit"),
         icon: null,
     },
     {
         title: "Security",
-        href: editSecurity(),
+        href: route("dashboard.settings.security.edit"),
         icon: null,
     },
     {
         title: "Teams",
-        href: teams(),
+        href: route("teams.index"),
         icon: null,
     },
     {
         title: "Appearance",
-        href: editAppearance(),
+        href: route("dashboard.settings.appearance.edit"),
         icon: null,
     },
 ];

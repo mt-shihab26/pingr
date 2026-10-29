@@ -10,7 +10,6 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { OTP_MAX_LENGTH } from "@/hooks/use-two-factor-auth";
-import { store } from "@/routes/two-factor/login";
 import { AuthLayout } from "@/components/layouts/auth-layout";
 
 export default function TwoFactorChallenge() {
@@ -52,7 +51,8 @@ export default function TwoFactorChallenge() {
         >
             <div className="space-y-6">
                 <Form
-                    {...store.form()}
+                    action={route("two-factor.login.store")}
+                    method="post"
                     className="space-y-4"
                     resetOnError
                     resetOnSuccess={!showRecoveryInput}

@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { store } from "@/routes/teams";
 
 export function CreateTeamModal({ children }: PropsWithChildren) {
     const [open, setOpen] = useState(false);
@@ -26,7 +25,8 @@ export function CreateTeamModal({ children }: PropsWithChildren) {
             <DialogContent>
                 <Form
                     key={String(open)}
-                    {...store.form()}
+                    action={route("teams.store")}
+                    method="post"
                     className="space-y-6"
                     onSuccess={() => setOpen(false)}
                 >

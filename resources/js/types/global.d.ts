@@ -1,4 +1,9 @@
+import type { route as routeFn } from "ziggy-js";
 import type { TUser, TTeam } from "./models";
+
+declare global {
+    var route: typeof routeFn;
+}
 
 declare module "react" {
     interface InputHTMLAttributes<T> {

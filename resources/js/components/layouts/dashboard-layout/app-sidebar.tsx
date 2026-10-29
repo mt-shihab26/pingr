@@ -14,12 +14,11 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { dashboard } from "@/routes";
 
 export function AppSidebar() {
     const page = usePage();
     const dashboardUrl = page.props.currentTeam
-        ? dashboard(page.props.currentTeam.slug)
+        ? route("dashboard", { current_team: page.props.currentTeam.slug })
         : "/";
 
     const mainNavItems = [
