@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard\Teams;
 
-use App\Enums\TeamPermission;
 use App\Enums\TeamRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Teams\UpdateTeamMemberRequest;
@@ -19,7 +18,7 @@ class TeamMemberController extends Controller
      */
     public function update(UpdateTeamMemberRequest $request, Team $team, User $user): RedirectResponse
     {
-        abort_unless($request->user()->hasTeamPermission($team, TeamPermission::UpdateMember), 403);
+        abort_unless($request->user()->hasTeamPermission($team, 'member:update'), 403);
 
         $newRole = TeamRole::from($request->validated('role'));
 
@@ -38,7 +37,7 @@ class TeamMemberController extends Controller
      */
     public function destroy(Request $request, Team $team, User $user): RedirectResponse
     {
-        abort_unless($request->user()->hasTeamPermission($team, TeamPermission::RemoveMember), 403);
+        abort_unless($request->user()->hasTeamPermission($team, 'member:remove'), 403);
 
         abort_if($team->owner()?->is($user), 403, __('The team owner cannot be removed.'));
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard\Teams;
 
 use App\Actions\Teams\CreateTeam;
-use App\Enums\TeamPermission;
 use App\Enums\TeamRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Teams\DeleteTeamRequest;
@@ -90,7 +89,7 @@ class TeamController extends Controller
      */
     public function update(SaveTeamRequest $request, Team $team): RedirectResponse
     {
-        abort_unless($request->user()->hasTeamPermission($team, TeamPermission::UpdateTeam), 403);
+        abort_unless($request->user()->hasTeamPermission($team, 'team:update'), 403);
 
         $team = DB::transaction(function () use ($request, $team) {
             $team = Team::whereKey($team->id)->lockForUpdate()->firstOrFail();

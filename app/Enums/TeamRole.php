@@ -19,16 +19,24 @@ enum TeamRole: string
     /**
      * Get all the permissions for this role.
      *
-     * @return array<TeamPermission>
+     * @return array<string>
      */
     public function permissions(): array
     {
         return match ($this) {
-            self::Owner => TeamPermission::cases(),
+            self::Owner => [
+                'team:update',
+                'team:delete',
+                'member:add',
+                'member:update',
+                'member:remove',
+                'invitation:create',
+                'invitation:cancel',
+            ],
             self::Admin => [
-                TeamPermission::UpdateTeam,
-                TeamPermission::CreateInvitation,
-                TeamPermission::CancelInvitation,
+                'team:update',
+                'invitation:create',
+                'invitation:cancel',
             ],
             self::Member => [],
         };
@@ -37,9 +45,9 @@ enum TeamRole: string
     /**
      * Determine if the role has the given permission.
      */
-    public function hasPermission(TeamPermission $permission): bool
+    public function hasPermission(string $permission): bool
     {
-        return in_array($permission, $this->permissions());
+        return in_array($permission, $this->permissions(), true);
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Concerns\GeneratesUniqueTeamSlugs;
 use App\Enums\TeamRole;
 use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -13,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -30,7 +30,44 @@ use Illuminate\Support\Carbon;
 class Team extends Model
 {
     /** @use HasFactory<TeamFactory> */
-    use GeneratesUniqueTeamSlugs, HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes;
+
+    /**
+     * Generate a unique slug for the team.
+     */
+    protected static function generateUniqueTeamSlug(string $name, ?int $excludeId = null): string
+    {
+        $defaultSlug = Str::slug($name);
+
+        $query = static::withTrashed()
+            ->where(function ($query) use ($defaultSlug) {
+                $query->where('slug', $defaultSlug)
+                    ->orWhere('slug', 'like', $defaultSlug.'-%');
+            });
+
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        $existingSlugs = $query->pluck('slug');
+
+        $maxSuffix = $existingSlugs
+            ->map(function (string $slug) use ($defaultSlug): ?int {
+                if ($slug === $defaultSlug) {
+                    return 0;
+                } elseif (preg_match('/^'.preg_quote($defaultSlug, '/').'-(\d+)$/', $slug, $matches)) {
+                    return (int) $matches[1];
+                }
+
+                return null;
+            })
+            ->filter(fn (?int $suffix) => $suffix !== null)
+            ->max() ?? 0;
+
+        return $existingSlugs->isEmpty()
+            ? $defaultSlug
+            : $defaultSlug.'-'.($maxSuffix + 1);
+    }
 
     /**
      * Bootstrap the model and its traits.

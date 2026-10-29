@@ -2,13 +2,13 @@
 
 namespace App\Http\Requests\Dashboard\Settings;
 
-use App\Concerns\PasswordValidationRules;
+use App\Concerns\AuthValidationRules;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProfileDeleteRequest extends FormRequest
 {
-    use PasswordValidationRules;
+    use AuthValidationRules;
 
     /**
      * Get the validation rules that apply to the request.

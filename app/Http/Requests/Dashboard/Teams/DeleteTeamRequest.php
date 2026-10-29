@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Dashboard\Teams;
 
-use App\Enums\TeamPermission;
 use App\Models\Team;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -20,7 +19,7 @@ class DeleteTeamRequest extends FormRequest
 
         return $team instanceof Team
             && ! $team->is_personal
-            && $this->user()->hasTeamPermission($team, TeamPermission::DeleteTeam);
+            && $this->user()->hasTeamPermission($team, 'team:delete');
     }
 
     /**
