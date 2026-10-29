@@ -1,4 +1,4 @@
-import { Form, Head } from "@inertiajs/react";
+import { Form } from "@inertiajs/react";
 import { LoaderCircle } from "lucide-react";
 import { InputError } from "@/components/elements/input-error";
 import { TextLink } from "@/components/elements/text-link";
@@ -7,12 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/routes";
 import { email } from "@/routes/password";
+import { AuthLayout } from "@/components/layouts/auth-layout";
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
-        <>
-            <Head title="Forgot password" />
-
+        <AuthLayout
+            title="Forgot password"
+            description="Enter your email to receive a password reset link"
+        >
             {status && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
                     {status}
@@ -58,11 +60,6 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     <TextLink href={login()}>log in</TextLink>
                 </div>
             </div>
-        </>
+        </AuthLayout>
     );
 }
-
-ForgotPassword.layout = {
-    title: "Forgot password",
-    description: "Enter your email to receive a password reset link",
-};

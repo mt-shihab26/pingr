@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import { Eye, LogOut, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { CreateTeamModal } from "@/components/screens/teams/create-team-modal";
@@ -6,6 +6,8 @@ import { Heading } from "@/components/elements/heading";
 import { LeaveTeamModal } from "@/components/screens/teams/leave-team-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {SettingsLayout} from "@/components/layouts/settings-layout";
+
 import {
     Tooltip,
     TooltipContent,
@@ -29,11 +31,15 @@ export default function TeamsIndex({ teams }: Props) {
     };
 
     return (
-        <>
-            <Head title="Teams" />
-
-            <h1 className="sr-only">Teams</h1>
-
+        <SettingsLayout
+            title="Teams"
+            breadcrumbs={[
+                {
+                    title: "Teams",
+                    href: index(),
+                },
+            ]}
+        >
             <div className="flex flex-col space-y-6">
                 <div className="flex items-center justify-between">
                     <Heading
@@ -172,15 +178,6 @@ export default function TeamsIndex({ teams }: Props) {
                 open={leaveTeamDialogOpen}
                 onOpenChange={setLeaveTeamDialogOpen}
             />
-        </>
+        </SettingsLayout>
     );
 }
-
-TeamsIndex.layout = {
-    breadcrumbs: [
-        {
-            title: "Teams",
-            href: index(),
-        },
-    ],
-};

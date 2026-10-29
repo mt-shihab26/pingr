@@ -1,5 +1,3 @@
-import type { PropsWithChildren } from "react";
-
 import { Link } from "@inertiajs/react";
 import { Heading } from "@/components/elements/heading";
 import { Button } from "@/components/ui/button";
@@ -11,6 +9,9 @@ import { edit } from "@/routes/profile";
 import { edit as editSecurity } from "@/routes/security";
 import { index as teams } from "@/routes/teams";
 import type { TNavItem } from "@/types/utils";
+import { AppLayout } from "../app-layout";
+import type { ReactNode } from "react";
+import type { TBreadcrumb } from "../app-layout/breadcrumbs";
 
 const sidebarNavItems: TNavItem[] = [
     {
@@ -35,51 +36,63 @@ const sidebarNavItems: TNavItem[] = [
     },
 ];
 
-export default function SettingsLayout({ children }: PropsWithChildren) {
+export function SettingsLayout({
+    title,
+    children,
+    breadcrumbs,
+}: {
+    title: string;
+    children: ReactNode;
+    breadcrumbs?: TBreadcrumb[];
+}) {
     const { isCurrentOrParentUrl } = useCurrentUrl();
 
     return (
-        <div className="px-4 py-6">
-            <Heading
-                title="Settings"
-                description="Manage your profile and account settings"
-            />
+        <AppLayout title={title} breadcrumbs={breadcrumbs}>
+            <div className="px-4 py-6">
+                <Heading
+                    title="Settings"
+                    description="Manage your profile and account settings"
+                />
 
-            <div className="flex flex-col lg:flex-row lg:space-x-12">
-                <aside className="w-full max-w-xl lg:w-48">
-                    <nav
-                        className="flex flex-col space-y-1 space-x-0"
-                        aria-label="Settings"
-                    >
-                        {sidebarNavItems.map((item, index) => (
-                            <Button
-                                key={`${toUrl(item.href)}-${index}`}
-                                size="sm"
-                                variant="ghost"
-                                className={cn("w-full justify-start", {
-                                    "bg-muted": isCurrentOrParentUrl(item.href),
-                                })}
-                                render={
-                                    <Link href={item.href}>
-                                        {item.icon && (
-                                            <item.icon className="h-4 w-4" />
-                                        )}
-                                        {item.title}
-                                    </Link>
-                                }
-                            />
-                        ))}
-                    </nav>
-                </aside>
+                <div className="flex flex-col lg:flex-row lg:space-x-12">
+                    <aside className="w-full max-w-xl lg:w-48">
+                        <nav
+                            className="flex flex-col space-y-1 space-x-0"
+                            aria-label="Settings"
+                        >
+                            {sidebarNavItems.map((item, index) => (
+                                <Button
+                                    key={`${toUrl(item.href)}-${index}`}
+                                    size="sm"
+                                    variant="ghost"
+                                    className={cn("w-full justify-start", {
+                                        "bg-muted": isCurrentOrParentUrl(
+                                            item.href,
+                                        ),
+                                    })}
+                                    render={
+                                        <Link href={item.href}>
+                                            {item.icon && (
+                                                <item.icon className="h-4 w-4" />
+                                            )}
+                                            {item.title}
+                                        </Link>
+                                    }
+                                />
+                            ))}
+                        </nav>
+                    </aside>
 
-                <Separator className="my-6 lg:hidden" />
+                    <Separator className="my-6 lg:hidden" />
 
-                <div className="flex-1 md:max-w-2xl">
-                    <section className="max-w-xl space-y-12">
-                        {children}
-                    </section>
+                    <div className="flex-1 md:max-w-2xl">
+                        <section className="max-w-xl space-y-12">
+                            {children}
+                        </section>
+                    </div>
                 </div>
             </div>
-        </div>
+        </AppLayout>
     );
 }

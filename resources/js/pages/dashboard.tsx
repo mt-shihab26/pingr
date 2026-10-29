@@ -1,4 +1,3 @@
-import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import {
     PendingInvitationsModal,
@@ -22,6 +21,7 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
 
     return (
         <AppLayout
+            title="Dashboard"
             breadcrumbs={[
                 {
                     title: "Dashboard",
@@ -31,7 +31,6 @@ export default function Dashboard({ pendingInvitations = [] }: Props) {
                 },
             ]}
         >
-            <Head title="Dashboard" />
             <PendingInvitationsModal
                 invitations={pendingInvitations}
                 open={pendingInvitations.length > 0 && showInvitations}

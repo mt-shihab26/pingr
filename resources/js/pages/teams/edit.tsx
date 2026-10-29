@@ -1,4 +1,4 @@
-import { Form, Head, router } from "@inertiajs/react";
+import { Form, router } from "@inertiajs/react";
 import { ChevronDown, Mail, UserPlus, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CancelInvitationModal } from "@/components/screens/teams/cancel-invitation-modal";
@@ -32,7 +32,7 @@ import { edit, index, update } from "@/routes/teams";
 import { update as updateMember } from "@/routes/teams/members";
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
-import { AppLayout } from "@/components/layouts/app-layout";
+import { SettingsLayout } from "@/components/layouts/settings-layout";
 
 export type TeamPermissions = {
     canUpdateTeam: boolean;
@@ -96,7 +96,8 @@ export default function TeamEdit({
     };
 
     return (
-        <AppLayout
+        <SettingsLayout
+            title={pageTitle}
             breadcrumbs={[
                 {
                     title: "Teams",
@@ -108,10 +109,6 @@ export default function TeamEdit({
                 },
             ]}
         >
-            <Head title={pageTitle} />
-
-            <h1 className="sr-only">{pageTitle}</h1>
-
             <div className="flex flex-col space-y-10">
                 <div className="space-y-6">
                     {permissions.canUpdateTeam ? (
@@ -401,6 +398,6 @@ export default function TeamEdit({
                     onOpenChange={setDeleteDialogOpen}
                 />
             ) : null}
-        </AppLayout>
+        </SettingsLayout>
     );
 }

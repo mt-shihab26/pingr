@@ -1,7 +1,10 @@
-import { Form, Head } from "@inertiajs/react";
+import { Form } from "@inertiajs/react";
 import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
-import { TeamInvitationAlert, type TTeamInvitationContext } from "@/components/screens/teams/team-invitation-alert";
+import {
+    TeamInvitationAlert,
+    type TTeamInvitationContext,
+} from "@/components/screens/teams/team-invitation-alert";
 import { TextLink } from "@/components/elements/text-link";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,6 +15,7 @@ import { register } from "@/routes";
 import { store } from "@/routes/login";
 import { request } from "@/routes/password";
 import { PasskeyVerify } from "@/components/screens/settings/passkey-verify";
+import { AuthLayout } from "@/components/layouts/auth-layout";
 
 type Props = {
     status?: string;
@@ -25,9 +29,10 @@ export default function Login({
     teamInvitation,
 }: Props) {
     return (
-        <>
-            <Head title="Log in" />
-
+        <AuthLayout
+            title="Log in to your account"
+            description="Enter your email and password below to log in"
+        >
             {teamInvitation && (
                 <TeamInvitationAlert
                     invitation={teamInvitation}
@@ -128,11 +133,6 @@ export default function Login({
                     {status}
                 </div>
             )}
-        </>
+        </AuthLayout>
     );
 }
-
-Login.layout = {
-    title: "Log in to your account",
-    description: "Enter your email and password below to log in",
-};

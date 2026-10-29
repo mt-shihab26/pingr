@@ -1,4 +1,4 @@
-import { Form, Head } from "@inertiajs/react";
+import { Form } from "@inertiajs/react";
 import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,14 @@ import {
     store as confirmStore,
 } from "@/actions/Laravel/Passkeys/Http/Controllers/PasskeyConfirmationController";
 import { PasskeyVerify } from "@/components/screens/settings/passkey-verify";
+import { AuthLayout } from "@/components/layouts/auth-layout";
 
 export default function ConfirmPassword() {
     return (
-        <>
-            <Head title="Confirm password" />
-
+        <AuthLayout
+            title="Confirm password"
+            description="This is a secure area of the application. Please confirm your password before continuing."
+        >
             <PasskeyVerify
                 routes={{
                     options: confirmOptions(),
@@ -55,12 +57,6 @@ export default function ConfirmPassword() {
                     </div>
                 )}
             </Form>
-        </>
+        </AuthLayout>
     );
 }
-
-ConfirmPassword.layout = {
-    title: "Confirm password",
-    description:
-        "This is a secure area of the application. Please confirm your password before continuing.",
-};
