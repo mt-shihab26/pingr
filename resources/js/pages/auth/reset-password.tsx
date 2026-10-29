@@ -1,4 +1,4 @@
-import { Form, Head } from "@inertiajs/react";
+import { Form } from "@inertiajs/react";
 import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { update } from "@/routes/password";
+import { AuthLayout } from "@/components/layouts/auth-layout";
 
 type Props = {
     token: string;
@@ -15,9 +16,10 @@ type Props = {
 
 export default function ResetPassword({ token, email, passwordRules }: Props) {
     return (
-        <>
-            <Head title="Reset password" />
-
+        <AuthLayout
+            title="Reset password"
+            description="Please enter your new password below"
+        >
             <Form
                 {...update.form()}
                 transform={(data) => ({ ...data, token, email })}
@@ -86,11 +88,6 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                     </div>
                 )}
             </Form>
-        </>
+        </AuthLayout>
     );
 }
-
-ResetPassword.layout = {
-    title: "Reset password",
-    description: "Please enter your new password below",
-};

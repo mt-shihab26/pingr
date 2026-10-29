@@ -1,6 +1,6 @@
-import { Head } from "@inertiajs/react";
 import { Heading } from "@/components/elements/heading";
 import { edit as editAppearance } from "@/routes/appearance";
+import { SettingsLayout } from "@/components/layouts/settings-layout";
 
 import type { LucideIcon } from "lucide-react";
 import { Monitor, Moon, Sun } from "lucide-react";
@@ -50,9 +50,15 @@ function AppearanceToggleTab({
 
 export default function Appearance() {
     return (
-        <>
-            <Head title="Appearance settings" />
-
+        <SettingsLayout
+            title="Appearance settings"
+            breadcrumbs={[
+                {
+                    title: "Appearance settings",
+                    href: editAppearance(),
+                },
+            ]}
+        >
             <h1 className="sr-only">Appearance settings</h1>
 
             <div className="space-y-6">
@@ -63,15 +69,6 @@ export default function Appearance() {
                 />
                 <AppearanceToggleTab />
             </div>
-        </>
+        </SettingsLayout>
     );
 }
-
-Appearance.layout = {
-    breadcrumbs: [
-        {
-            title: "Appearance settings",
-            href: editAppearance(),
-        },
-    ],
-};

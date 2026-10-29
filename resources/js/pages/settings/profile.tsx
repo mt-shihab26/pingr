@@ -1,4 +1,4 @@
-import { Form, Head, usePage } from "@inertiajs/react";
+import { Form, usePage } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 import ProfileController from "@/actions/App/Http/Controllers/Settings/ProfileController";
 import { DeleteUser } from "@/components/screens/settings/delete-user";
@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { edit } from "@/routes/profile";
 import { send } from "@/routes/verification";
+import { SettingsLayout } from "@/components/layouts/settings-layout";
 
 export default function Profile({
     mustVerifyEmail,
@@ -20,9 +21,15 @@ export default function Profile({
     const { auth } = usePage().props;
 
     return (
-        <>
-            <Head title="Profile settings" />
-
+        <SettingsLayout
+            title="Profile settings"
+            breadcrumbs={[
+                {
+                    title: "Profile settings",
+                    href: edit(),
+                },
+            ]}
+        >
             <h1 className="sr-only">Profile settings</h1>
 
             <div className="space-y-6">
@@ -119,15 +126,6 @@ export default function Profile({
             </div>
 
             <DeleteUser />
-        </>
+        </SettingsLayout>
     );
 }
-
-Profile.layout = {
-    breadcrumbs: [
-        {
-            title: "Profile settings",
-            href: edit(),
-        },
-    ],
-};

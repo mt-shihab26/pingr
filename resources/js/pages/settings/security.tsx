@@ -1,4 +1,4 @@
-import { Form, Head } from "@inertiajs/react";
+import { Form } from "@inertiajs/react";
 import { useRef } from "react";
 import SecurityController from "@/actions/App/Http/Controllers/Settings/SecurityController";
 import { Heading } from "@/components/elements/heading";
@@ -11,8 +11,8 @@ import type { Props as ManagePasskeysProps } from "@/components/screens/settings
 import { ManagePasskeys } from "@/components/screens/settings/manage-passkeys";
 import type { Props as ManageTwoFactorProps } from "@/components/screens/settings/manage-two-factor";
 import { ManageTwoFactor } from "@/components/screens/settings/manage-two-factor";
+import { SettingsLayout } from "@/components/layouts/settings-layout";
 
-// oxfmt-ignore
 type Props = {
     passwordRules: string;
 } & ManagePasskeysProps &
@@ -23,9 +23,15 @@ export default function Security(props: Props) {
     const currentPasswordInput = useRef<HTMLInputElement>(null);
 
     return (
-        <>
-            <Head title="Security settings" />
-
+        <SettingsLayout
+            title="Security settings"
+            breadcrumbs={[
+                {
+                    title: "Security settings",
+                    href: edit(),
+                },
+            ]}
+        >
             <h1 className="sr-only">Security settings</h1>
 
             <div className="space-y-6">
@@ -134,15 +140,6 @@ export default function Security(props: Props) {
                 canManagePasskeys={props.canManagePasskeys}
                 passkeys={props.passkeys}
             />
-        </>
+        </SettingsLayout>
     );
 }
-
-Security.layout = {
-    breadcrumbs: [
-        {
-            title: "Security settings",
-            href: edit(),
-        },
-    ],
-};

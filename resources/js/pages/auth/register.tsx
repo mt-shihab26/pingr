@@ -1,4 +1,4 @@
-import { Form, Head } from "@inertiajs/react";
+import { Form } from "@inertiajs/react";
 import { InputError } from "@/components/elements/input-error";
 import { PasswordInput } from "@/components/elements/password-input";
 import { TeamInvitationAlert } from "@/components/screens/teams/team-invitation-alert";
@@ -10,6 +10,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { login } from "@/routes";
 import { store } from "@/routes/register";
 import { type TTeamInvitationContext } from "@/components/screens/teams/team-invitation-alert";
+import { AuthLayout } from "@/components/layouts/auth-layout";
 
 type Props = {
     passwordRules: string;
@@ -18,8 +19,10 @@ type Props = {
 
 export default function Register({ passwordRules, teamInvitation }: Props) {
     return (
-        <>
-            <Head title="Register" />
+        <AuthLayout
+            title="Create an account"
+            description="Enter your details below to create your account"
+        >
             <Form
                 {...store.form()}
                 resetOnSuccess={["password", "password_confirmation"]}
@@ -133,11 +136,6 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                     </>
                 )}
             </Form>
-        </>
+        </AuthLayout>
     );
 }
-
-Register.layout = {
-    title: "Create an account",
-    description: "Enter your details below to create your account",
-};
