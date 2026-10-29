@@ -62,6 +62,7 @@ export function SettingsLayout({
                                     key={`${toUrl(item.href)}-${index}`}
                                     size="sm"
                                     variant="ghost"
+                                    nativeButton={false}
                                     className={cn("w-full justify-start", {
                                         "bg-muted": isCurrentOrParentUrl(
                                             item.href,
