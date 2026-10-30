@@ -147,12 +147,12 @@ const CreateTarget = () => {
                 description="Add new target for monitoring of those targets status"
             />
             <div className="flex flex-col space-y-2">
-                <Heading
-                    variant="small"
-                    title="Type"
-                    description="Select type of target you want to monitor"
-                    required
-                />
+                <div className="flex flex-col space-y-1">
+                    <Label required>Type</Label>
+                    <p className="text-xs text-muted-foreground">
+                        Select type of target you want to monitor
+                    </p>
+                </div>
                 <div className="flex w-full space-x-2">
                     {types.map((type) => (
                         <Card
@@ -177,7 +177,7 @@ const CreateTarget = () => {
                         {selectedType.endpoint.label}
                     </Label>
                     {selectedType.endpoint.description && (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                             {selectedType.endpoint.description}
                         </p>
                     )}
