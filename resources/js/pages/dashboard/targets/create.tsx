@@ -1,11 +1,12 @@
-import type { TTargetAIFrequencyUnit, TTargetType } from "@/types/enums";
+import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/enums";
 
-import { aiFrequencyUnits, types } from "@/lib/targets";
+import { aiFrequencyUnits, checks, types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { cn } from "cn";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Heading } from "@/components/elements/heading";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { InputError } from "@/components/elements/input-error";
@@ -20,17 +21,68 @@ const CreateTarget = () => {
         endpoint: string | null;
         ai_frequency_value: number | null;
         ai_frequency_unit: TTargetAIFrequencyUnit;
+        check_website_uptime: boolean;
+        check_website_certificate_health: boolean;
+        check_website_broken_links: boolean;
+        check_website_mixed_content: boolean;
+        check_website_lighthouse: boolean;
+        check_website_scheduled_tasks: boolean;
+        check_website_application_health: boolean;
+        check_website_sitemap: boolean;
+        check_website_dns: boolean;
+        check_website_domain: boolean;
+        check_website_dns_blocklist: boolean;
+        check_server_uptime: boolean;
+        check_server_scheduled_tasks: boolean;
+        check_server_dns: boolean;
+        check_server_domain: boolean;
+        check_server_dns_blocklist: boolean;
+        check_server_open_ports: boolean;
+        check_tcpport_uptime: boolean;
+        check_tcpport_dns: boolean;
+        check_tcpport_domain: boolean;
+        check_tcpport_dns_blocklist: boolean;
     }>({
         type: "website",
         label: null,
         endpoint: null,
         ai_frequency_value: 1,
         ai_frequency_unit: "day",
+        check_website_uptime: true,
+        check_website_certificate_health: true,
+        check_website_broken_links: true,
+        check_website_mixed_content: true,
+        check_website_lighthouse: true,
+        check_website_scheduled_tasks: true,
+        check_website_application_health: true,
+        check_website_sitemap: true,
+        check_website_dns: true,
+        check_website_domain: true,
+        check_website_dns_blocklist: true,
+        check_server_uptime: true,
+        check_server_scheduled_tasks: true,
+        check_server_dns: true,
+        check_server_domain: true,
+        check_server_dns_blocklist: true,
+        check_server_open_ports: true,
+        check_tcpport_uptime: true,
+        check_tcpport_dns: true,
+        check_tcpport_domain: true,
+        check_tcpport_dns_blocklist: true,
     });
 
     const selectedType = useMemo(() => {
         return types.find((type) => type.key === data.type)!;
     }, [data.type]);
+
+    const checkField = useCallback(
+        (check: TTargetCheck) =>
+            `check_${data.type}_${check}` as Extract<
+                keyof typeof data,
+                `check_${TTargetType}_${TTargetCheck}`
+            >,
+        [data.type],
+    );
 
     return (
         <DashboardLayout title="Create new target for monitor">
@@ -149,6 +201,29 @@ const CreateTarget = () => {
                             <InputError message={errors.ai_frequency_unit} />
                         </div>
                     </div>
+                </div>
+            )}
+            {selectedType.checks.length > 0 && (
+                <div className="flex flex-col space-y-2">
+                    <Label>Checks</Label>
+                    <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                        {checks
+                            .filter((check) => selectedType.checks.includes(check.key))
+                            .map((check) => (
+                                <Label key={check.key} className="cursor-pointer">
+                                    <Checkbox
+                                        checked={data[checkField(check.key)]}
+                                        onCheckedChange={(checked) =>
+                                            setData(checkField(check.key), checked)
+                                        }
+                                    />
+                                    {check.label}
+                                </Label>
+                            ))}
+                    </div>
+                    {selectedType.checks.map((key) => (
+                        <InputError key={key} message={errors[checkField(key)]} />
+                    ))}
                 </div>
             )}
         </DashboardLayout>
