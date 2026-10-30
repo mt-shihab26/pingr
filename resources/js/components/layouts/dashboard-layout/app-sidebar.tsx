@@ -20,9 +20,7 @@ import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 
 const dashboardUrl = (team: TTeam | null): string => {
-    return team
-        ? route("dashboard.overview.index", { team: team.slug })
-        : "/";
+    return team ? route("dashboard.overview.index", { team: team.slug }) : "/";
 };
 
 export function AppSidebar() {
@@ -53,7 +51,7 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={resourceLinks} className="mt-auto" />
+                <NavFooter items={resourceLinks} />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

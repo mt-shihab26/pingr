@@ -11,7 +11,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
             description="Please verify your email address by clicking on the link we just emailed to you."
         >
             {status === "verification-link-sent" && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
+                <div className="text-center text-sm font-medium text-green-600">
                     A new verification link has been sent to the email address
                     you provided during registration.
                 </div>
@@ -32,7 +32,6 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             {processing && <Spinner />}
                             Resend verification email
                         </Button>
-
                     </>
                 )}
             </Form>
@@ -42,7 +41,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                 method="post"
                 as="button"
                 type="button"
-                className="mx-auto block text-sm"
+                className="self-center text-sm"
             >
                 Log out
             </TextLink>

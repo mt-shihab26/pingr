@@ -41,9 +41,7 @@ import { useShared } from "@/hooks/use-shared";
 import { dashboardNavItems, resourceLinks } from "@/lib/links";
 
 const dashboardUrl = (team: TTeam | null): string => {
-    return team
-        ? route("dashboard.overview.index", { team: team.slug })
-        : "/";
+    return team ? route("dashboard.overview.index", { team: team.slug }) : "/";
 };
 
 type Props = {
@@ -61,8 +59,8 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
 
     return (
         <>
-            <div className="border-b border-sidebar-border/80">
-                <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
+            <div className="flex justify-center border-b border-sidebar-border/80">
+                <div className="flex h-16 w-full items-center gap-2 px-4 md:max-w-7xl lg:gap-6">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>
@@ -71,7 +69,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="mr-2 h-8.5 w-8.5"
+                                        className="h-8.5 w-8.5"
                                     >
                                         <Menu className="h-5 w-5" />
                                     </Button>
@@ -87,14 +85,14 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 <SheetHeader className="flex justify-start text-left">
                                     <AppLogoIcon className="h-6 w-6 fill-current text-black dark:text-white" />
                                 </SheetHeader>
-                                <div className="flex h-full flex-1 flex-col space-y-4 p-4">
+                                <div className="flex h-full flex-1 flex-col gap-4 p-4">
                                     <div className="flex h-full flex-col justify-between text-sm">
-                                        <div className="flex flex-col space-y-4">
+                                        <div className="flex flex-col gap-4">
                                             {mainNavItems.map((item) => (
                                                 <Link
                                                     key={item.title}
                                                     href={item.href}
-                                                    className="flex items-center space-x-2 font-medium"
+                                                    className="flex items-center gap-2 font-medium"
                                                 >
                                                     {item.icon && (
                                                         <item.icon className="h-5 w-5" />
@@ -104,14 +102,14 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                             ))}
                                         </div>
 
-                                        <div className="flex flex-col space-y-4">
+                                        <div className="flex flex-col gap-4">
                                             {resourceLinks.map((item) => (
                                                 <a
                                                     key={item.title}
                                                     href={toUrl(item.href)}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="flex items-center space-x-2 font-medium"
+                                                    className="flex items-center gap-2 font-medium"
                                                 >
                                                     {item.icon && (
                                                         <item.icon className="h-5 w-5" />
@@ -129,15 +127,15 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     <Link
                         href={dashboardHref}
                         prefetch
-                        className="flex items-center space-x-2"
+                        className="flex items-center gap-2"
                     >
                         <AppLogo />
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
+                    <div className="hidden h-full items-center gap-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
-                            <NavigationMenuList className="flex h-full items-stretch space-x-2">
+                            <NavigationMenuList className="flex h-full items-stretch gap-2">
                                 {mainNavItems.map((item, index) => (
                                     <NavigationMenuItem
                                         key={index}
@@ -151,11 +149,11 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                                     item.href,
                                                     activeItemStyles,
                                                 ),
-                                                "h-9 cursor-pointer px-3",
+                                                "h-9 cursor-pointer gap-2 px-3",
                                             )}
                                         >
                                             {item.icon && (
-                                                <item.icon className="mr-2 h-4 w-4" />
+                                                <item.icon className="h-4 w-4" />
                                             )}
                                             {item.title}
                                         </Link>
@@ -168,8 +166,8 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                         </NavigationMenu>
                     </div>
 
-                    <div className="ml-auto flex items-center space-x-2">
-                        <div className="relative flex items-center space-x-1">
+                    <div className="flex flex-1 items-center justify-end gap-2">
+                        <div className="relative flex items-center gap-2">
                             <Button
                                 variant="ghost"
                                 size="icon"
@@ -177,7 +175,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             >
                                 <Search className="size-5! opacity-80 group-hover:opacity-100" />
                             </Button>
-                            <div className="ml-1 hidden gap-1 lg:flex">
+                            <div className="hidden gap-1 lg:flex">
                                 {resourceLinks.map((item) => (
                                     <TooltipProvider key={item.title} delay={0}>
                                         <Tooltip>
@@ -231,8 +229,8 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                 </div>
             </div>
             {breadcrumbs.length > 1 && (
-                <div className="flex w-full border-b border-sidebar-border/70">
-                    <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
+                <div className="flex w-full justify-center border-b border-sidebar-border/70">
+                    <div className="flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
                         <Breadcrumbs breadcrumbs={breadcrumbs} />
                     </div>
                 </div>

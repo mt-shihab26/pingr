@@ -35,7 +35,9 @@ export function PendingInvitationsModal({
 
     const acceptInvitation = (invitation: TDashboardInvitation) => {
         router.visit(
-            route("dashboard.teams.invitations.accept", { invitation: invitation.code }),
+            route("dashboard.teams.invitations.accept", {
+                invitation: invitation.code,
+            }),
             {
                 onStart: () => setProcessingCode(invitation.code),
                 onFinish: () => setProcessingCode(null),
@@ -45,7 +47,9 @@ export function PendingInvitationsModal({
 
     const declineInvitation = (invitation: TDashboardInvitation) => {
         router.visit(
-            route("dashboard.teams.invitations.decline", { invitation: invitation.code }),
+            route("dashboard.teams.invitations.decline", {
+                invitation: invitation.code,
+            }),
             {
                 onStart: () => setProcessingCode(invitation.code),
                 onFinish: () => setProcessingCode(null),
@@ -74,7 +78,7 @@ export function PendingInvitationsModal({
                         <div
                             key={invitation.code}
                             data-test="pending-invitation-row"
-                            className="rounded-none border p-4"
+                            className="flex flex-col gap-4 rounded-none border p-4"
                         >
                             <div className="space-y-1">
                                 <p className="font-medium">
@@ -86,7 +90,7 @@ export function PendingInvitationsModal({
                                 </p>
                             </div>
 
-                            <div className="mt-4 flex justify-end gap-2">
+                            <div className="flex justify-end gap-2">
                                 <Button
                                     variant="secondary"
                                     data-test="pending-invitation-decline"

@@ -24,7 +24,7 @@ import { OTP_MAX_LENGTH } from "@/hooks/use-two-factor-auth";
 
 function GridScanIcon() {
     return (
-        <div className="mb-3 rounded-full border border-border bg-card p-0.5 shadow-sm">
+        <div className="rounded-full border border-border bg-card p-0.5 shadow-sm">
             <div className="relative overflow-hidden rounded-full border border-border bg-muted p-2.5">
                 <div className="absolute inset-0 grid grid-cols-5 opacity-50">
                     {Array.from({ length: 5 }, (_, i) => (
@@ -71,8 +71,8 @@ function TwoFactorSetupStep({
                 <AlertError errors={errors} />
             ) : (
                 <>
-                    <div className="mx-auto flex max-w-md overflow-hidden">
-                        <div className="mx-auto aspect-square w-64 rounded-lg border border-border">
+                    <div className="flex max-w-md justify-center overflow-hidden">
+                        <div className="aspect-square w-64 rounded-lg border border-border">
                             <div className="z-10 flex h-full w-full items-center justify-center p-5">
                                 {qrCodeSvg ? (
                                     <div
@@ -325,12 +325,14 @@ export function TwoFactorSetupModal({
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
             <DialogContent className="sm:max-w-md">
-                <DialogHeader className="flex items-center justify-center">
+                <DialogHeader className="flex items-center justify-center gap-4">
                     <GridScanIcon />
-                    <DialogTitle>{modalConfig.title}</DialogTitle>
-                    <DialogDescription className="text-center">
-                        {modalConfig.description}
-                    </DialogDescription>
+                    <div className="flex flex-col items-center gap-1">
+                        <DialogTitle>{modalConfig.title}</DialogTitle>
+                        <DialogDescription className="text-center">
+                            {modalConfig.description}
+                        </DialogDescription>
+                    </div>
                 </DialogHeader>
 
                 <div className="flex flex-col items-center space-y-5">

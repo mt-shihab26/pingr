@@ -17,12 +17,13 @@ export default function TeamsIndex({ teams }: Props) {
     return (
         <DashboardLayout
             title="Switch team"
-            breadcrumbs={[{ title: "Switch team", href: route("dashboard.teams.index") }]}
+            breadcrumbs={[
+                { title: "Switch team", href: route("dashboard.teams.index") },
+            ]}
         >
-            <div className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6">
+            <div className="w-full max-w-3xl space-y-6 self-center px-4 py-6">
                 <div className="flex items-center justify-between gap-4">
                     <Heading
-                        variant="small"
                         title="Your teams"
                         description="Switch between teams or manage a team."
                     />
@@ -78,12 +79,12 @@ export default function TeamsIndex({ teams }: Props) {
                                     >
                                         {isCurrentTeam ? (
                                             <>
-                                                <Check className="mr-2 size-4" />
+                                                <Check className="size-4" />
                                                 Current team
                                             </>
                                         ) : (
                                             <>
-                                                <ArrowRightLeft className="mr-2 size-4" />
+                                                <ArrowRightLeft className="size-4" />
                                                 Switch
                                             </>
                                         )}
@@ -101,7 +102,7 @@ export default function TeamsIndex({ teams }: Props) {
                                             />
                                         }
                                     >
-                                        <Settings2 className="mr-2 size-4" />
+                                        <Settings2 className="size-4" />
                                         Manage team
                                     </Button>
                                 </div>

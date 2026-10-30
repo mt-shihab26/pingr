@@ -1,4 +1,4 @@
-export function Heading({
+export const Heading = ({
     title,
     description,
     variant = "default",
@@ -6,13 +6,13 @@ export function Heading({
     title: string;
     description?: string;
     variant?: "default" | "small";
-}) {
+}) => {
     return (
-        <header className={variant === "small" ? "" : "mb-8 space-y-0.5"}>
+        <header className="flex flex-col gap-0.5">
             <h2
                 className={
                     variant === "small"
-                        ? "mb-0.5 text-base font-medium"
+                        ? "text-base font-medium"
                         : "text-xl font-semibold tracking-tight"
                 }
             >
@@ -23,4 +23,4 @@ export function Heading({
             )}
         </header>
     );
-}
+};

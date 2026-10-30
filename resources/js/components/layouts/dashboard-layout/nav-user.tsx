@@ -37,7 +37,7 @@ export function NavUser() {
                                 data-test="sidebar-menu-button"
                             >
                                 <UserInfo user={user} team={team} />
-                                <ChevronsUpDown className="ml-auto size-4" />
+                                <ChevronsUpDown className="size-4" />
                             </SidebarMenuButton>
                         }
                     />

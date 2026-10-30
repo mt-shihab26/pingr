@@ -36,11 +36,11 @@ export function UserMenuContent({ user }: Props) {
             <DropdownMenuItem
                 render={
                     <Link
-                        className="block w-full cursor-pointer"
+                        className="w-full cursor-pointer"
                         href={route("dashboard.teams.index")}
                         onClick={cleanup}
                     >
-                        <Users className="mr-2" />
+                        <Users />
                         Teams
                     </Link>
                 }
@@ -50,12 +50,12 @@ export function UserMenuContent({ user }: Props) {
                 <DropdownMenuItem
                     render={
                         <Link
-                            className="block w-full cursor-pointer"
+                            className="w-full cursor-pointer"
                             href={route("dashboard.settings.profile.edit")}
                             prefetch
                             onClick={cleanup}
                         >
-                            <Settings className="mr-2" />
+                            <Settings />
                             Settings
                         </Link>
                     }
@@ -63,7 +63,7 @@ export function UserMenuContent({ user }: Props) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} data-test="logout-button">
-                <LogOut className="mr-2" />
+                <LogOut />
                 Log out
             </DropdownMenuItem>
         </>

@@ -22,14 +22,14 @@ export function AuthSplitLayout({
                 <div className="absolute inset-0 bg-zinc-900" />
                 <Link
                     href={route("home")}
-                    className="relative z-20 flex items-center text-lg font-medium"
+                    className="relative z-20 flex items-center gap-2 text-lg font-medium"
                 >
-                    <AppLogoIcon className="mr-2 size-8 fill-current text-white" />
+                    <AppLogoIcon className="size-8 fill-current text-white" />
                     {name}
                 </Link>
             </div>
-            <div className="w-full lg:p-8">
-                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-87.5">
+            <div className="flex w-full justify-center lg:p-8">
+                <div className="flex w-full flex-col justify-center gap-6 sm:w-87.5">
                     <Link
                         href={route("home")}
                         className="relative z-20 flex items-center justify-center lg:hidden"

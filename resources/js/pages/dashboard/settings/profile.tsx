@@ -52,7 +52,7 @@ export default function Profile({
 
                                 <Input
                                     id="name"
-                                    className="mt-1 block w-full"
+                                    className="block w-full"
                                     defaultValue={user.name}
                                     name="name"
                                     required
@@ -60,10 +60,7 @@ export default function Profile({
                                     placeholder="Full name"
                                 />
 
-                                <InputError
-                                    className="mt-2"
-                                    message={errors.name}
-                                />
+                                <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
@@ -72,7 +69,7 @@ export default function Profile({
                                 <Input
                                     id="email"
                                     type="email"
-                                    className="mt-1 block w-full"
+                                    className="block w-full"
                                     defaultValue={user.email}
                                     name="email"
                                     required
@@ -80,16 +77,13 @@ export default function Profile({
                                     placeholder="Email address"
                                 />
 
-                                <InputError
-                                    className="mt-2"
-                                    message={errors.email}
-                                />
+                                <InputError message={errors.email} />
                             </div>
 
                             {mustVerifyEmail &&
                                 user.email_verified_at === null && (
-                                    <div>
-                                        <p className="-mt-4 text-sm text-muted-foreground">
+                                    <div className="flex flex-col gap-2">
+                                        <p className="text-sm text-muted-foreground">
                                             Your email address is unverified.{" "}
                                             <Link
                                                 href={route(
@@ -105,7 +99,7 @@ export default function Profile({
 
                                         {status ===
                                             "verification-link-sent" && (
-                                            <div className="mt-2 text-sm font-medium text-green-600">
+                                            <div className="text-sm font-medium text-green-600">
                                                 A new verification link has been
                                                 sent to your email address.
                                             </div>

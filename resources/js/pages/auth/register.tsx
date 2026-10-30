@@ -50,10 +50,7 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                                     name="name"
                                     placeholder="Full name"
                                 />
-                                <InputError
-                                    message={errors.name}
-                                    className="mt-2"
-                                />
+                                <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
@@ -104,7 +101,7 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="w-full"
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >

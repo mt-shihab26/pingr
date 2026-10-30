@@ -79,7 +79,10 @@ export default function TeamEdit({
 
     const updateMemberRole = (member: TTeamMember, newRole: string) => {
         router.visit(
-            route("dashboard.teams.members.update", { team: team.slug, user: member.id }),
+            route("dashboard.teams.members.update", {
+                team: team.slug,
+                user: member.id,
+            }),
             {
                 data: { role: newRole },
                 preserveScroll: true,
@@ -99,7 +102,7 @@ export default function TeamEdit({
 
     return (
         <DashboardLayout title={pageTitle}>
-            <div className="mx-auto flex w-full max-w-5xl items-center gap-4 px-4 pt-6">
+            <div className="flex w-full max-w-5xl items-center gap-4 self-center px-4 pt-6">
                 <Link
                     href={route("dashboard.teams.index")}
                     className="inline-flex shrink-0 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -122,12 +125,11 @@ export default function TeamEdit({
                     ]}
                 />
             </div>
-            <div className="mx-auto w-full max-w-5xl space-y-10 px-4 py-6">
+            <div className="w-full max-w-5xl space-y-10 self-center px-4 py-6">
                 <div className="space-y-6">
                     {permissions.canUpdateTeam ? (
                         <>
                             <Heading
-                                variant="small"
                                 title="Team settings"
                                 description="Update your team name and settings"
                             />
@@ -238,7 +240,7 @@ export default function TeamEdit({
                                                         data-test="member-role-trigger"
                                                     >
                                                         {member.role_label}
-                                                        <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </Button>
                                                 }
                                             />
