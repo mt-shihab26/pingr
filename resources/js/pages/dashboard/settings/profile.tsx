@@ -25,7 +25,7 @@ export default function Profile({
             title="Profile settings"
             breadcrumbs={[
                 {
-                    title: "Profile settings",
+                    title: "Profile",
                     href: route("dashboard.settings.profile.edit"),
                 },
             ]}

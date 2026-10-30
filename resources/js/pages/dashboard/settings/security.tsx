@@ -25,7 +25,7 @@ export default function Security(props: Props) {
             title="Security settings"
             breadcrumbs={[
                 {
-                    title: "Security settings",
+                    title: "Security",
                     href: route("dashboard.settings.security.edit"),
                 },
             ]}

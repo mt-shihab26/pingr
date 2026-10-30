@@ -3,6 +3,7 @@ import { Heading } from "@/components/elements/heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCurrentUrl } from "@/hooks/use-current-url";
+import { useShared } from "@/hooks/use-shared";
 import { cn, toUrl } from "@/lib/utils";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import type { ReactNode } from "react";
@@ -12,16 +13,35 @@ import { settingsNavItems } from "@/lib/links";
 export function SettingsLayout({
     title,
     children,
-    breadcrumbs,
+    breadcrumbs = [],
 }: {
     title: string;
     children: ReactNode;
     breadcrumbs?: TBreadcrumb[];
 }) {
     const { isCurrentOrParentUrl } = useCurrentUrl();
+    const { team } = useShared();
 
     return (
-        <DashboardLayout title={title} breadcrumbs={breadcrumbs}>
+        <DashboardLayout
+            title={title}
+            breadcrumbs={[
+                {
+                    type: "back",
+                    title: "Back to dashboard",
+                    href: team
+                        ? route("dashboard.overview.index", {
+                              team: team.slug,
+                          })
+                        : "/",
+                },
+                {
+                    title: "Settings",
+                    href: route("dashboard.settings.profile.edit"),
+                },
+                ...breadcrumbs,
+            ]}
+        >
             <Heading
                 title="Settings"
                 description="Manage your profile and account settings"

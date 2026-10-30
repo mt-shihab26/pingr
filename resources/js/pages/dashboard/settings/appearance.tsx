@@ -53,7 +53,7 @@ export default function Appearance() {
             title="Appearance settings"
             breadcrumbs={[
                 {
-                    title: "Appearance settings",
+                    title: "Appearance",
                     href: route("dashboard.settings.appearance.edit"),
                 },
             ]}
