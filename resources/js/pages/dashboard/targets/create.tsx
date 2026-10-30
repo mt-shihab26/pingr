@@ -14,12 +14,14 @@ import { Label } from "@/components/ui/label";
 const CreateTarget = () => {
     const { data, setData, errors } = useForm<{
         type: TTargetType;
+        label: string | null;
         website_url: string | null;
         server_address: string | null;
         tcpport_endpoint: string | null;
         ai_url: string | null;
     }>({
         type: "website",
+        label: null,
         website_url: null,
         server_address: null,
         tcpport_endpoint: null,
@@ -36,6 +38,7 @@ const CreateTarget = () => {
                 <Heading
                     variant="small"
                     title="Type"
+                    required
                     description="Select type of target you want to monitor"
                 />
                 <div className="flex w-full space-x-2">
@@ -58,10 +61,13 @@ const CreateTarget = () => {
             </div>
             {data.type === "website" && (
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="website_url">Website URL</Label>
+                    <Label htmlFor="website_url" required>
+                        Website URL
+                    </Label>
                     <Input
                         id="website_url"
                         name="website_url"
+                        required
                         type="url"
                         placeholder="https://example.com"
                         value={data.website_url ?? ""}
@@ -72,10 +78,13 @@ const CreateTarget = () => {
             )}
             {data.type === "server" && (
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="server_address">Server address</Label>
+                    <Label htmlFor="server_address" required>
+                        Server address
+                    </Label>
                     <Input
                         id="server_address"
                         name="server_address"
+                        required
                         type="text"
                         placeholder="192.168.1.1 or server.example.com"
                         value={data.server_address ?? ""}
@@ -88,10 +97,13 @@ const CreateTarget = () => {
             )}
             {data.type === "tcpport" && (
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="tcpport_endpoint">TCP endpoint</Label>
+                    <Label htmlFor="tcpport_endpoint" required>
+                        TCP endpoint
+                    </Label>
                     <Input
                         id="tcpport_endpoint"
                         name="tcpport_endpoint"
+                        required
                         type="text"
                         placeholder="example.com:443"
                         value={data.tcpport_endpoint ?? ""}
@@ -105,7 +117,7 @@ const CreateTarget = () => {
             {data.type === "ai" && (
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-1">
-                        <Label htmlFor="ai_url">
+                        <Label htmlFor="ai_url" required>
                             What website would you like to monitor?
                         </Label>
                         <p className="text-sm text-muted-foreground">
@@ -115,6 +127,7 @@ const CreateTarget = () => {
                     <Input
                         id="ai_url"
                         name="ai_url"
+                        required
                         type="url"
                         placeholder="https://example.com"
                         value={data.ai_url ?? ""}
@@ -123,6 +136,18 @@ const CreateTarget = () => {
                     <InputError message={errors.ai_url} />
                 </div>
             )}
+            <div className="flex flex-col gap-2">
+                <Label htmlFor="label">Label</Label>
+                <Input
+                    id="label"
+                    name="label"
+                    type="text"
+                    placeholder="My website"
+                    value={data.label ?? ""}
+                    onChange={(e) => setData("label", e.target.value)}
+                />
+                <InputError message={errors.label} />
+            </div>
         </DashboardLayout>
     );
 };
