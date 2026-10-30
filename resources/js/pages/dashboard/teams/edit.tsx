@@ -5,7 +5,6 @@ import { CancelInvitationModal } from "@/components/screens/dashboard/teams/canc
 import { DeleteTeamModal } from "@/components/screens/dashboard/teams/delete-team-modal";
 import { Heading } from "@/components/elements/heading";
 import { InputError } from "@/components/elements/input-error";
-
 import {
     InviteMemberModal,
     type TRoleOption,
@@ -102,7 +101,7 @@ export default function TeamEdit({
 
     return (
         <DashboardLayout title={pageTitle}>
-            <div className="flex w-full max-w-5xl items-center gap-4 self-center px-4 pt-6">
+            <div className="flex w-full max-w-5xl items-center gap-4 self-center">
                 <Link
                     href={route("dashboard.teams.index")}
                     className="inline-flex shrink-0 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -125,7 +124,7 @@ export default function TeamEdit({
                     ]}
                 />
             </div>
-            <div className="w-full max-w-5xl space-y-10 self-center px-4 py-6">
+            <div className="w-full max-w-5xl space-y-10 self-center">
                 <div className="space-y-6">
                     {permissions.canUpdateTeam ? (
                         <>

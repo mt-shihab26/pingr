@@ -21,7 +21,7 @@ export default function TeamsIndex({ teams }: Props) {
                 { title: "Switch team", href: route("dashboard.teams.index") },
             ]}
         >
-            <div className="w-full max-w-3xl space-y-6 self-center px-4 py-6">
+            <div className="w-full max-w-3xl space-y-6 self-center">
                 <div className="flex items-center justify-between gap-4">
                     <Heading
                         title="Your teams"
