@@ -5,23 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Dashboard\Targets\StoreTargetRequest;
 use App\Http\Requests\Dashboard\Targets\UpdateTargetRequest;
 use App\Models\Target;
+use Inertia\Response;
 
 class TargetController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index(): Response
     {
-        //
+        return inertia("dashboard/targets/index");
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
+    public function create(): Response
     {
-        //
+        return inertia("dashboard/targets/create");
     }
 
     /**

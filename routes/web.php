@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\Teams\TeamController;
 use App\Http\Controllers\Dashboard\Teams\TeamInvitationController;
 use App\Http\Controllers\Dashboard\Teams\TeamMemberController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TargetController;
 use App\Http\Controllers\WellKnownController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Auth\Middleware\RequirePassword;
@@ -22,7 +23,12 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
 
     Route::prefix('/{team}')->middleware(EnsureTeamMembership::class)->group(function () {
         Route::get('/overview', [OverviewController::class, "index"])->name('dashboard.overview.index');
-        Route::get('/targets', [OverviewController::class, "index"])->name('dashboard.targets.index');
+
+        Route::prefix("/targets")->group(function () {
+            Route::get('/', [TargetController::class, "index"])->name('dashboard.targets.index');
+            Route::get('/create', [TargetController::class, "create"])->name('dashboard.targets.create');
+        });
+
         Route::get('/pages', [OverviewController::class, "index"])->name('dashboard.pages.index');
     });
 
