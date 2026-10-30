@@ -7,17 +7,17 @@ export const dashboardNavItems = (team: TTeam | null): TNavItem[] => {
     return [
         {
             title: "Dashboard",
-            href: route("dashboard.team.overview.index", { team: team?.slug }),
+            href: route("dashboard.overview.index", { team: team?.slug }),
             icon: LayoutGrid,
         },
         {
             title: "Targets",
-            href: route("dashboard.team.targets.index", { team: team?.slug }),
+            href: route("dashboard.targets.index", { team: team?.slug }),
             icon: LayoutGrid,
         },
         {
             title: "Pages",
-            href: route("dashboard.team.pages.index", { team: team?.slug }),
+            href: route("dashboard.pages.index", { team: team?.slug }),
             icon: LayoutGrid,
         },
     ];

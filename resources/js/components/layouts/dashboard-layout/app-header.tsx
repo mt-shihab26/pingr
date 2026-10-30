@@ -42,7 +42,7 @@ import { dashboardNavItems, resourceLinks } from "@/lib/links";
 
 const dashboardUrl = (team: TTeam | null): string => {
     return team
-        ? route("dashboard.team.overview.index", { team: team.slug })
+        ? route("dashboard.overview.index", { team: team.slug })
         : "/";
 };
 

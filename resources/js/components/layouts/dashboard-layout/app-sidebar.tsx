@@ -21,7 +21,7 @@ import { NavUser } from "./nav-user";
 
 const dashboardUrl = (team: TTeam | null): string => {
     return team
-        ? route("dashboard.team.overview.index", { team: team.slug })
+        ? route("dashboard.overview.index", { team: team.slug })
         : "/";
 };
 

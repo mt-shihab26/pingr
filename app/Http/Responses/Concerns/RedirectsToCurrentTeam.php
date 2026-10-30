@@ -12,7 +12,7 @@ trait RedirectsToCurrentTeam
         $team = $this->currentTeam($request);
 
         return $redirect === '/dashboard'
-            ? route('dashboard.team.overview.index', ['team' => $team->slug], absolute: false)
+            ? route('dashboard.overview.index', ['team' => $team->slug], absolute: false)
             : $redirect;
     }
 

@@ -81,7 +81,7 @@ class TeamInvitationController extends Controller
 
         abort_if(! $team, 403);
 
-        return redirect()->route('dashboard.team.overview.index', ['team' => $team->slug]);
+        return redirect()->route('dashboard.overview.index', ['team' => $team->slug]);
     }
 
     /**
@@ -99,6 +99,6 @@ class TeamInvitationController extends Controller
 
         abort_if(! $team, 403);
 
-        return redirect()->route('dashboard.team.overview.index', ['team' => $team->slug]);
+        return redirect()->route('dashboard.overview.index', ['team' => $team->slug]);
     }
 }

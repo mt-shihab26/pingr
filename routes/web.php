@@ -21,9 +21,9 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
     Route::get('/', [OverviewController::class, "redirect"])->withoutMiddleware("verified")->name('dashboard.index');
 
     Route::prefix('/{team}')->middleware(EnsureTeamMembership::class)->group(function () {
-        Route::get('/overview', [OverviewController::class, "index"])->name('dashboard.team.overview.index');
-        Route::get('/targets', [OverviewController::class, "index"])->name('dashboard.team.targets.index');
-        Route::get('/pages', [OverviewController::class, "index"])->name('dashboard.team.pages.index');
+        Route::get('/overview', [OverviewController::class, "index"])->name('dashboard.overview.index');
+        Route::get('/targets', [OverviewController::class, "index"])->name('dashboard.targets.index');
+        Route::get('/pages', [OverviewController::class, "index"])->name('dashboard.pages.index');
     });
 
     Route::prefix('/teams')->group(function () {
