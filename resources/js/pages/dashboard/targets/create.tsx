@@ -1,12 +1,13 @@
+import type { TTargetType } from "@/types/enums";
+
 import { types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";
+import { cn } from "cn";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Heading } from "@/components/elements/heading";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
-import type { TTargetType } from "@/types/enums";
 import { InputError } from "@/components/elements/input-error";
-import { cn } from "cn";
 
 const CreateTarget = () => {
     const { data, setData, errors } = useForm<{
@@ -32,8 +33,8 @@ const CreateTarget = () => {
                         <Card
                             key={type.key}
                             onClick={() => setData("type", type.key)}
-                            className={cn("w-full", {
-                                "border border-red-500": data.type == type.key,
+                            className={cn("w-full cursor-pointer", {
+                                "ring-primary": data.type === type.key,
                             })}
                         >
                             <CardContent>

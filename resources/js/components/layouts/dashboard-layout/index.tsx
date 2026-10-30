@@ -23,7 +23,7 @@ export function DashboardLayout({
             <h1 className="sr-only">{title}</h1>
             <div
                 className={cn(
-                    "flex flex-1 flex-col gap-8 px-4 py-6",
+                    "flex flex-1 flex-col gap-6 px-4 py-6",
                     className,
                 )}
             >
