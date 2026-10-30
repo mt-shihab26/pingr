@@ -127,6 +127,12 @@ const CreateTarget = () => {
             title="Create new target for monitor"
             breadcrumbs={[
                 {
+                    type: "back",
+                    title: "Back to targets",
+                    href: route("dashboard.targets.index", { team }),
+                },
+
+                {
                     title: "Targets",
                     href: route("dashboard.targets.index", { team }),
                 },
