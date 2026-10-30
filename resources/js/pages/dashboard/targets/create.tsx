@@ -2,6 +2,7 @@ import type { TTargetAIFrequencyUnit, TTargetType } from "@/types/enums";
 
 import { aiFrequencyUnits, types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";
+import { useMemo } from "react";
 import { cn } from "cn";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,20 +17,18 @@ const CreateTarget = () => {
     const { data, setData, errors } = useForm<{
         type: TTargetType;
         label: string | null;
-        website_url: string | null;
-        server_address: string | null;
-        tcpport_endpoint: string | null;
-        ai_url: string | null;
+        endpoint: string | null;
         ai_frequency_unit: TTargetAIFrequencyUnit;
     }>({
         type: "website",
         label: null,
-        website_url: null,
-        server_address: null,
-        tcpport_endpoint: null,
-        ai_url: null,
+        endpoint: null,
         ai_frequency_unit: "day",
     });
+
+    const selectedType = useMemo(() => {
+        return types.find((type) => type.key === data.type)!;
+    }, [data.type]);
 
     return (
         <DashboardLayout title="Create new target for monitor">
@@ -62,87 +61,30 @@ const CreateTarget = () => {
                 </div>
                 <InputError message={errors.type} />
             </div>
-            {data.type === "website" && (
-                <div className="flex flex-col space-y-2">
-                    <Label htmlFor="website_url" required>
-                        Website URL
+            <div className="flex flex-col space-y-2">
+                <div className="flex flex-col space-y-1">
+                    <Label htmlFor={`endpoint_${selectedType.key}`} required>
+                        {selectedType.target.label}
                     </Label>
-                    <Input
-                        id="website_url"
-                        name="website_url"
-                        maxLength={2048}
-                        minLength={10}
-                        required
-                        type="url"
-                        placeholder="https://example.com"
-                        value={data.website_url ?? ""}
-                        onChange={(e) => setData("website_url", e.target.value)}
-                    />
-                    <InputError message={errors.website_url} />
-                </div>
-            )}
-            {data.type === "server" && (
-                <div className="flex flex-col space-y-2">
-                    <Label htmlFor="server_address" required>
-                        Server address
-                    </Label>
-                    <Input
-                        id="server_address"
-                        name="server_address"
-                        maxLength={253}
-                        minLength={4}
-                        required
-                        type="text"
-                        placeholder="192.168.1.1 or server.example.com"
-                        value={data.server_address ?? ""}
-                        onChange={(e) => setData("server_address", e.target.value)}
-                    />
-                    <InputError message={errors.server_address} />
-                </div>
-            )}
-            {data.type === "tcpport" && (
-                <div className="flex flex-col space-y-2">
-                    <Label htmlFor="tcpport_endpoint" required>
-                        TCP endpoint
-                    </Label>
-                    <Input
-                        id="tcpport_endpoint"
-                        name="tcpport_endpoint"
-                        maxLength={259}
-                        minLength={6}
-                        required
-                        type="text"
-                        placeholder="example.com:443"
-                        value={data.tcpport_endpoint ?? ""}
-                        onChange={(e) => setData("tcpport_endpoint", e.target.value)}
-                    />
-                    <InputError message={errors.tcpport_endpoint} />
-                </div>
-            )}
-            {data.type === "ai" && (
-                <div className="flex flex-col space-y-2">
-                    <div className="flex flex-col space-y-1">
-                        <Label htmlFor="ai_url" required>
-                            What website would you like to monitor?
-                        </Label>
+                    {selectedType.target.description && (
                         <p className="text-sm text-muted-foreground">
-                            We'll analyze the page and suggest what to monitor.
+                            {selectedType.target.description}
                         </p>
-                    </div>
-                    <Input
-                        id="ai_url"
-                        name="ai_url"
-                        maxLength={2048}
-                        minLength={10}
-                        required
-                        type="url"
-                        placeholder="https://example.com"
-                        value={data.ai_url ?? ""}
-                        onChange={(e) => setData("ai_url", e.target.value)}
-                    />
-                    <InputError message={errors.ai_url} />
+                    )}
                 </div>
-            )}
+                <Input
+                    id={`endpoint_${selectedType.key}`}
+                    name={`endpoint_${selectedType.key}`}
+                    maxLength={selectedType.target.maxLength}
+                    minLength={selectedType.target.minLength}
+                    type={selectedType.target.type}
+                    placeholder={selectedType.target.placeholder}
+                    value={data.endpoint ?? ""}
+                    onChange={(e) => setData("endpoint", e.target.value)}
+                    required
+                />
+                <InputError message={errors.endpoint} />
+            </div>
             <div className="flex flex-col space-y-2">
                 <Label htmlFor="label">Label</Label>
                 <Input

@@ -5,6 +5,14 @@ export const types: {
     label: string;
     description: string;
     checks: TTargetCheck[];
+    target: {
+        label: string;
+        description?: string;
+        type: "url" | "text";
+        placeholder: string;
+        minLength: number;
+        maxLength: number;
+    };
 }[] = [
     {
         key: "website",
@@ -23,24 +31,53 @@ export const types: {
             "domain",
             "dns_blocklist",
         ],
+        target: {
+            label: "Website URL",
+            type: "url",
+            placeholder: "https://example.com",
+            minLength: 10,
+            maxLength: 2048,
+        },
     },
     {
         key: "server",
         label: "Server",
         description: "Test server availability via ICMP ping & port scans",
         checks: ["uptime", "scheduled_tasks", "dns", "domain", "dns_blocklist", "open_ports"],
+        target: {
+            label: "Server address",
+            type: "text",
+            placeholder: "192.168.1.1 or server.example.com",
+            minLength: 4,
+            maxLength: 253,
+        },
     },
     {
         key: "tcpport",
         label: "TCP Port",
         description: "Verify if a TCP port is reachable",
         checks: ["uptime", "dns", "domain", "dns_blocklist"],
+        target: {
+            label: "TCP endpoint",
+            type: "text",
+            placeholder: "example.com:443",
+            minLength: 6,
+            maxLength: 259,
+        },
     },
     {
         key: "ai",
         label: "AI",
         description: "Use AI to verify anything you want",
         checks: [],
+        target: {
+            label: "What website would you like to monitor?",
+            description: "We'll analyze the page and suggest what to monitor.",
+            type: "url",
+            placeholder: "https://example.com",
+            minLength: 10,
+            maxLength: 2048,
+        },
     },
 ];
 
