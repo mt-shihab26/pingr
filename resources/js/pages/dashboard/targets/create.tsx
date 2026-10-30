@@ -5,6 +5,7 @@ import { useForm } from "@inertiajs/react";
 import { useCallback, useMemo } from "react";
 import { cn } from "cn";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Heading } from "@/components/elements/heading";
@@ -61,6 +62,14 @@ const CreateTarget = () => {
         return `check_${check}` as Extract<keyof typeof data, `check_${TTargetCheck}`>;
     }, []);
 
+    const toggleAllChecks = () => {
+        const checked = !selectedType.checks.every((key) => data[checkField(key)]);
+        setData((d) => ({
+            ...d,
+            ...Object.fromEntries(selectedType.checks.map((key) => [checkField(key), checked])),
+        }));
+    };
+
     return (
         <DashboardLayout title="Create new target for monitor">
             <Heading
@@ -116,20 +125,7 @@ const CreateTarget = () => {
                 />
                 <InputError message={errors.endpoint} />
             </div>
-            <div className="flex flex-col space-y-2">
-                <Label htmlFor="label">Label</Label>
-                <Input
-                    id="label"
-                    name="label"
-                    maxLength={255}
-                    minLength={3}
-                    type="text"
-                    placeholder="My website"
-                    value={data.label ?? ""}
-                    onChange={(e) => setData("label", e.target.value)}
-                />
-                <InputError message={errors.label} />
-            </div>
+
             {data.type === "ai" && (
                 <div className="flex flex-col space-y-2">
                     <Label htmlFor="ai_frequency" required>
@@ -182,7 +178,14 @@ const CreateTarget = () => {
             )}
             {selectedType.checks.length > 0 && (
                 <div className="flex flex-col space-y-2">
-                    <Label>Checks</Label>
+                    <div className="flex items-center justify-between">
+                        <Label>Checks</Label>
+                        <Button type="button" variant="link" size="xs" onClick={toggleAllChecks}>
+                            {selectedType.checks.every((key) => data[checkField(key)])
+                                ? "Deselect all"
+                                : "Select all"}
+                        </Button>
+                    </div>
                     <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                         {checks
                             .filter((check) => selectedType.checks.includes(check.key))
@@ -203,6 +206,20 @@ const CreateTarget = () => {
                     ))}
                 </div>
             )}
+            <div className="flex flex-col space-y-2">
+                <Label htmlFor="label">Label</Label>
+                <Input
+                    id="label"
+                    name="label"
+                    maxLength={255}
+                    minLength={3}
+                    type="text"
+                    placeholder="My website"
+                    value={data.label ?? ""}
+                    onChange={(e) => setData("label", e.target.value)}
+                />
+                <InputError message={errors.label} />
+            </div>
         </DashboardLayout>
     );
 };
