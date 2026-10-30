@@ -3,6 +3,7 @@ import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/
 import { aiFrequencyUnits, checks, types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";
 import { useCallback, useEffect, useMemo } from "react";
+import { useShared } from "@/hooks/use-shared";
 import { cn } from "cn";
 
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,8 @@ import { Label } from "@/components/ui/label";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 
 const CreateTarget = () => {
+    const { team } = useShared();
+
     const { data, setData, errors } = useForm<{
         type: TTargetType;
         label: string | null;
@@ -120,7 +123,19 @@ const CreateTarget = () => {
     };
 
     return (
-        <DashboardLayout title="Create new target for monitor">
+        <DashboardLayout
+            title="Create new target for monitor"
+            breadcrumbs={[
+                {
+                    title: "Targets",
+                    href: route("dashboard.targets.index", { team }),
+                },
+                {
+                    title: "Create",
+                    href: route("dashboard.targets.create", { team }),
+                },
+            ]}
+        >
             <Heading
                 title="Add new Target"
                 description="Add new target for monitoring of those targets status"

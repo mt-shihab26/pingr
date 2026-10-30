@@ -21,7 +21,7 @@ Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passke
 Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [OverviewController::class, "redirect"])->withoutMiddleware("verified")->name('dashboard.index');
 
-    Route::prefix('/{team}')->middleware(EnsureTeamMembership::class)->group(function () {
+    Route::prefix('/{team:slug}')->middleware(EnsureTeamMembership::class)->group(function () {
         Route::get('/overview', [OverviewController::class, "index"])->name('dashboard.overview.index');
 
         Route::prefix("/targets")->group(function () {
@@ -41,7 +41,7 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
             Route::delete('/{invitation}', [TeamInvitationController::class, 'decline'])->name('dashboard.teams.invitations.decline');
         });
 
-        Route::prefix('/{team}')->middleware(EnsureTeamMembership::class)->group(function () {
+        Route::prefix('/{team:slug}')->middleware(EnsureTeamMembership::class)->group(function () {
             Route::get('/', [TeamController::class, 'edit'])->name('dashboard.teams.edit');
             Route::patch('/', [TeamController::class, 'update'])->name('dashboard.teams.update');
             Route::delete('/', [TeamController::class, 'destroy'])->name('dashboard.teams.destroy');
