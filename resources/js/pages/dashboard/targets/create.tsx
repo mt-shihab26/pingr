@@ -171,7 +171,8 @@ const CreateTarget = () => {
                                     "ring-primary": data.type === type.key,
                                 })}
                             >
-                                <CardContent>
+                                <CardContent className="flex flex-col gap-2">
+                                    <type.display.icon className="size-5" />
                                     <div>{type.display.label}</div>
                                     <div>{type.display.description}</div>
                                 </CardContent>

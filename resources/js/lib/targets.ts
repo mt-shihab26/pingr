@@ -1,8 +1,12 @@
 import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/enums";
+import type { LucideIcon } from "lucide-react";
+
+import { Globe, Network, Server, Sparkles } from "lucide-react";
 
 export const types: {
     key: TTargetType;
     display: {
+        icon: LucideIcon;
         label: string;
         description: string;
     };
@@ -19,6 +23,7 @@ export const types: {
     {
         key: "website",
         display: {
+            icon: Globe,
             label: "Website",
             description: "Check website uptime, broken pages & more",
         },
@@ -46,6 +51,7 @@ export const types: {
     {
         key: "server",
         display: {
+            icon: Server,
             label: "Server",
             description: "Test server availability via ICMP ping & port scans",
         },
@@ -61,6 +67,7 @@ export const types: {
     {
         key: "tcpport",
         display: {
+            icon: Network,
             label: "TCP Port",
             description: "Verify if a TCP port is reachable",
         },
@@ -76,6 +83,7 @@ export const types: {
     {
         key: "ai",
         display: {
+            icon: Sparkles,
             label: "AI",
             description: "Use AI to verify anything you want",
         },
