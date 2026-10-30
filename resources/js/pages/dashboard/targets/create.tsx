@@ -38,8 +38,8 @@ const CreateTarget = () => {
                 <Heading
                     variant="small"
                     title="Type"
-                    required
                     description="Select type of target you want to monitor"
+                    required
                 />
                 <div className="flex w-full space-x-2">
                     {types.map((type) => (
@@ -67,6 +67,8 @@ const CreateTarget = () => {
                     <Input
                         id="website_url"
                         name="website_url"
+                        maxLength={2048}
+                        minLength={10}
                         required
                         type="url"
                         placeholder="https://example.com"
@@ -84,6 +86,8 @@ const CreateTarget = () => {
                     <Input
                         id="server_address"
                         name="server_address"
+                        maxLength={253}
+                        minLength={4}
                         required
                         type="text"
                         placeholder="192.168.1.1 or server.example.com"
@@ -103,6 +107,8 @@ const CreateTarget = () => {
                     <Input
                         id="tcpport_endpoint"
                         name="tcpport_endpoint"
+                        maxLength={259}
+                        minLength={6}
                         required
                         type="text"
                         placeholder="example.com:443"
@@ -127,6 +133,8 @@ const CreateTarget = () => {
                     <Input
                         id="ai_url"
                         name="ai_url"
+                        maxLength={2048}
+                        minLength={10}
                         required
                         type="url"
                         placeholder="https://example.com"
@@ -141,6 +149,8 @@ const CreateTarget = () => {
                 <Input
                     id="label"
                     name="label"
+                    maxLength={255}
+                    minLength={3}
                     type="text"
                     placeholder="My website"
                     value={data.label ?? ""}
