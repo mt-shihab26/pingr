@@ -2,7 +2,7 @@ import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/
 
 import { aiFrequencyUnits, checks, types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { cn } from "cn";
 
 import { Button } from "@/components/ui/button";
@@ -40,19 +40,74 @@ const CreateTarget = () => {
         endpoint: null,
         ai_frequency_value: 1,
         ai_frequency_unit: "day",
-        check_uptime: true,
-        check_certificate_health: true,
-        check_broken_links: true,
-        check_mixed_content: true,
-        check_lighthouse: true,
-        check_scheduled_tasks: true,
-        check_application_health: true,
-        check_sitemap: true,
-        check_dns: true,
-        check_domain: true,
-        check_dns_blocklist: true,
-        check_open_ports: true,
+        check_uptime: false,
+        check_certificate_health: false,
+        check_broken_links: false,
+        check_mixed_content: false,
+        check_lighthouse: false,
+        check_scheduled_tasks: false,
+        check_application_health: false,
+        check_sitemap: false,
+        check_dns: false,
+        check_domain: false,
+        check_dns_blocklist: false,
+        check_open_ports: false,
     });
+
+    useEffect(() => {
+        const unchecked = {
+            check_uptime: false,
+            check_certificate_health: false,
+            check_broken_links: false,
+            check_mixed_content: false,
+            check_lighthouse: false,
+            check_scheduled_tasks: false,
+            check_application_health: false,
+            check_sitemap: false,
+            check_dns: false,
+            check_domain: false,
+            check_dns_blocklist: false,
+            check_open_ports: false,
+        };
+
+        if (data.type === "website") {
+            setData((d) => ({
+                ...d,
+                ...unchecked,
+                check_uptime: true,
+                check_certificate_health: true,
+                check_broken_links: true,
+                check_mixed_content: true,
+                check_lighthouse: true,
+                check_dns: true,
+                check_domain: true,
+                check_dns_blocklist: true,
+            }));
+        }
+
+        if (data.type === "server") {
+            setData((d) => ({
+                ...d,
+                ...unchecked,
+                check_uptime: true,
+            }));
+        }
+
+        if (data.type === "tcpport") {
+            setData((d) => ({
+                ...d,
+                ...unchecked,
+                check_uptime: true,
+            }));
+        }
+
+        if (data.type === "ai") {
+            setData((d) => ({
+                ...d,
+                ...unchecked,
+            }));
+        }
+    }, [data.type]);
 
     const selectedType = useMemo(() => {
         return types.find((type) => type.key === data.type)!;
