@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heading } from "@/components/elements/heading";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { InputError } from "@/components/elements/input-error";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const CreateTarget = () => {
     const { data, setData, errors } = useForm<{
@@ -54,6 +56,66 @@ const CreateTarget = () => {
                 </div>
                 <InputError message={errors.type} />
             </div>
+            {data.type === "website" && (
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="website_url">Website URL</Label>
+                    <Input
+                        id="website_url"
+                        name="website_url"
+                        type="url"
+                        placeholder="https://example.com"
+                        value={data.website_url ?? ""}
+                        onChange={(e) => setData("website_url", e.target.value)}
+                    />
+                    <InputError message={errors.website_url} />
+                </div>
+            )}
+            {data.type === "server" && (
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="server_address">Server address</Label>
+                    <Input
+                        id="server_address"
+                        name="server_address"
+                        type="text"
+                        placeholder="192.168.1.1 or server.example.com"
+                        value={data.server_address ?? ""}
+                        onChange={(e) =>
+                            setData("server_address", e.target.value)
+                        }
+                    />
+                    <InputError message={errors.server_address} />
+                </div>
+            )}
+            {data.type === "tcpport" && (
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="tcpport_endpoint">TCP endpoint</Label>
+                    <Input
+                        id="tcpport_endpoint"
+                        name="tcpport_endpoint"
+                        type="text"
+                        placeholder="example.com:443"
+                        value={data.tcpport_endpoint ?? ""}
+                        onChange={(e) =>
+                            setData("tcpport_endpoint", e.target.value)
+                        }
+                    />
+                    <InputError message={errors.tcpport_endpoint} />
+                </div>
+            )}
+            {data.type === "ai" && (
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="ai_url">URL to verify</Label>
+                    <Input
+                        id="ai_url"
+                        name="ai_url"
+                        type="url"
+                        placeholder="https://example.com"
+                        value={data.ai_url ?? ""}
+                        onChange={(e) => setData("ai_url", e.target.value)}
+                    />
+                    <InputError message={errors.ai_url} />
+                </div>
+            )}
         </DashboardLayout>
     );
 };
