@@ -1,6 +1,6 @@
-import type { TTargetType } from "@/types/enums";
+import type { TTargetAIFrequencyUnit, TTargetType } from "@/types/enums";
 
-import { types } from "@/lib/targets";
+import { aiFrequencyUnits, types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";
 import { cn } from "cn";
 
@@ -20,6 +20,7 @@ const CreateTarget = () => {
         server_address: string | null;
         tcpport_endpoint: string | null;
         ai_url: string | null;
+        ai_frequency_unit: TTargetAIFrequencyUnit;
     }>({
         type: "website",
         label: null,
@@ -27,6 +28,7 @@ const CreateTarget = () => {
         server_address: null,
         tcpport_endpoint: null,
         ai_url: null,
+        ai_frequency_unit: "day",
     });
 
     return (
@@ -174,11 +176,11 @@ const CreateTarget = () => {
                         </div>
                         <div>
                             <NativeSelect>
-                                <NativeSelectOption value="">Select a fruit</NativeSelectOption>
-                                <NativeSelectOption value="apple">Apple</NativeSelectOption>
-                                <NativeSelectOption value="banana">Banana</NativeSelectOption>
-                                <NativeSelectOption value="blueberry">Blueberry</NativeSelectOption>
-                                <NativeSelectOption value="pineapple">Pineapple</NativeSelectOption>
+                                {aiFrequencyUnits.map((x) => (
+                                    <NativeSelectOption key={x.key} value={x.key}>
+                                        {x.label}
+                                    </NativeSelectOption>
+                                ))}
                             </NativeSelect>
                             <InputError message={errors.label} />
                         </div>

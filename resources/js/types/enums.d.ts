@@ -1,9 +1,16 @@
-export type TTeamRole = "owner" | "admin" | "member";
+export type TTeamRole =
+    | "owner" //
+    | "admin"
+    | "member";
 
-export type TTargetType = "website" | "server" | "tcpport" | "ai";
+export type TTargetType =
+    | "website" //
+    | "server"
+    | "tcpport"
+    | "ai";
 
 export type TTargetCheck =
-    | "uptime"
+    | "uptime" //
     | "certificate_health"
     | "broken_links"
     | "mixed_content"
@@ -15,3 +22,8 @@ export type TTargetCheck =
     | "domain"
     | "dns_blocklist"
     | "open_ports";
+
+export type TTargetAIFrequencyUnit =
+    | "minute" //
+    | "hour"
+    | "day";

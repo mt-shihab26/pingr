@@ -1,4 +1,4 @@
-import type { TTargetCheck, TTargetType } from "@/types/enums";
+import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/enums";
 
 export const types: {
     key: TTargetType;
@@ -28,14 +28,7 @@ export const types: {
         key: "server",
         label: "Server",
         description: "Test server availability via ICMP ping & port scans",
-        checks: [
-            "uptime",
-            "scheduled_tasks",
-            "dns",
-            "domain",
-            "dns_blocklist",
-            "open_ports",
-        ],
+        checks: ["uptime", "scheduled_tasks", "dns", "domain", "dns_blocklist", "open_ports"],
     },
     {
         key: "tcpport",
@@ -102,5 +95,23 @@ export const checks: {
     {
         key: "open_ports",
         label: "Open Ports",
+    },
+];
+
+export const aiFrequencyUnits: {
+    key: TTargetAIFrequencyUnit;
+    label: string;
+}[] = [
+    {
+        key: "minute",
+        label: "Minute(s)",
+    },
+    {
+        key: "hour",
+        label: "Hour(s)",
+    },
+    {
+        key: "day",
+        label: "Day(s)",
     },
 ];
