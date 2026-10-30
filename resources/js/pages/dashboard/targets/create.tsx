@@ -18,11 +18,13 @@ const CreateTarget = () => {
         type: TTargetType;
         label: string | null;
         endpoint: string | null;
+        ai_frequency_value: number | null;
         ai_frequency_unit: TTargetAIFrequencyUnit;
     }>({
         type: "website",
         label: null,
         endpoint: null,
+        ai_frequency_value: 1,
         ai_frequency_unit: "day",
     });
 
@@ -53,8 +55,8 @@ const CreateTarget = () => {
                             })}
                         >
                             <CardContent>
-                                <div>{type.label}</div>
-                                <div>{type.description}</div>
+                                <div>{type.display.label}</div>
+                                <div>{type.display.description}</div>
                             </CardContent>
                         </Card>
                     ))}
@@ -64,21 +66,21 @@ const CreateTarget = () => {
             <div className="flex flex-col space-y-2">
                 <div className="flex flex-col space-y-1">
                     <Label htmlFor={`endpoint_${selectedType.key}`} required>
-                        {selectedType.target.label}
+                        {selectedType.endpoint.label}
                     </Label>
-                    {selectedType.target.description && (
+                    {selectedType.endpoint.description && (
                         <p className="text-sm text-muted-foreground">
-                            {selectedType.target.description}
+                            {selectedType.endpoint.description}
                         </p>
                     )}
                 </div>
                 <Input
                     id={`endpoint_${selectedType.key}`}
                     name={`endpoint_${selectedType.key}`}
-                    maxLength={selectedType.target.maxLength}
-                    minLength={selectedType.target.minLength}
-                    type={selectedType.target.type}
-                    placeholder={selectedType.target.placeholder}
+                    maxLength={selectedType.endpoint.maxLength}
+                    minLength={selectedType.endpoint.minLength}
+                    type={selectedType.endpoint.type}
+                    placeholder={selectedType.endpoint.placeholder}
                     value={data.endpoint ?? ""}
                     onChange={(e) => setData("endpoint", e.target.value)}
                     required
@@ -101,30 +103,50 @@ const CreateTarget = () => {
             </div>
             {data.type === "ai" && (
                 <div className="flex flex-col space-y-2">
-                    <Label>How often should we execute this prompt?</Label>
-                    <div>
-                        <div>
+                    <Label htmlFor="ai_frequency" required>
+                        How often should we execute this prompt?
+                    </Label>
+                    <div className="flex w-full items-start gap-2">
+                        <div className="flex min-w-0 flex-1 flex-col space-y-2">
                             <Input
-                                id="label"
-                                name="label"
-                                maxLength={255}
-                                minLength={3}
-                                type="text"
-                                placeholder="My website"
-                                value={data.label ?? ""}
-                                onChange={(e) => setData("label", e.target.value)}
+                                id="ai_frequency"
+                                name="ai_frequency"
+                                min={1}
+                                required
+                                type="number"
+                                placeholder="1"
+                                value={data.ai_frequency_value ?? ""}
+                                className="w-full"
+                                onChange={(e) =>
+                                    setData(
+                                        "ai_frequency_value",
+                                        e.target.value === "" ? null : Number(e.target.value),
+                                    )
+                                }
                             />
-                            <InputError message={errors.label} />
+                            <InputError message={errors.ai_frequency_value} />
                         </div>
-                        <div>
-                            <NativeSelect>
+                        <div className="flex min-w-0 flex-1 flex-col space-y-2">
+                            <NativeSelect
+                                id="ai_frequency_unit"
+                                name="ai_frequency_unit"
+                                aria-label="Frequency unit"
+                                value={data.ai_frequency_unit}
+                                className="w-full"
+                                onChange={(e) =>
+                                    setData(
+                                        "ai_frequency_unit",
+                                        e.target.value as TTargetAIFrequencyUnit,
+                                    )
+                                }
+                            >
                                 {aiFrequencyUnits.map((x) => (
                                     <NativeSelectOption key={x.key} value={x.key}>
                                         {x.label}
                                     </NativeSelectOption>
                                 ))}
                             </NativeSelect>
-                            <InputError message={errors.label} />
+                            <InputError message={errors.ai_frequency_unit} />
                         </div>
                     </div>
                 </div>

@@ -2,10 +2,11 @@ import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/
 
 export const types: {
     key: TTargetType;
-    label: string;
-    description: string;
-    checks: TTargetCheck[];
-    target: {
+    display: {
+        label: string;
+        description: string;
+    };
+    endpoint: {
         label: string;
         description?: string;
         type: "url" | "text";
@@ -13,11 +14,21 @@ export const types: {
         minLength: number;
         maxLength: number;
     };
+    checks: TTargetCheck[];
 }[] = [
     {
         key: "website",
-        label: "Website",
-        description: "Check website uptime, broken pages & more",
+        display: {
+            label: "Website",
+            description: "Check website uptime, broken pages & more",
+        },
+        endpoint: {
+            label: "Website URL",
+            type: "url",
+            placeholder: "https://example.com",
+            minLength: 10,
+            maxLength: 2048,
+        },
         checks: [
             "uptime",
             "certificate_health",
@@ -31,46 +42,44 @@ export const types: {
             "domain",
             "dns_blocklist",
         ],
-        target: {
-            label: "Website URL",
-            type: "url",
-            placeholder: "https://example.com",
-            minLength: 10,
-            maxLength: 2048,
-        },
     },
     {
         key: "server",
-        label: "Server",
-        description: "Test server availability via ICMP ping & port scans",
-        checks: ["uptime", "scheduled_tasks", "dns", "domain", "dns_blocklist", "open_ports"],
-        target: {
+        display: {
+            label: "Server",
+            description: "Test server availability via ICMP ping & port scans",
+        },
+        endpoint: {
             label: "Server address",
             type: "text",
             placeholder: "192.168.1.1 or server.example.com",
             minLength: 4,
             maxLength: 253,
         },
+        checks: ["uptime", "scheduled_tasks", "dns", "domain", "dns_blocklist", "open_ports"],
     },
     {
         key: "tcpport",
-        label: "TCP Port",
-        description: "Verify if a TCP port is reachable",
-        checks: ["uptime", "dns", "domain", "dns_blocklist"],
-        target: {
+        display: {
+            label: "TCP Port",
+            description: "Verify if a TCP port is reachable",
+        },
+        endpoint: {
             label: "TCP endpoint",
             type: "text",
             placeholder: "example.com:443",
             minLength: 6,
             maxLength: 259,
         },
+        checks: ["uptime", "dns", "domain", "dns_blocklist"],
     },
     {
         key: "ai",
-        label: "AI",
-        description: "Use AI to verify anything you want",
-        checks: [],
-        target: {
+        display: {
+            label: "AI",
+            description: "Use AI to verify anything you want",
+        },
+        endpoint: {
             label: "What website would you like to monitor?",
             description: "We'll analyze the page and suggest what to monitor.",
             type: "url",
@@ -78,6 +87,7 @@ export const types: {
             minLength: 10,
             maxLength: 2048,
         },
+        checks: [],
     },
 ];
 
