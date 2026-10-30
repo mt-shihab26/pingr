@@ -104,7 +104,14 @@ const CreateTarget = () => {
             )}
             {data.type === "ai" && (
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="ai_url">URL to verify</Label>
+                    <div className="flex flex-col gap-1">
+                        <Label htmlFor="ai_url">
+                            What website would you like to monitor?
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                            We'll analyze the page and suggest what to monitor.
+                        </p>
+                    </div>
                     <Input
                         id="ai_url"
                         name="ai_url"
