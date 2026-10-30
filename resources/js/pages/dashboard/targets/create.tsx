@@ -83,25 +83,19 @@ const CreateTarget = () => {
                 check_domain: true,
                 check_dns_blocklist: true,
             }));
-        }
-
-        if (data.type === "server") {
+        } else if (data.type === "server") {
             setData((d) => ({
                 ...d,
                 ...unchecked,
                 check_uptime: true,
             }));
-        }
-
-        if (data.type === "tcpport") {
+        } else if (data.type === "tcpport") {
             setData((d) => ({
                 ...d,
                 ...unchecked,
                 check_uptime: true,
             }));
-        }
-
-        if (data.type === "ai") {
+        } else {
             setData((d) => ({
                 ...d,
                 ...unchecked,
