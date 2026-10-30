@@ -12,8 +12,16 @@ import { InputError } from "@/components/elements/input-error";
 const CreateTarget = () => {
     const { data, setData, errors } = useForm<{
         type: TTargetType;
+        website_url: string | null;
+        server_address: string | null;
+        tcpport_endpoint: string | null;
+        ai_url: string | null;
     }>({
         type: "website",
+        website_url: null,
+        server_address: null,
+        tcpport_endpoint: null,
+        ai_url: null,
     });
 
     return (
