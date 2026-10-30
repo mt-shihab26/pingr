@@ -60,7 +60,7 @@ const CreateTarget = () => {
                 <InputError message={errors.type} />
             </div>
             {data.type === "website" && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col space-y-2">
                     <Label htmlFor="website_url" required>
                         Website URL
                     </Label>
@@ -79,7 +79,7 @@ const CreateTarget = () => {
                 </div>
             )}
             {data.type === "server" && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col space-y-2">
                     <Label htmlFor="server_address" required>
                         Server address
                     </Label>
@@ -100,7 +100,7 @@ const CreateTarget = () => {
                 </div>
             )}
             {data.type === "tcpport" && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col space-y-2">
                     <Label htmlFor="tcpport_endpoint" required>
                         TCP endpoint
                     </Label>
@@ -121,8 +121,8 @@ const CreateTarget = () => {
                 </div>
             )}
             {data.type === "ai" && (
-                <div className="flex flex-col gap-2">
-                    <div className="flex flex-col gap-1">
+                <div className="flex flex-col space-y-2">
+                    <div className="flex flex-col space-y-1">
                         <Label htmlFor="ai_url" required>
                             What website would you like to monitor?
                         </Label>
@@ -144,7 +144,7 @@ const CreateTarget = () => {
                     <InputError message={errors.ai_url} />
                 </div>
             )}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col space-y-2">
                 <Label htmlFor="label">Label</Label>
                 <Input
                     id="label"
