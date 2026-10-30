@@ -21,68 +21,45 @@ const CreateTarget = () => {
         endpoint: string | null;
         ai_frequency_value: number | null;
         ai_frequency_unit: TTargetAIFrequencyUnit;
-        check_website_uptime: boolean;
-        check_website_certificate_health: boolean;
-        check_website_broken_links: boolean;
-        check_website_mixed_content: boolean;
-        check_website_lighthouse: boolean;
-        check_website_scheduled_tasks: boolean;
-        check_website_application_health: boolean;
-        check_website_sitemap: boolean;
-        check_website_dns: boolean;
-        check_website_domain: boolean;
-        check_website_dns_blocklist: boolean;
-        check_server_uptime: boolean;
-        check_server_scheduled_tasks: boolean;
-        check_server_dns: boolean;
-        check_server_domain: boolean;
-        check_server_dns_blocklist: boolean;
-        check_server_open_ports: boolean;
-        check_tcpport_uptime: boolean;
-        check_tcpport_dns: boolean;
-        check_tcpport_domain: boolean;
-        check_tcpport_dns_blocklist: boolean;
+        check_uptime: boolean;
+        check_certificate_health: boolean;
+        check_broken_links: boolean;
+        check_mixed_content: boolean;
+        check_lighthouse: boolean;
+        check_scheduled_tasks: boolean;
+        check_application_health: boolean;
+        check_sitemap: boolean;
+        check_dns: boolean;
+        check_domain: boolean;
+        check_dns_blocklist: boolean;
+        check_open_ports: boolean;
     }>({
         type: "website",
         label: null,
         endpoint: null,
         ai_frequency_value: 1,
         ai_frequency_unit: "day",
-        check_website_uptime: true,
-        check_website_certificate_health: true,
-        check_website_broken_links: true,
-        check_website_mixed_content: true,
-        check_website_lighthouse: true,
-        check_website_scheduled_tasks: true,
-        check_website_application_health: true,
-        check_website_sitemap: true,
-        check_website_dns: true,
-        check_website_domain: true,
-        check_website_dns_blocklist: true,
-        check_server_uptime: true,
-        check_server_scheduled_tasks: true,
-        check_server_dns: true,
-        check_server_domain: true,
-        check_server_dns_blocklist: true,
-        check_server_open_ports: true,
-        check_tcpport_uptime: true,
-        check_tcpport_dns: true,
-        check_tcpport_domain: true,
-        check_tcpport_dns_blocklist: true,
+        check_uptime: true,
+        check_certificate_health: true,
+        check_broken_links: true,
+        check_mixed_content: true,
+        check_lighthouse: true,
+        check_scheduled_tasks: true,
+        check_application_health: true,
+        check_sitemap: true,
+        check_dns: true,
+        check_domain: true,
+        check_dns_blocklist: true,
+        check_open_ports: true,
     });
 
     const selectedType = useMemo(() => {
         return types.find((type) => type.key === data.type)!;
     }, [data.type]);
 
-    const checkField = useCallback(
-        (check: TTargetCheck) =>
-            `check_${data.type}_${check}` as Extract<
-                keyof typeof data,
-                `check_${TTargetType}_${TTargetCheck}`
-            >,
-        [data.type],
-    );
+    const checkField = useCallback((check: TTargetCheck) => {
+        return `check_${check}` as Extract<keyof typeof data, `check_${TTargetCheck}`>;
+    }, []);
 
     return (
         <DashboardLayout title="Create new target for monitor">
