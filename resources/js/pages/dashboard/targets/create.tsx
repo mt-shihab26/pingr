@@ -10,6 +10,7 @@ import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { InputError } from "@/components/elements/input-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 
 const CreateTarget = () => {
     const { data, setData, errors } = useForm<{
@@ -92,9 +93,7 @@ const CreateTarget = () => {
                         type="text"
                         placeholder="192.168.1.1 or server.example.com"
                         value={data.server_address ?? ""}
-                        onChange={(e) =>
-                            setData("server_address", e.target.value)
-                        }
+                        onChange={(e) => setData("server_address", e.target.value)}
                     />
                     <InputError message={errors.server_address} />
                 </div>
@@ -113,9 +112,7 @@ const CreateTarget = () => {
                         type="text"
                         placeholder="example.com:443"
                         value={data.tcpport_endpoint ?? ""}
-                        onChange={(e) =>
-                            setData("tcpport_endpoint", e.target.value)
-                        }
+                        onChange={(e) => setData("tcpport_endpoint", e.target.value)}
                     />
                     <InputError message={errors.tcpport_endpoint} />
                 </div>
@@ -158,6 +155,36 @@ const CreateTarget = () => {
                 />
                 <InputError message={errors.label} />
             </div>
+            {data.type === "ai" && (
+                <div className="flex flex-col space-y-2">
+                    <Label>How often should we execute this prompt?</Label>
+                    <div>
+                        <div>
+                            <Input
+                                id="label"
+                                name="label"
+                                maxLength={255}
+                                minLength={3}
+                                type="text"
+                                placeholder="My website"
+                                value={data.label ?? ""}
+                                onChange={(e) => setData("label", e.target.value)}
+                            />
+                            <InputError message={errors.label} />
+                        </div>
+                        <div>
+                            <NativeSelect>
+                                <NativeSelectOption value="">Select a fruit</NativeSelectOption>
+                                <NativeSelectOption value="apple">Apple</NativeSelectOption>
+                                <NativeSelectOption value="banana">Banana</NativeSelectOption>
+                                <NativeSelectOption value="blueberry">Blueberry</NativeSelectOption>
+                                <NativeSelectOption value="pineapple">Pineapple</NativeSelectOption>
+                            </NativeSelect>
+                            <InputError message={errors.label} />
+                        </div>
+                    </div>
+                </div>
+            )}
         </DashboardLayout>
     );
 };
