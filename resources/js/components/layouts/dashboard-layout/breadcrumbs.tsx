@@ -1,4 +1,5 @@
 import { Link } from "@inertiajs/react";
+import { ArrowLeft } from "lucide-react";
 import { Fragment } from "react";
 import {
     Breadcrumb,
@@ -11,6 +12,7 @@ import {
 import type { InertiaLinkProps } from "@inertiajs/react";
 
 export type TBreadcrumb = {
+    type?: "link" | "back";
     title: string;
     href: NonNullable<InertiaLinkProps["href"]>;
 };
@@ -27,7 +29,19 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: TBreadcrumb[] }) {
                             return (
                                 <Fragment key={index}>
                                     <BreadcrumbItem>
-                                        {isLast ? (
+                                        {item.type === "back" ? (
+                                            <BreadcrumbLink
+                                                render={
+                                                    <Link
+                                                        href={item.href}
+                                                        className="inline-flex items-center gap-2"
+                                                    >
+                                                        <ArrowLeft className="size-4" />
+                                                        {item.title}
+                                                    </Link>
+                                                }
+                                            />
+                                        ) : isLast ? (
                                             <BreadcrumbPage>
                                                 {item.title}
                                             </BreadcrumbPage>

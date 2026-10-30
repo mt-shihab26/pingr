@@ -1,5 +1,5 @@
-import { Form, Link, router } from "@inertiajs/react";
-import { ArrowLeft, ChevronDown, Mail, UserPlus, X } from "lucide-react";
+import { Form, router } from "@inertiajs/react";
+import { ChevronDown, Mail, UserPlus, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CancelInvitationModal } from "@/components/screens/dashboard/teams/cancel-invitation-modal";
 import { DeleteTeamModal } from "@/components/screens/dashboard/teams/delete-team-modal";
@@ -30,7 +30,6 @@ import {
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
-import { Breadcrumbs } from "@/components/layouts/dashboard-layout/breadcrumbs";
 
 export type TeamPermissions = {
     canUpdateTeam: boolean;
@@ -100,30 +99,26 @@ export default function TeamEdit({
     };
 
     return (
-        <DashboardLayout title={pageTitle}>
-            <div className="flex w-full max-w-5xl items-center gap-4 self-center">
-                <Link
-                    href={route("dashboard.teams.index")}
-                    className="inline-flex shrink-0 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    <ArrowLeft className="size-4" />
-                    Back to teams
-                </Link>
-                <Breadcrumbs
-                    breadcrumbs={[
-                        {
-                            title: "Teams",
-                            href: route("dashboard.teams.index"),
-                        },
-                        {
-                            title: team.name,
-                            href: route("dashboard.teams.edit", {
-                                team: team.slug,
-                            }),
-                        },
-                    ]}
-                />
-            </div>
+        <DashboardLayout
+            title={pageTitle}
+            breadcrumbs={[
+                {
+                    type: "back",
+                    title: "Back to teams",
+                    href: route("dashboard.teams.index"),
+                },
+                {
+                    title: "Teams",
+                    href: route("dashboard.teams.index"),
+                },
+                {
+                    title: team.name,
+                    href: route("dashboard.teams.edit", {
+                        team: team.slug,
+                    }),
+                },
+            ]}
+        >
             <div className="w-full max-w-5xl space-y-10 self-center">
                 <div className="space-y-6">
                     {permissions.canUpdateTeam ? (

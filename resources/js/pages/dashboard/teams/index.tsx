@@ -18,7 +18,23 @@ export default function TeamsIndex({ teams }: Props) {
         <DashboardLayout
             title="Switch team"
             breadcrumbs={[
-                { title: "Switch team", href: route("dashboard.teams.index") },
+                {
+                    type: "back",
+                    title: "Back to dashboard",
+                    href: currentTeam
+                        ? route("dashboard.overview.index", {
+                              team: currentTeam.slug,
+                          })
+                        : "/",
+                },
+                {
+                    title: "Teams",
+                    href: route("dashboard.teams.index"),
+                },
+                {
+                    title: "Switch team",
+                    href: route("dashboard.teams.index"),
+                },
             ]}
         >
             <div className="w-full max-w-3xl space-y-6 self-center">
