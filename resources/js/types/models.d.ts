@@ -1,4 +1,4 @@
-import type { TTeamRole } from "./enums";
+import type { TTeamRole, TTargetType, TTargetAIFrequencyUnit } from "./enums";
 
 export type TUser = {
     id: number;
@@ -36,4 +36,28 @@ export type TTeamInvitation = {
     role: TTeamRole;
     role_label: string;
     created_at: string;
+};
+
+export type TTarget = {
+    id: number;
+    team_id: number;
+    type: TTargetType;
+    label: string | null;
+    endpoint: string;
+    ai_frequency_value: number | null;
+    ai_frequency_unit: TTargetAIFrequencyUnit | null;
+    check_uptime: boolean;
+    check_certificate_health: boolean;
+    check_broken_links: boolean;
+    check_mixed_content: boolean;
+    check_lighthouse: boolean;
+    check_scheduled_tasks: boolean;
+    check_application_health: boolean;
+    check_sitemap: boolean;
+    check_dns: boolean;
+    check_domain: boolean;
+    check_dns_blocklist: boolean;
+    check_open_ports: boolean;
+    created_at: string;
+    updated_at: string;
 };

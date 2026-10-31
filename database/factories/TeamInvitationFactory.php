@@ -21,7 +21,7 @@ class TeamInvitationFactory extends Factory
     public function definition(): array
     {
         return [
-            'team_id' => Team::factory(),
+            'team_id' => Team::inRandomOrder()->first()?->id ?? Team::factory(),
             'email' => fake()->unique()->safeEmail(),
             'role' => TeamRole::Member,
             'invited_by' => User::factory(),

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Target;
+use App\Models\Team;
 use Illuminate\Database\Seeder;
 
 class TargetSeeder extends Seeder
@@ -11,6 +13,8 @@ class TargetSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Team::query()->each(function (Team $team) {
+            Target::factory()->count(12)->for($team)->create();
+        });
     }
 }

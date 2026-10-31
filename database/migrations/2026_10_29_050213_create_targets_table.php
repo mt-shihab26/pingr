@@ -13,6 +13,24 @@ return new class extends Migration
     {
         Schema::create('targets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
+            $table->string('type');
+            $table->string('label')->nullable();
+            $table->string('endpoint', 2048);
+            $table->unsignedSmallInteger('ai_frequency_value')->nullable();
+            $table->string('ai_frequency_unit')->nullable();
+            $table->boolean('check_uptime')->default(false);
+            $table->boolean('check_certificate_health')->default(false);
+            $table->boolean('check_broken_links')->default(false);
+            $table->boolean('check_mixed_content')->default(false);
+            $table->boolean('check_lighthouse')->default(false);
+            $table->boolean('check_scheduled_tasks')->default(false);
+            $table->boolean('check_application_health')->default(false);
+            $table->boolean('check_sitemap')->default(false);
+            $table->boolean('check_dns')->default(false);
+            $table->boolean('check_domain')->default(false);
+            $table->boolean('check_dns_blocklist')->default(false);
+            $table->boolean('check_open_ports')->default(false);
             $table->timestamps();
         });
     }

@@ -24,9 +24,9 @@ class StoreTargetRequest extends FormRequest
         return [
             'type' => ['required', Rule::enum(TargetType::class)],
             'label' => ['nullable', 'string', 'min:3', 'max:255'],
-            'endpoint' => ['required', 'string', ...$this->endpointRules()],
-            'ai_frequency_value' => [Rule::requiredIf($this->input('type') === 'ai'), 'integer', 'min:1', 'max:365'],
-            'ai_frequency_unit' => [Rule::requiredIf($this->input('type') === 'ai'), Rule::enum(TargetAIFrequencyUnit::class)],
+            'endpoint' => ['bail', 'required', 'string', ...$this->endpointRules()],
+            'ai_frequency_value' => [Rule::requiredIf($this->input('type') === 'ai'), 'nullable', 'integer', 'min:1', 'max:365'],
+            'ai_frequency_unit' => [Rule::requiredIf($this->input('type') === 'ai'), 'nullable', Rule::enum(TargetAIFrequencyUnit::class)],
             'check_uptime' => ['sometimes', 'boolean'],
             'check_certificate_health' => ['sometimes', 'boolean'],
             'check_broken_links' => ['sometimes', 'boolean'],

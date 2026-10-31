@@ -28,6 +28,10 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
             Route::get('/', [TargetController::class, "index"])->name('dashboard.targets.index');
             Route::get('/create', [TargetController::class, "create"])->name('dashboard.targets.create');
             Route::post('/', [TargetController::class, "store"])->name('dashboard.targets.store');
+            Route::get('/{target}', [TargetController::class, 'show'])->name('dashboard.targets.show');
+            Route::get('/{target}/edit', [TargetController::class, 'edit'])->name('dashboard.targets.edit');
+            Route::patch('/{target}', [TargetController::class, 'update'])->name('dashboard.targets.update');
+            Route::delete('/{target}', [TargetController::class, 'destroy'])->name('dashboard.targets.destroy');
         });
 
         Route::get('/pages', [OverviewController::class, "index"])->name('dashboard.pages.index');
