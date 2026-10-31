@@ -11,7 +11,11 @@ export type TNavItem = {
 export type TPaginated<T> = {
     data: T[];
     total: number;
+    from: number | null;
+    to: number | null;
+    first_page_url: string;
     current_page: number;
+    per_page: number;
     last_page: number;
     prev_page_url: string | null;
     next_page_url: string | null;

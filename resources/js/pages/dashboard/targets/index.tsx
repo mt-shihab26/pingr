@@ -17,6 +17,7 @@ import { types } from "@/lib/targets";
 import { router } from "@inertiajs/react";
 
 import { Link } from "@inertiajs/react";
+import { Paginator } from "@/components/elements/paginator";
 import { Filter, Plus, Activity, SearchX, CircleDashed } from "lucide-react";
 import { TargetActions } from "@/components/screens/dashboard/targets/target-actions";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
@@ -167,23 +168,7 @@ const TargetIndex = ({
                                 )}
                             </TableBody>
                         </Table>
-                        {targets.last_page > 1 && (
-                            <div className="flex items-center justify-between border-t p-4 text-xs">
-                                {targets.prev_page_url ? (
-                                    <Link href={targets.prev_page_url}>Previous</Link>
-                                ) : (
-                                    <span />
-                                )}
-                                <span className="text-muted-foreground">
-                                    Page {targets.current_page} of {targets.last_page}
-                                </span>
-                                {targets.next_page_url ? (
-                                    <Link href={targets.next_page_url}>Next</Link>
-                                ) : (
-                                    <span />
-                                )}
-                            </div>
-                        )}
+                        <Paginator pagination={targets} />
                     </TabsContent>
                     <TabsContent value="issues" className="py-14 text-center">
                         <Activity className="mx-auto mb-3 size-6 text-muted-foreground" />
