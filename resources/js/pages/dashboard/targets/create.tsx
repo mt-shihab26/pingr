@@ -218,6 +218,7 @@ const CreateTarget = () => {
                                     id="ai_frequency"
                                     name="ai_frequency"
                                     min={1}
+                                    max={365}
                                     required
                                     type="number"
                                     placeholder="1"
