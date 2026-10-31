@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TargetAIFrequencyUnit;
+use App\Enums\TargetTab;
 use App\Enums\TargetType;
 use Database\Factories\TargetFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -91,6 +92,33 @@ class Target extends Model
     {
         // Targets do not store monitoring results yet, so none have recorded issues.
         $query->whereRaw('1 = 0');
+    }
+
+    /**
+     * Filter targets by the selected tab.
+     *
+     * @param  Builder<static>  $query
+     */
+    #[Scope]
+    protected function tab(Builder $query, TargetTab $tab): void
+    {
+        if ($tab === TargetTab::Issues) {
+            $query->withIssues();
+        }
+    }
+
+    /**
+     * Count targets for each tab using the current query filters.
+     *
+     * @param  Builder<static>  $query
+     * @return array{all: int, issues: int}
+     */
+    public static function tabCounts(Builder $query): array
+    {
+        return [
+            TargetTab::All->value => (clone $query)->count(),
+            TargetTab::Issues->value => (clone $query)->withIssues()->count(),
+        ];
     }
 
     /**

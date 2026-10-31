@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Enums\TargetTab;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Targets\StoreTargetRequest;
 use App\Http\Requests\Dashboard\Targets\UpdateTargetRequest;
@@ -22,27 +23,24 @@ class TargetController extends Controller
         $validated = $request->validate([
             'search' => ['nullable', 'string', 'max:255'],
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
-            'tab' => ['sometimes', 'string', Rule::in(['all', 'issues'])],
+            'tab' => ['sometimes', 'string', Rule::enum(TargetTab::class)],
         ]);
 
         $search = trim($validated['search'] ?? '');
-        $tab = $validated['tab'] ?? 'all';
+        $tab = TargetTab::from($validated['tab'] ?? TargetTab::All->value);
 
         $query = $team->targets()->search($search);
-        $counts = [
-            'all' => (clone $query)->count(),
-            'issues' => (clone $query)->withIssues()->count(),
-        ];
+        $counts = Target::tabCounts($query->getQuery());
 
         $targets = $query
-            ->when($tab === 'issues', fn ($query) => $query->withIssues())
+            ->tab($tab)
             ->latest()
             ->paginate((int) ($validated['per_page'] ?? 20))
             ->withQueryString();
 
         return inertia("dashboard/targets/index", [
             'targets' => $targets,
-            'filters' => ['search' => $search, 'tab' => $tab],
+            'filters' => ['search' => $search, 'tab' => $tab->value],
             'counts' => $counts,
         ]);
     }
