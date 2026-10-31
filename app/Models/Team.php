@@ -123,6 +123,16 @@ class Team extends Model
     }
 
     /**
+     * Get all targets for this team.
+     *
+     * @return HasMany<Target, $this>
+     */
+    public function targets(): HasMany
+    {
+        return $this->hasMany(Target::class);
+    }
+
+    /**
      * Get all invitations for this team.
      *
      * @return HasMany<TeamInvitation, $this>

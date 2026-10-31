@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Dashboard\Targets;
 
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTargetRequest extends FormRequest
+class UpdateTargetRequest extends StoreTargetRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +13,6 @@ class UpdateTargetRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return parent::rules();
     }
 }

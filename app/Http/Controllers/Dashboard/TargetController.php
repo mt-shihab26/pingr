@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Targets\StoreTargetRequest;
 use App\Http\Requests\Dashboard\Targets\UpdateTargetRequest;
 use App\Models\Target;
+use App\Models\Team;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class TargetController extends Controller
@@ -13,9 +15,16 @@ class TargetController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Team $team): Response
     {
-        return inertia("dashboard/targets/index");
+        $targets = $team->targets()
+            ->latest()
+            ->paginate(20)
+            ->withQueryString();
+
+        return inertia("dashboard/targets/index", [
+            'targets' => $targets,
+        ]);
     }
 
     /**
@@ -29,40 +38,68 @@ class TargetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTargetRequest $request): void
+    public function store(StoreTargetRequest $request, Team $team): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+
+        $team->targets()->create($validated);
+
+        return redirect()
+            ->route('dashboard.targets.index', ['team' => $team->slug])
+            ->with("success", "Target created.");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Target $target): void
+    public function show(Team $team, Target $target): Response
     {
-        //
+        abort_unless($target->team_id === $team->id, 404);
+
+        return inertia("dashboard/targets/show", [
+            'target' => $target,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Target $target): void
+    public function edit(Team $team, Target $target): Response
     {
-        //
+        abort_unless($target->team_id === $team->id, 404);
+
+        return inertia("dashboard/targets/edit", [
+            'target' => $target,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTargetRequest $request, Target $target): void
+    public function update(UpdateTargetRequest $request, Team $team, Target $target): RedirectResponse
     {
-        //
+        abort_unless($target->team_id === $team->id, 404);
+
+        $validated = $request->validated();
+
+        $target->update($validated);
+
+        return redirect()
+            ->route('dashboard.targets.index', $team)
+            ->with("success", "Target updated.");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Target $target): void
+    public function destroy(Team $team, Target $target): RedirectResponse
     {
-        //
+        abort_unless($target->team_id === $team->id, 404);
+
+        $target->delete();
+
+        return redirect()
+            ->route('dashboard.targets.index', $team)
+            ->with("success", "Target deleted.");
     }
 }
