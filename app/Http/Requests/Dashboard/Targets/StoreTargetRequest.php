@@ -4,6 +4,9 @@ namespace App\Http\Requests\Dashboard\Targets;
 
 use App\Enums\TargetAIFrequencyUnit;
 use App\Enums\TargetType;
+use App\Rules\IpAddressOrHostname;
+use App\Rules\ValidEndpointPort;
+use App\Rules\ValidTcpEndpoint;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -37,6 +40,21 @@ class StoreTargetRequest extends FormRequest
             'check_dns_blocklist' => ['sometimes', 'boolean'],
             'check_open_ports' => ['sometimes', 'boolean'],
         ];
+    }
+
+    /**
+     * Get endpoint validation rules based on the target type.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    private function endpointRules(): array
+    {
+        return match ($this->input('type')) {
+            'website', 'ai' => ['url', 'min:10', 'max:2048'],
+            'server' => ['min:4', 'max:253', new IpAddressOrHostname],
+            'tcpport' => ['min:6', 'max:259', new ValidTcpEndpoint, new ValidEndpointPort],
+            default => [],
+        };
     }
 
     /**
@@ -116,50 +134,5 @@ class StoreTargetRequest extends FormRequest
                 }
             },
         ];
-    }
-
-    /**
-     * Get endpoint validation rules based on the target type.
-     *
-     * @return array<int, ValidationRule|array<mixed>|string>
-     */
-    private function endpointRules(): array
-    {
-        return match ($this->input('type')) {
-            'website', 'ai' => ['url', 'min:10', 'max:2048'],
-
-            'server' => [
-                'min:4',
-                'max:253',
-                function ($attribute, $value, $fail) {
-                    $isIp = filter_var($value, FILTER_VALIDATE_IP);
-
-                    $isHostname = filter_var(
-                        $value,
-                        FILTER_VALIDATE_DOMAIN,
-                        FILTER_FLAG_HOSTNAME,
-                    );
-
-                    if (! $isIp && ! $isHostname) {
-                        $fail('The endpoint must be a valid IP address or hostname.');
-                    }
-                },
-            ],
-
-            'tcpport' => [
-                'min:6',
-                'max:259',
-                'regex:/^(?:[a-zA-Z0-9.-]+|\[[0-9a-fA-F:]+\]):([1-9][0-9]{0,4})$/',
-                function ($attribute, $value, $fail) {
-                    $port = (int) substr($value, strrpos($value, ':') + 1);
-
-                    if ($port > 65535) {
-                        $fail('The port must be between 1 and 65535.');
-                    }
-                },
-            ],
-
-            default => [],
-        };
     }
 }
