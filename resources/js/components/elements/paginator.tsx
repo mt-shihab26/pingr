@@ -6,10 +6,10 @@ import {
 } from "@/components/ui/pagination";
 
 import type { TPaginated } from "@/types/utils";
-import { Fragment } from "react";
 
 import { router } from "@inertiajs/react";
 
+import { Fragment } from "react";
 import { Link } from "@inertiajs/react";
 import { PerPageSelector } from "@/components/elements/per-page-selector";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
@@ -27,10 +27,7 @@ const getPageRange = (currentPage: number, lastPage: number) => {
 };
 
 export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>, "data"> }) => {
-    const pages = getPageRange(
-        pagination.current_page,
-        pagination.last_page,
-    );
+    const pages = getPageRange(pagination.current_page, pagination.last_page);
 
     const changePerPage = (perPage: number) => {
         const url = new URL(pagination.first_page_url);
@@ -111,27 +108,31 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                     {pages.map((page, index) => (
                         <Fragment key={page}>
                             {index > 0 && page - pages[index - 1] > 1 && (
-                                <PaginationItem><PaginationEllipsis /></PaginationItem>
+                                <PaginationItem>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
                             )}
-                        <PaginationItem>
-                            <Button
-                                variant={page === pagination.current_page ? "outline" : "ghost"}
-                                size="icon"
-                                nativeButton={false}
-                                render={
-                                    <Link
-                                        href={pageUrl(page)}
-                                        preserveScroll
-                                        aria-label={`Go to page ${page}`}
-                                        aria-current={
-                                            page === pagination.current_page ? "page" : undefined
-                                        }
-                                    />
-                                }
-                            >
-                                {page}
-                            </Button>
-                        </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    variant={page === pagination.current_page ? "outline" : "ghost"}
+                                    size="icon"
+                                    nativeButton={false}
+                                    render={
+                                        <Link
+                                            href={pageUrl(page)}
+                                            preserveScroll
+                                            aria-label={`Go to page ${page}`}
+                                            aria-current={
+                                                page === pagination.current_page
+                                                    ? "page"
+                                                    : undefined
+                                            }
+                                        />
+                                    }
+                                >
+                                    {page}
+                                </Button>
+                            </PaginationItem>
                         </Fragment>
                     ))}
                     <PaginationItem>
