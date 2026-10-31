@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/pagination";
 
 import type { TPaginated } from "@/types/utils";
+import { Fragment } from "react";
 
 import { router } from "@inertiajs/react";
 
@@ -15,16 +16,18 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-r
 import { Button } from "@/components/ui/button";
 
 const getPageRange = (currentPage: number, lastPage: number) => {
-    const pageCount = Math.min(5, lastPage);
-    const startPage = Math.max(1, Math.min(currentPage - 2, lastPage - pageCount + 1));
-    const endPage = startPage + pageCount - 1;
-    const pages = Array.from({ length: pageCount }, (_, index) => startPage + index);
+    if (lastPage <= 7) {
+        return Array.from({ length: lastPage }, (_, index) => index + 1);
+    }
 
-    return { startPage, endPage, pages };
+    const startPage = Math.max(2, Math.min(currentPage - 2, lastPage - 5));
+    const middlePages = Array.from({ length: 5 }, (_, index) => startPage + index);
+
+    return [1, ...middlePages, lastPage];
 };
 
 export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>, "data"> }) => {
-    const { startPage, endPage, pages } = getPageRange(
+    const pages = getPageRange(
         pagination.current_page,
         pagination.last_page,
     );
@@ -105,13 +108,12 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                             </Button>
                         )}
                     </PaginationItem>
-                    {startPage > 1 && (
+                    {pages.map((page, index) => (
+                        <Fragment key={page}>
+                            {index > 0 && page - pages[index - 1] > 1 && (
+                                <PaginationItem><PaginationEllipsis /></PaginationItem>
+                            )}
                         <PaginationItem>
-                            <PaginationEllipsis />
-                        </PaginationItem>
-                    )}
-                    {pages.map((page) => (
-                        <PaginationItem key={page}>
                             <Button
                                 variant={page === pagination.current_page ? "outline" : "ghost"}
                                 size="icon"
@@ -130,12 +132,8 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                                 {page}
                             </Button>
                         </PaginationItem>
+                        </Fragment>
                     ))}
-                    {endPage < pagination.last_page && (
-                        <PaginationItem>
-                            <PaginationEllipsis />
-                        </PaginationItem>
-                    )}
                     <PaginationItem>
                         {pagination.next_page_url ? (
                             <Button
