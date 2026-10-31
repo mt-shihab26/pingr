@@ -29,11 +29,20 @@ class TargetController extends Controller
         $search = trim($validated['search'] ?? '');
         $tab = TargetTab::from($validated['tab'] ?? TargetTab::All->value);
 
-        $query = $team->targets()->search($search);
-        $counts = Target::tabCounts($query->getQuery());
+        $query = $team->targets()
+            ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
+                $query->where('label', 'like', '%'.$search.'%')
+                    ->orWhere('endpoint', 'like', '%'.$search.'%');
+            }));
 
-        $targets = $query
-            ->tab($tab)
+        // Targets do not store monitoring results yet, so none have recorded issues.
+        $issuesQuery = (clone $query)->whereRaw('1 = 0');
+        $counts = [
+            TargetTab::All->value => (clone $query)->count(),
+            TargetTab::Issues->value => (clone $issuesQuery)->count(),
+        ];
+
+        $targets = ($tab === TargetTab::Issues ? $issuesQuery : $query)
             ->latest()
             ->paginate((int) ($validated['per_page'] ?? 20))
             ->withQueryString();

@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use App\Enums\TargetAIFrequencyUnit;
-use App\Enums\TargetTab;
 use App\Enums\TargetType;
 use Database\Factories\TargetFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Scope;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -63,75 +60,6 @@ class Target extends Model
     use HasFactory;
 
     /**
-     * Search targets by label or endpoint.
-     *
-     * @param  Builder<static>  $query
-     */
-    #[Scope]
-    protected function search(Builder $query, string $search): void
-    {
-        $search = trim($search);
-
-        if ($search === '') {
-            return;
-        }
-
-        $query->where(function (Builder $query) use ($search) {
-            $query->where('label', 'like', '%'.$search.'%')
-                ->orWhere('endpoint', 'like', '%'.$search.'%');
-        });
-    }
-
-    /**
-     * Limit targets to those with recorded monitoring issues.
-     *
-     * @param  Builder<static>  $query
-     */
-    #[Scope]
-    protected function withIssues(Builder $query): void
-    {
-        // Targets do not store monitoring results yet, so none have recorded issues.
-        $query->whereRaw('1 = 0');
-    }
-
-    /**
-     * Filter targets by the selected tab.
-     *
-     * @param  Builder<static>  $query
-     */
-    #[Scope]
-    protected function tab(Builder $query, TargetTab $tab): void
-    {
-        if ($tab === TargetTab::Issues) {
-            $query->withIssues();
-        }
-    }
-
-    /**
-     * Count targets for each tab using the current query filters.
-     *
-     * @param  Builder<static>  $query
-     * @return array{all: int, issues: int}
-     */
-    public static function tabCounts(Builder $query): array
-    {
-        return [
-            TargetTab::All->value => (clone $query)->count(),
-            TargetTab::Issues->value => (clone $query)->withIssues()->count(),
-        ];
-    }
-
-    /**
-     * Get the team that the target belongs to.
-     *
-     * @return BelongsTo<Team, $this>
-     */
-    public function team(): BelongsTo
-    {
-        return $this->belongsTo(Team::class);
-    }
-
-    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -161,5 +89,15 @@ class Target extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the team that the target belongs to.
+     *
+     * @return BelongsTo<Team, $this>
+     */
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 }
