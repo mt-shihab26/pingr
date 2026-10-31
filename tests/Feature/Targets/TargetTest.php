@@ -218,3 +218,65 @@ test('invalid target page sizes are rejected', function (mixed $perPage) {
         'per_page' => $perPage,
     ]))->assertUnprocessable()->assertJsonValidationErrors('per_page');
 })->with([0, -1, 101, 'invalid', ['array']]);
+
+test('target tabs are filtered and counted by the server', function (string $tab, int $expectedTotal) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $team->targets()->createMany([
+        ['type' => 'server', 'endpoint' => 'api.example.com', 'label' => 'Production API'],
+        ['type' => 'server', 'endpoint' => 'other.example.com', 'label' => 'Staging'],
+    ]);
+    Team::factory()->create()->targets()->create(['type' => 'server', 'endpoint' => 'api.example.com', 'label' => 'Production API']);
+
+    $this->actingAs($user)->get(route('dashboard.targets.index', [
+        'team' => $team,
+        'tab' => $tab,
+        'search' => 'Production',
+        'per_page' => 1,
+    ]))->assertOk()->assertInertia(fn (Assert $page) => $page
+        ->where('filters.tab', $tab)
+        ->where('filters.search', 'Production')
+        ->where('counts.all', 1)
+        ->where('counts.issues', 0)
+        ->where('targets.total', $expectedTotal)
+        ->where('targets.per_page', 1)
+        ->has('targets.data', $expectedTotal)
+    );
+})->with([
+    'all' => ['all', 1],
+    'issues' => ['issues', 0],
+]);
+
+test('target tabs default to all and persist in pagination links', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $team->targets()->createMany([
+        ['type' => 'server', 'endpoint' => 'one.example.com'],
+        ['type' => 'server', 'endpoint' => 'two.example.com'],
+    ]);
+
+    $this->actingAs($user)->get(route('dashboard.targets.index', ['team' => $team]))
+        ->assertInertia(fn (Assert $page) => $page->where('filters.tab', 'all'));
+
+    $this->get(route('dashboard.targets.index', ['team' => $team, 'tab' => 'all', 'per_page' => 1]))
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('targets.next_page_url', function (string $url) {
+                parse_str(parse_url($url, PHP_URL_QUERY), $query);
+
+                return $query['tab'] === 'all' && $query['per_page'] === '1' && $query['page'] === '2';
+            })
+        );
+});
+
+test('invalid target tabs are rejected', function (mixed $tab) {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->getJson(route('dashboard.targets.index', [
+        'team' => $user->personalTeam(),
+        'tab' => $tab,
+    ]))->assertUnprocessable()->assertJsonValidationErrors('tab');
+})->with([
+    'unknown' => ['unknown'],
+    'array' => [['all']],
+    'empty' => [''],
+]);

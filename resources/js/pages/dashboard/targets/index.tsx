@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 
 import type { TTarget } from "@/types/models";
-import type { TPaginated } from "@/types/utils";
+import type { TPaginated, TTargetTab } from "@/types/utils";
 
 import { useState } from "react";
 import { useShared } from "@/hooks/use-shared";
@@ -29,14 +29,15 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 const TargetIndex = ({
     targets,
     filters,
+    counts,
 }: {
     targets: TPaginated<TTarget>;
-    filters: { search: string };
+    filters: { search: string; tab: TTargetTab };
+    counts: { all: number; issues: number };
 }) => {
     const { team } = useShared();
 
     const [search, setSearch] = useState(filters.search);
-    const [tab, setTab] = useState<string>("all");
 
     useDebounce(search.trim(), (debouncedSearch) => {
         if (debouncedSearch === filters.search) return;
@@ -46,6 +47,7 @@ const TargetIndex = ({
             {
                 search: debouncedSearch,
                 per_page: targets.per_page,
+                tab: filters.tab,
             },
             {
                 preserveState: true,
@@ -55,6 +57,19 @@ const TargetIndex = ({
         );
     });
 
+    const changeTab = (tab: TTargetTab) => {
+        if (tab === filters.tab) return;
+
+        router.get(route("dashboard.targets.index", { team }), {
+            search: search.trim(),
+            per_page: targets.per_page,
+            tab,
+        }, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    };
+
     return (
         <DashboardLayout
             title="Targets"
@@ -62,8 +77,8 @@ const TargetIndex = ({
         >
             <div className="border">
                 <Tabs
-                    value={tab}
-                    onValueChange={(value) => setTab(String(value))}
+                    value={filters.tab}
+                    onValueChange={(value) => changeTab(value as TTargetTab)}
                     className="gap-0"
                 >
                     <div className="flex flex-wrap items-center gap-4 border-b p-4">
@@ -81,12 +96,12 @@ const TargetIndex = ({
                         <TabsList>
                             <TabsTrigger value="all" className="cursor-pointer">
                                 All
-                                <Badge className="tabular-nums">{targets.total}</Badge>
+                                <Badge className="tabular-nums">{counts.all}</Badge>
                             </TabsTrigger>
                             <TabsTrigger value="issues" className="cursor-pointer">
                                 Targets with issues
                                 <Badge variant="secondary" className="tabular-nums">
-                                    0
+                                    {counts.issues}
                                 </Badge>
                             </TabsTrigger>
                         </TabsList>
@@ -98,7 +113,7 @@ const TargetIndex = ({
                             <Plus className="size-4" /> Add target
                         </Button>
                     </div>
-                    <TabsContent value="all">
+                    <TabsContent value={filters.tab}>
                         <Table className="min-w-160">
                             <TableHeader>
                                 <TableRow>
@@ -155,14 +170,22 @@ const TargetIndex = ({
                                 {targets.data.length === 0 && (
                                     <TableRow>
                                         <TableCell colSpan={4} className="h-44 text-center">
-                                            <SearchX className="mx-auto mb-3 size-6 text-muted-foreground" />
+                                            {filters.tab === "issues" ? (
+                                                <Activity className="mx-auto mb-3 size-6 text-muted-foreground" />
+                                            ) : (
+                                                <SearchX className="mx-auto mb-3 size-6 text-muted-foreground" />
+                                            )}
                                             <p className="font-medium">
-                                                {filters.search
+                                                {filters.tab === "issues"
+                                                    ? "No issue results yet"
+                                                    : filters.search
                                                     ? "No matching targets"
                                                     : "No targets yet"}
                                             </p>
                                             <p className="mt-1 text-muted-foreground">
-                                                {filters.search
+                                                {filters.tab === "issues"
+                                                    ? "Issues will appear here once monitoring results are available."
+                                                    : filters.search
                                                     ? "Try another name or endpoint."
                                                     : "Add your first target to start monitoring."}
                                             </p>
@@ -172,13 +195,6 @@ const TargetIndex = ({
                             </TableBody>
                         </Table>
                         <Paginator pagination={targets} />
-                    </TabsContent>
-                    <TabsContent value="issues" className="py-14 text-center">
-                        <Activity className="mx-auto mb-3 size-6 text-muted-foreground" />
-                        <p className="font-medium">No issue results yet</p>
-                        <p className="mt-1 text-muted-foreground">
-                            Issues will appear here once monitoring results are available.
-                        </p>
                     </TabsContent>
                 </Tabs>
             </div>

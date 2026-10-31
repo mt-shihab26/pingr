@@ -9,6 +9,7 @@ use App\Models\Target;
 use App\Models\Team;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Response;
 
 class TargetController extends Controller
@@ -21,19 +22,28 @@ class TargetController extends Controller
         $validated = $request->validate([
             'search' => ['nullable', 'string', 'max:255'],
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
+            'tab' => ['sometimes', 'string', Rule::in(['all', 'issues'])],
         ]);
 
         $search = trim($validated['search'] ?? '');
+        $tab = $validated['tab'] ?? 'all';
 
-        $targets = $team->targets()
-            ->search($search)
+        $query = $team->targets()->search($search);
+        $counts = [
+            'all' => (clone $query)->count(),
+            'issues' => (clone $query)->withIssues()->count(),
+        ];
+
+        $targets = $query
+            ->when($tab === 'issues', fn ($query) => $query->withIssues())
             ->latest()
             ->paginate((int) ($validated['per_page'] ?? 20))
             ->withQueryString();
 
         return inertia("dashboard/targets/index", [
             'targets' => $targets,
-            'filters' => ['search' => $search],
+            'filters' => ['search' => $search, 'tab' => $tab],
+            'counts' => $counts,
         ]);
     }
 

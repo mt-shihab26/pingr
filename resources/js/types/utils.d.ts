@@ -21,6 +21,8 @@ export type TPaginated<T> = {
     next_page_url: string | null;
 };
 
+export type TTargetTab = "all" | "issues";
+
 export type TTargetCheck =
     | "uptime" //
     | "certificate_health"

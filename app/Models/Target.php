@@ -82,6 +82,18 @@ class Target extends Model
     }
 
     /**
+     * Limit targets to those with recorded monitoring issues.
+     *
+     * @param  Builder<static>  $query
+     */
+    #[Scope]
+    protected function withIssues(Builder $query): void
+    {
+        // Targets do not store monitoring results yet, so none have recorded issues.
+        $query->whereRaw('1 = 0');
+    }
+
+    /**
      * Get the team that the target belongs to.
      *
      * @return BelongsTo<Team, $this>
