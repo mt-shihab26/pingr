@@ -1,4 +1,5 @@
-import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/enums";
+import type { TTargetAIFrequencyUnit, TTargetType } from "@/types/enums";
+import type { TTargetCheck } from "@/types/utils";
 
 import { aiFrequencyUnits, checks, types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";

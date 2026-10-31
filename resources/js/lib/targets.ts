@@ -1,4 +1,5 @@
-import type { TTargetAIFrequencyUnit, TTargetCheck, TTargetType } from "@/types/enums";
+import type { TTargetAIFrequencyUnit, TTargetType } from "@/types/enums";
+import type { TTargetCheck } from "@/types/utils";
 import type { LucideIcon } from "lucide-react";
 
 import { Globe, Network, Server, Sparkles } from "lucide-react";
