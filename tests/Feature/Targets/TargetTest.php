@@ -162,3 +162,59 @@ test('valid TCP hosts are accepted', function (string $endpoint) {
         'endpoint' => $endpoint,
     ])->assertSessionHasNoErrors()->assertRedirect();
 })->with(['example.com:443', 'localhost:8080', '192.0.2.1:65535', '[2001:db8::1]:443', '[::1]:80']);
+
+test('target filtering searches labels and endpoints within the current team', function (string $search) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'server', 'endpoint' => 'api.example.com', 'label' => 'Production API']);
+    $team->targets()->create(['type' => 'server', 'endpoint' => 'other.example.com', 'label' => 'Staging']);
+    Team::factory()->create()->targets()->create(['type' => 'server', 'endpoint' => 'api.example.com', 'label' => 'Production API']);
+
+    $this->actingAs($user)->get(route('dashboard.targets.index', ['team' => $team, 'search' => $search]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('targets.data', 1)
+            ->where('targets.data.0.id', $target->id)
+            ->where('targets.total', 1)
+            ->where('filters.search', $search)
+        );
+})->with(['Production', 'api.example.com']);
+
+test('invalid target search filters are rejected', function (mixed $search) {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->getJson(route('dashboard.targets.index', [
+        'team' => $user->personalTeam(),
+        'search' => $search,
+    ]))->assertUnprocessable()->assertJsonValidationErrors('search');
+})->with([
+    'array' => [['unexpected']],
+    'too long' => [str_repeat('a', 256)],
+]);
+
+test('target page size can be filtered', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $team->targets()->createMany([
+        ['type' => 'server', 'endpoint' => 'one.example.com'],
+        ['type' => 'server', 'endpoint' => 'two.example.com'],
+    ]);
+
+    $this->actingAs($user)->get(route('dashboard.targets.index', ['team' => $team, 'per_page' => 1]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('targets.data', 1)
+            ->where('targets.per_page', 1)
+            ->where('targets.total', 2)
+            ->where('filters.per_page', 1)
+        );
+});
+
+test('invalid target page sizes are rejected', function (mixed $perPage) {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->getJson(route('dashboard.targets.index', [
+        'team' => $user->personalTeam(),
+        'per_page' => $perPage,
+    ]))->assertUnprocessable()->assertJsonValidationErrors('per_page');
+})->with([0, -1, 101, 'invalid', ['array']]);

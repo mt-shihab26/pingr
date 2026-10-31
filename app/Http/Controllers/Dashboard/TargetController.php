@@ -8,6 +8,7 @@ use App\Http\Requests\Dashboard\Targets\UpdateTargetRequest;
 use App\Models\Target;
 use App\Models\Team;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Response;
 
 class TargetController extends Controller
@@ -15,15 +16,24 @@ class TargetController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Team $team): Response
+    public function index(Request $request, Team $team): Response
     {
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:255'],
+            'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
+        ]);
+
+        $search = trim($validated['search'] ?? '');
+
         $targets = $team->targets()
+            ->search($search)
             ->latest()
-            ->paginate(20)
+            ->paginate((int) ($validated['per_page'] ?? 20))
             ->withQueryString();
 
         return inertia("dashboard/targets/index", [
             'targets' => $targets,
+            'filters' => ['search' => $search, 'per_page' => (int) ($validated['per_page'] ?? 20)],
         ]);
     }
 

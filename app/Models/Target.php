@@ -6,6 +6,8 @@ use App\Enums\TargetAIFrequencyUnit;
 use App\Enums\TargetType;
 use Database\Factories\TargetFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,6 +60,26 @@ class Target extends Model
 {
     /** @use HasFactory<TargetFactory> */
     use HasFactory;
+
+    /**
+     * Search targets by label or endpoint.
+     *
+     * @param  Builder<static>  $query
+     */
+    #[Scope]
+    protected function search(Builder $query, string $search): void
+    {
+        $search = trim($search);
+
+        if ($search === '') {
+            return;
+        }
+
+        $query->where(function (Builder $query) use ($search) {
+            $query->where('label', 'like', '%'.$search.'%')
+                ->orWhere('endpoint', 'like', '%'.$search.'%');
+        });
+    }
 
     /**
      * Get the team that the target belongs to.
