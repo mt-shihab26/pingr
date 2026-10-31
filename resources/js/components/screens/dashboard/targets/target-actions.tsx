@@ -36,6 +36,11 @@ export const TargetActions = ({ target }: { target: TTarget }) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem
+                        render={<Link href={route("dashboard.targets.show", { team, target: target.id })} />}
+                    >
+                        View
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
                         render={
                             <Link
                                 href={route("dashboard.targets.edit", { team, target: target.id })}
