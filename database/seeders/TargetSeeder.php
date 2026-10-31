@@ -14,7 +14,7 @@ class TargetSeeder extends Seeder
     public function run(): void
     {
         Team::query()->each(function (Team $team) {
-            Target::factory()->count(12)->for($team)->create();
+            Target::factory()->count(200)->for($team)->create();
         });
     }
 }

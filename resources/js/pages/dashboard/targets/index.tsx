@@ -75,11 +75,11 @@ const TargetIndex = ({
                             />
                         </div>
                         <TabsList>
-                            <TabsTrigger value="all">
+                            <TabsTrigger value="all" className="cursor-pointer">
                                 All
                                 <Badge className="tabular-nums">{targets.total}</Badge>
                             </TabsTrigger>
-                            <TabsTrigger value="issues">
+                            <TabsTrigger value="issues" className="cursor-pointer">
                                 Targets with issues
                                 <Badge variant="secondary" className="tabular-nums">
                                     0
