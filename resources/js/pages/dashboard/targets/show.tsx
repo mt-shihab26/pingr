@@ -29,10 +29,16 @@ const ShowTarget = ({ target }: { target: TTarget }) => {
         <DashboardLayout
             title={target.label ?? target.endpoint}
             breadcrumbs={[
-                { type: "back", title: "Back to targets", href: route("dashboard.targets.index", { team }) },
-                { title: "Overview", href: route("dashboard.overview.index", { team }) },
+                {
+                    type: "back",
+                    title: "Back to targets",
+                    href: route("dashboard.targets.index", { team }),
+                },
                 { title: "Targets", href: route("dashboard.targets.index", { team }) },
-                { title: target.label ?? target.endpoint, href: route("dashboard.targets.show", { team, target: target.id }) },
+                {
+                    title: target.label ?? target.endpoint,
+                    href: route("dashboard.targets.show", { team, target: target.id }),
+                },
             ]}
         >
             <Heading title={target.label ?? target.endpoint} />
