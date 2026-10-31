@@ -21,12 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatInitials } from "@/lib/formats";
 import type { TTeam, TTeamInvitation, TTeamMember } from "@/types/models";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
@@ -59,19 +54,12 @@ export default function TeamEdit({
     const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [removeMemberDialogOpen, setRemoveMemberDialogOpen] = useState(false);
-    const [memberToRemove, setMemberToRemove] = useState<TTeamMember | null>(
-        null,
-    );
-    const [cancelInvitationDialogOpen, setCancelInvitationDialogOpen] =
-        useState(false);
-    const [invitationToCancel, setInvitationToCancel] =
-        useState<TTeamInvitation | null>(null);
+    const [memberToRemove, setMemberToRemove] = useState<TTeamMember | null>(null);
+    const [cancelInvitationDialogOpen, setCancelInvitationDialogOpen] = useState(false);
+    const [invitationToCancel, setInvitationToCancel] = useState<TTeamInvitation | null>(null);
 
     const pageTitle = useMemo(
-        () =>
-            permissions.canUpdateTeam
-                ? `Edit ${team.name}`
-                : `View ${team.name}`,
+        () => (permissions.canUpdateTeam ? `Edit ${team.name}` : `View ${team.name}`),
         [permissions.canUpdateTeam, team.name],
     );
 
@@ -138,9 +126,7 @@ export default function TeamEdit({
                                 {({ errors, processing }) => (
                                     <>
                                         <div className="grid gap-2">
-                                            <Label htmlFor="name">
-                                                Team name
-                                            </Label>
+                                            <Label htmlFor="name">Team name</Label>
                                             <Input
                                                 id="name"
                                                 name="name"
@@ -203,19 +189,14 @@ export default function TeamEdit({
                                 <div className="flex items-center gap-4">
                                     <Avatar className="h-10 w-10">
                                         {member.avatar ? (
-                                            <AvatarImage
-                                                src={member.avatar}
-                                                alt={member.name}
-                                            />
+                                            <AvatarImage src={member.avatar} alt={member.name} />
                                         ) : null}
                                         <AvatarFallback>
                                             {formatInitials(member.name)}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div>
-                                        <div className="font-medium">
-                                            {member.name}
-                                        </div>
+                                        <div className="font-medium">{member.name}</div>
                                         <div className="text-sm text-muted-foreground">
                                             {member.email}
                                         </div>
@@ -223,8 +204,7 @@ export default function TeamEdit({
                                 </div>
 
                                 <div className="flex items-center gap-2">
-                                    {member.role !== "owner" &&
-                                    permissions.canUpdateMember ? (
+                                    {member.role !== "owner" && permissions.canUpdateMember ? (
                                         <DropdownMenu>
                                             <DropdownMenuTrigger
                                                 render={
@@ -244,10 +224,7 @@ export default function TeamEdit({
                                                         key={role.value}
                                                         data-test="member-role-option"
                                                         onSelect={() =>
-                                                            updateMemberRole(
-                                                                member,
-                                                                role.value,
-                                                            )
+                                                            updateMemberRole(member, role.value)
                                                         }
                                                     >
                                                         {role.label}
@@ -256,13 +233,10 @@ export default function TeamEdit({
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     ) : (
-                                        <Badge variant="secondary">
-                                            {member.role_label}
-                                        </Badge>
+                                        <Badge variant="secondary">{member.role_label}</Badge>
                                     )}
 
-                                    {member.role !== "owner" &&
-                                    permissions.canRemoveMember ? (
+                                    {member.role !== "owner" && permissions.canRemoveMember ? (
                                         <TooltipProvider>
                                             <Tooltip>
                                                 <TooltipTrigger
@@ -272,9 +246,7 @@ export default function TeamEdit({
                                                             size="sm"
                                                             data-test="member-remove-button"
                                                             onClick={() =>
-                                                                confirmRemoveMember(
-                                                                    member,
-                                                                )
+                                                                confirmRemoveMember(member)
                                                             }
                                                         >
                                                             <X className="h-4 w-4" />
@@ -313,9 +285,7 @@ export default function TeamEdit({
                                             <Mail className="h-5 w-5 text-muted-foreground" />
                                         </div>
                                         <div>
-                                            <div className="font-medium">
-                                                {invitation.email}
-                                            </div>
+                                            <div className="font-medium">{invitation.email}</div>
                                             <div className="text-sm text-muted-foreground">
                                                 {invitation.role_label}
                                             </div>
@@ -332,9 +302,7 @@ export default function TeamEdit({
                                                             size="sm"
                                                             data-test="invitation-cancel-button"
                                                             onClick={() =>
-                                                                confirmCancelInvitation(
-                                                                    invitation,
-                                                                )
+                                                                confirmCancelInvitation(invitation)
                                                             }
                                                         >
                                                             <X className="h-4 w-4" />
@@ -364,8 +332,7 @@ export default function TeamEdit({
                             <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
                                 <p className="font-medium">Warning</p>
                                 <p className="text-sm">
-                                    Please proceed with caution, this cannot be
-                                    undone.
+                                    Please proceed with caution, this cannot be undone.
                                 </p>
                             </div>
                             <Button

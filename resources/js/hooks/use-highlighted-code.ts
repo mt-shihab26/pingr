@@ -8,8 +8,7 @@ export function useHighlightedCode(value: string, language: string) {
         language: string;
         highlighter: Awaited<ReturnType<typeof loadHighlighter>>;
     } | null>(null);
-    const highlighter =
-        loaded?.language === language ? loaded.highlighter : null;
+    const highlighter = loaded?.language === language ? loaded.highlighter : null;
 
     useEffect(() => {
         let cancelled = false;
@@ -45,10 +44,7 @@ export function useHighlightedCode(value: string, language: string) {
     const end = code.lastIndexOf("\n") + 1;
 
     if (highlighter && end > next.text.length) {
-        const result = highlighter.highlight(
-            code.slice(next.text.length, end - 1),
-            next.state,
-        );
+        const result = highlighter.highlight(code.slice(next.text.length, end - 1), next.state);
 
         next = {
             highlighter,
@@ -70,9 +66,6 @@ export function useHighlightedCode(value: string, language: string) {
             return code.split("\n");
         }
 
-        return [
-            ...next.lines,
-            highlighter.highlight(tail, next.state).lines[0],
-        ];
+        return [...next.lines, highlighter.highlight(tail, next.state).lines[0]];
     }, [code, highlighter, next, tail]);
 }

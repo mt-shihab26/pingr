@@ -1,10 +1,5 @@
 import { Form } from "@inertiajs/react";
-import {
-    cloneElement,
-    type MouseEvent,
-    type MouseEventHandler,
-    type ReactElement,
-} from "react";
+import { cloneElement, type MouseEvent, type MouseEventHandler, type ReactElement } from "react";
 import { useState } from "react";
 import { InputError } from "@/components/elements/input-error";
 import { Button } from "@/components/ui/button";
@@ -51,8 +46,7 @@ export function CreateTeamModal({ children }: { children: ReactElement }) {
                             <DialogHeader>
                                 <DialogTitle>Create a new team</DialogTitle>
                                 <DialogDescription>
-                                    Create a new team to collaborate with
-                                    others.
+                                    Create a new team to collaborate with others.
                                 </DialogDescription>
                             </DialogHeader>
 
@@ -70,11 +64,7 @@ export function CreateTeamModal({ children }: { children: ReactElement }) {
 
                             <DialogFooter className="gap-2">
                                 <DialogClose
-                                    render={
-                                        <Button variant="secondary">
-                                            Cancel
-                                        </Button>
-                                    }
+                                    render={<Button variant="secondary">Cancel</Button>}
                                 ></DialogClose>
 
                                 <Button

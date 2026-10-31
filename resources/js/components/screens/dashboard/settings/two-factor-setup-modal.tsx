@@ -12,11 +12,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSlot,
-} from "@/components/ui/input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Spinner } from "@/components/ui/spinner";
 import { useAppearance } from "@/hooks/use-appearance";
 import { useClipboard } from "@/hooks/use-clipboard";
@@ -169,10 +165,7 @@ function TwoFactorVerificationStep({
                 errors?: { confirmTwoFactorAuthentication?: { code?: string } };
             }) => (
                 <>
-                    <div
-                        ref={pinInputContainerRef}
-                        className="relative w-full space-y-3"
-                    >
+                    <div ref={pinInputContainerRef} className="relative w-full space-y-3">
                         <div className="flex w-full flex-col items-center space-y-3 py-2">
                             <InputOTP
                                 id="otp"
@@ -184,22 +177,12 @@ function TwoFactorVerificationStep({
                                 autoFocus
                             >
                                 <InputOTPGroup>
-                                    {Array.from(
-                                        { length: OTP_MAX_LENGTH },
-                                        (_, index) => (
-                                            <InputOTPSlot
-                                                key={index}
-                                                index={index}
-                                            />
-                                        ),
-                                    )}
+                                    {Array.from({ length: OTP_MAX_LENGTH }, (_, index) => (
+                                        <InputOTPSlot key={index} index={index} />
+                                    ))}
                                 </InputOTPGroup>
                             </InputOTP>
-                            <InputError
-                                message={
-                                    errors?.confirmTwoFactorAuthentication?.code
-                                }
-                            />
+                            <InputError message={errors?.confirmTwoFactorAuthentication?.code} />
                         </div>
 
                         <div className="flex w-full space-x-5">
@@ -215,9 +198,7 @@ function TwoFactorVerificationStep({
                             <Button
                                 type="submit"
                                 className="flex-1"
-                                disabled={
-                                    processing || code.length < OTP_MAX_LENGTH
-                                }
+                                disabled={processing || code.length < OTP_MAX_LENGTH}
                             >
                                 Confirm
                             </Button>
@@ -252,8 +233,7 @@ export function TwoFactorSetupModal({
     fetchSetupData,
     errors,
 }: Props) {
-    const [showVerificationStep, setShowVerificationStep] =
-        useState<boolean>(false);
+    const [showVerificationStep, setShowVerificationStep] = useState<boolean>(false);
 
     const modalConfig = useMemo<{
         title: string;
@@ -272,8 +252,7 @@ export function TwoFactorSetupModal({
         if (showVerificationStep) {
             return {
                 title: "Verify authentication code",
-                description:
-                    "Enter the 6-digit code from your authenticator app",
+                description: "Enter the 6-digit code from your authenticator app",
                 buttonText: "Continue",
             };
         }

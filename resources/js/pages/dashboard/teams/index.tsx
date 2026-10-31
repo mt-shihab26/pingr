@@ -61,9 +61,7 @@ export default function TeamsIndex({ teams }: Props) {
                                     <Users className="size-5 text-muted-foreground" />
                                     <div>
                                         <div className="flex items-center gap-2">
-                                            <span className="font-medium">
-                                                {listedTeam.name}
-                                            </span>
+                                            <span className="font-medium">{listedTeam.name}</span>
                                             {isCurrentTeam && (
                                                 <Check className="size-4 text-muted-foreground" />
                                             )}
@@ -82,10 +80,9 @@ export default function TeamsIndex({ teams }: Props) {
                                         disabled={isCurrentTeam}
                                         onClick={() =>
                                             router.post(
-                                                route(
-                                                    "dashboard.teams.switch",
-                                                    { team: listedTeam.slug },
-                                                ),
+                                                route("dashboard.teams.switch", {
+                                                    team: listedTeam.slug,
+                                                }),
                                             )
                                         }
                                     >
@@ -107,10 +104,9 @@ export default function TeamsIndex({ teams }: Props) {
                                         nativeButton={false}
                                         render={
                                             <Link
-                                                href={route(
-                                                    "dashboard.teams.edit",
-                                                    { team: listedTeam.slug },
-                                                )}
+                                                href={route("dashboard.teams.edit", {
+                                                    team: listedTeam.slug,
+                                                })}
                                             />
                                         }
                                     >

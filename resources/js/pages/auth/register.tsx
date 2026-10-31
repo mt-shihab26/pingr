@@ -31,10 +31,7 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                 {({ processing, errors }) => (
                     <>
                         {teamInvitation && (
-                            <TeamInvitationAlert
-                                invitation={teamInvitation}
-                                action="Register"
-                            />
+                            <TeamInvitationAlert invitation={teamInvitation} action="Register" />
                         )}
 
                         <div className="grid gap-6">
@@ -82,9 +79,7 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
-                                    Confirm password
-                                </Label>
+                                <Label htmlFor="password_confirmation">Confirm password</Label>
                                 <PasswordInput
                                     id="password_confirmation"
                                     required
@@ -94,9 +89,7 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                                     placeholder="Confirm password"
                                     passwordrules={passwordRules}
                                 />
-                                <InputError
-                                    message={errors.password_confirmation}
-                                />
+                                <InputError message={errors.password_confirmation} />
                             </div>
 
                             <Button

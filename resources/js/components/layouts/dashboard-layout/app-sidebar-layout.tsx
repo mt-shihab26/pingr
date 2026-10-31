@@ -11,10 +11,7 @@ type AppLayoutProps = {
     breadcrumbs?: TBreadcrumb[];
 };
 
-export function AppSidebarLayout({
-    children,
-    breadcrumbs = [],
-}: AppLayoutProps) {
+export function AppSidebarLayout({ children, breadcrumbs = [] }: AppLayoutProps) {
     return (
         <AppShell variant="sidebar">
             <AppSidebar />

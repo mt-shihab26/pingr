@@ -1,13 +1,7 @@
 import { Link } from "@inertiajs/react";
 import type { PropsWithChildren } from "react";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function AuthCardLayout({
     children,
@@ -36,9 +30,7 @@ export function AuthCardLayout({
                             <CardTitle className="text-xl">{title}</CardTitle>
                             <CardDescription>{description}</CardDescription>
                         </CardHeader>
-                        <CardContent className="px-10 py-8">
-                            {children}
-                        </CardContent>
+                        <CardContent className="px-10 py-8">{children}</CardContent>
                     </Card>
                 </div>
             </div>

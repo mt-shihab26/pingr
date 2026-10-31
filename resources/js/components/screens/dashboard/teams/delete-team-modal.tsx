@@ -51,17 +51,15 @@ export function DeleteTeamModal({ team, open, onOpenChange }: Props) {
                             <DialogHeader>
                                 <DialogTitle>Are you sure?</DialogTitle>
                                 <DialogDescription>
-                                    This action cannot be undone. This will
-                                    permanently delete the team{" "}
-                                    <strong>"{team.name}"</strong>.
+                                    This action cannot be undone. This will permanently delete the
+                                    team <strong>"{team.name}"</strong>.
                                 </DialogDescription>
                             </DialogHeader>
 
                             <div className="space-y-4 py-4">
                                 <div className="grid gap-2">
                                     <Label htmlFor="confirmation-name">
-                                        Type <strong>"{team.name}"</strong> to
-                                        confirm
+                                        Type <strong>"{team.name}"</strong> to confirm
                                     </Label>
                                     <Input
                                         id="confirmation-name"
@@ -69,9 +67,7 @@ export function DeleteTeamModal({ team, open, onOpenChange }: Props) {
                                         data-test="delete-team-name"
                                         value={confirmationName}
                                         onChange={(event) =>
-                                            setConfirmationName(
-                                                event.target.value,
-                                            )
+                                            setConfirmationName(event.target.value)
                                         }
                                         placeholder="Enter team name"
                                         autoComplete="off"
@@ -81,13 +77,7 @@ export function DeleteTeamModal({ team, open, onOpenChange }: Props) {
                             </div>
 
                             <DialogFooter className="gap-2">
-                                <DialogClose
-                                    render={
-                                        <Button variant="secondary">
-                                            Cancel
-                                        </Button>
-                                    }
-                                />
+                                <DialogClose render={<Button variant="secondary">Cancel</Button>} />
 
                                 <Button
                                     variant="destructive"

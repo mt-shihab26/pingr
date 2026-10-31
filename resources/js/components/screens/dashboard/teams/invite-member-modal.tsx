@@ -35,14 +35,8 @@ type Props = {
     onOpenChange: (open: boolean) => void;
 };
 
-export function InviteMemberModal({
-    team,
-    availableRoles,
-    open,
-    onOpenChange,
-}: Props) {
-    const [inviteRole, setInviteRole] =
-        useState<TRoleOption["value"]>("member");
+export function InviteMemberModal({ team, availableRoles, open, onOpenChange }: Props) {
+    const [inviteRole, setInviteRole] = useState<TRoleOption["value"]>("member");
 
     const handleOpenChange = (nextOpen: boolean) => {
         onOpenChange(nextOpen);
@@ -94,9 +88,7 @@ export function InviteMemberModal({
                                         data-test="invite-role"
                                         value={inviteRole}
                                         onValueChange={(value) =>
-                                            setInviteRole(
-                                                value as TRoleOption["value"],
-                                            )
+                                            setInviteRole(value as TRoleOption["value"])
                                         }
                                     >
                                         <SelectTrigger className="w-full">
@@ -104,10 +96,7 @@ export function InviteMemberModal({
                                         </SelectTrigger>
                                         <SelectContent>
                                             {availableRoles.map((role) => (
-                                                <SelectItem
-                                                    key={role.value}
-                                                    value={role.value}
-                                                >
+                                                <SelectItem key={role.value} value={role.value}>
                                                     {role.label}
                                                 </SelectItem>
                                             ))}
@@ -118,13 +107,7 @@ export function InviteMemberModal({
                             </div>
 
                             <DialogFooter className="gap-2">
-                                <DialogClose
-                                    render={
-                                        <Button variant="secondary">
-                                            Cancel
-                                        </Button>
-                                    }
-                                />
+                                <DialogClose render={<Button variant="secondary">Cancel</Button>} />
                                 <Button
                                     type="submit"
                                     data-test="invite-submit"

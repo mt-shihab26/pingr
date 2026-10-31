@@ -1,10 +1,7 @@
 import { router } from "@inertiajs/react";
 import { KeyRound } from "lucide-react";
 import { Heading } from "@/components/elements/heading";
-import {
-    PasskeyItem,
-    type TPasskey,
-} from "@/components/screens/dashboard/settings/passkey-item";
+import { PasskeyItem, type TPasskey } from "@/components/screens/dashboard/settings/passkey-item";
 import { PasskeyRegistration } from "@/components/screens/dashboard/settings/passkey-register";
 
 export type Props = {
@@ -57,11 +54,7 @@ export function ManagePasskeys(props: Props) {
             <div className="overflow-hidden rounded-lg border border-border">
                 {passkeys.length > 0 ? (
                     passkeys.map((passkey) => (
-                        <PasskeyItem
-                            key={passkey.id}
-                            passkey={passkey}
-                            onDelete={handleDelete}
-                        />
+                        <PasskeyItem key={passkey.id} passkey={passkey} onDelete={handleDelete} />
                     ))
                 ) : (
                     <EmptyState />

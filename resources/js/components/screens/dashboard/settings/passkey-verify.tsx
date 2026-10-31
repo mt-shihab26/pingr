@@ -17,12 +17,7 @@ type Props = {
     separator?: string;
 };
 
-export function PasskeyVerify({
-    routes,
-    label,
-    loadingLabel,
-    separator,
-}: Props = {}) {
+export function PasskeyVerify({ routes, label, loadingLabel, separator }: Props = {}) {
     const { verify, isLoading, error, isSupported } = usePasskeyVerify({
         ...(routes && {
             routes: {
@@ -54,9 +49,7 @@ export function PasskeyVerify({
                         ? (loadingLabel ?? "Authenticating...")
                         : (label ?? "Sign in with a passkey")}
                 </Button>
-                {error && (
-                    <InputError message={error} className="text-center" />
-                )}
+                {error && <InputError message={error} className="text-center" />}
             </div>
 
             <div className="relative">

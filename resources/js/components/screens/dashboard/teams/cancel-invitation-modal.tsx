@@ -19,12 +19,7 @@ type Props = {
     onOpenChange: (open: boolean) => void;
 };
 
-export function CancelInvitationModal({
-    team,
-    invitation,
-    open,
-    onOpenChange,
-}: Props) {
+export function CancelInvitationModal({ team, invitation, open, onOpenChange }: Props) {
     const [processing, setProcessing] = useState(false);
 
     const cancelInvitation = () => {
@@ -57,11 +52,7 @@ export function CancelInvitationModal({
                 </DialogHeader>
 
                 <DialogFooter className="gap-2">
-                    <DialogClose
-                        render={
-                            <Button variant="secondary">Keep invitation</Button>
-                        }
-                    />
+                    <DialogClose render={<Button variant="secondary">Keep invitation</Button>} />
                     <Button
                         variant="destructive"
                         data-test="cancel-invitation-confirm"

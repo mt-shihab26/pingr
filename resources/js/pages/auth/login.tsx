@@ -20,22 +20,13 @@ type Props = {
     teamInvitation?: TTeamInvitationContext | null;
 };
 
-export default function Login({
-    status,
-    canResetPassword,
-    teamInvitation,
-}: Props) {
+export default function Login({ status, canResetPassword, teamInvitation }: Props) {
     return (
         <AuthLayout
             title="Log in to your account"
             description="Enter your email and password below to log in"
         >
-            {teamInvitation && (
-                <TeamInvitationAlert
-                    invitation={teamInvitation}
-                    action="Log in"
-                />
-            )}
+            {teamInvitation && <TeamInvitationAlert invitation={teamInvitation} action="Log in" />}
 
             <PasskeyVerify />
 
@@ -88,11 +79,7 @@ export default function Login({
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <Checkbox
-                                    id="remember"
-                                    name="remember"
-                                    tabIndex={3}
-                                />
+                                <Checkbox id="remember" name="remember" tabIndex={3} />
                                 <Label htmlFor="remember">Remember me</Label>
                             </div>
 
@@ -127,9 +114,7 @@ export default function Login({
             </Form>
 
             {status && (
-                <div className="text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
+                <div className="text-center text-sm font-medium text-green-600">{status}</div>
             )}
         </AuthLayout>
     );

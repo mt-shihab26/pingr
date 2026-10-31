@@ -94,9 +94,7 @@ export function useAppearance(): TUseAppearanceReturn {
         () => "system",
     );
 
-    const resolvedAppearance: TResolvedAppearance = isDarkMode(appearance)
-        ? "dark"
-        : "light";
+    const resolvedAppearance: TResolvedAppearance = isDarkMode(appearance) ? "dark" : "light";
 
     const updateAppearance = (mode: TAppearance): void => {
         currentAppearance = mode;

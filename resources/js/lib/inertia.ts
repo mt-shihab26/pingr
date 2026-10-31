@@ -17,9 +17,7 @@ export const initializeInertiaErrorModal = (): void => {
     }
 
     const observer = new MutationObserver(() => {
-        const iframe = document.querySelector<HTMLIFrameElement>(
-            "#inertia-error-dialog iframe",
-        );
+        const iframe = document.querySelector<HTMLIFrameElement>("#inertia-error-dialog iframe");
 
         if (iframe && iframe.getAttribute("sandbox") === "allow-scripts") {
             const content = iframe.srcdoc;

@@ -42,16 +42,10 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: TBreadcrumb[] }) {
                                                 }
                                             />
                                         ) : isLast ? (
-                                            <BreadcrumbPage>
-                                                {item.title}
-                                            </BreadcrumbPage>
+                                            <BreadcrumbPage>{item.title}</BreadcrumbPage>
                                         ) : (
                                             <BreadcrumbLink
-                                                render={
-                                                    <Link href={item.href}>
-                                                        {item.title}
-                                                    </Link>
-                                                }
+                                                render={<Link href={item.href}>{item.title}</Link>}
                                             />
                                         )}
                                     </BreadcrumbItem>

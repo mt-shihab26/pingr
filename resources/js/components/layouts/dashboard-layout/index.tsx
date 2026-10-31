@@ -21,14 +21,7 @@ export function DashboardLayout({
         <AppHeaderLayout breadcrumbs={breadcrumbs}>
             <Head title={title} />
             <h1 className="sr-only">{title}</h1>
-            <div
-                className={cn(
-                    "flex flex-1 flex-col gap-6 px-4 py-6",
-                    className,
-                )}
-            >
-                {children}
-            </div>
+            <div className={cn("flex flex-1 flex-col gap-6 px-4 py-6", className)}>{children}</div>
         </AppHeaderLayout>
     );
 }

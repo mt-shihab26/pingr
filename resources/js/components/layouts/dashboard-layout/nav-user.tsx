@@ -4,11 +4,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import {
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from "@/components/ui/sidebar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -44,13 +40,7 @@ export function NavUser() {
                     <DropdownMenuContent
                         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                         align="end"
-                        side={
-                            isMobile
-                                ? "bottom"
-                                : state === "collapsed"
-                                  ? "left"
-                                  : "bottom"
-                        }
+                        side={isMobile ? "bottom" : state === "collapsed" ? "left" : "bottom"}
                     >
                         <UserMenuContent user={user} />
                     </DropdownMenuContent>

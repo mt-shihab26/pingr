@@ -12,8 +12,8 @@ export default function VerifyEmail({ status }: { status?: string }) {
         >
             {status === "verification-link-sent" && (
                 <div className="text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                    A new verification link has been sent to the email address you provided during
+                    registration.
                 </div>
             )}
 
@@ -24,11 +24,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
             >
                 {({ processing }) => (
                     <>
-                        <Button
-                            type="submit"
-                            disabled={processing}
-                            variant="secondary"
-                        >
+                        <Button type="submit" disabled={processing} variant="secondary">
                             {processing && <Spinner />}
                             Resend verification email
                         </Button>

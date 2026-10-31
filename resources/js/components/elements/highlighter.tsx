@@ -1,9 +1,5 @@
 import * as React from "react";
-import {
-    createHighlighterCore,
-    type GrammarState,
-    type HighlighterCore,
-} from "shiki/core";
+import { createHighlighterCore, type GrammarState, type HighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 
 // Add the languages you need. Each one loads the first time it is used.
@@ -39,10 +35,7 @@ let highlighter: Promise<HighlighterCore> | undefined;
 
 function getHighlighter() {
     highlighter ??= createHighlighterCore({
-        themes: [
-            import("shiki/themes/github-light.mjs"),
-            import("shiki/themes/github-dark.mjs"),
-        ],
+        themes: [import("shiki/themes/github-light.mjs"), import("shiki/themes/github-dark.mjs")],
         langs: [],
         engine: createJavaScriptRegexEngine({ forgiving: true }),
     });

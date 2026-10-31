@@ -12,9 +12,7 @@ export default function Dashboard({
 }: {
     pendingInvitations?: TDashboardInvitation[];
 }) {
-    const [showInvitations, setShowInvitations] = useState(
-        pendingInvitations.length > 0,
-    );
+    const [showInvitations, setShowInvitations] = useState(pendingInvitations.length > 0);
 
     const { team } = useShared();
 

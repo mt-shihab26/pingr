@@ -80,32 +80,27 @@ export default function Profile({
                                 <InputError message={errors.email} />
                             </div>
 
-                            {mustVerifyEmail &&
-                                user.email_verified_at === null && (
-                                    <div className="flex flex-col gap-2">
-                                        <p className="text-sm text-muted-foreground">
-                                            Your email address is unverified.{" "}
-                                            <Link
-                                                href={route(
-                                                    "verification.send",
-                                                )}
-                                                as="button"
-                                                className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                                            >
-                                                Click here to re-send the
-                                                verification email.
-                                            </Link>
-                                        </p>
+                            {mustVerifyEmail && user.email_verified_at === null && (
+                                <div className="flex flex-col gap-2">
+                                    <p className="text-sm text-muted-foreground">
+                                        Your email address is unverified.{" "}
+                                        <Link
+                                            href={route("verification.send")}
+                                            as="button"
+                                            className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                        >
+                                            Click here to re-send the verification email.
+                                        </Link>
+                                    </p>
 
-                                        {status ===
-                                            "verification-link-sent" && (
-                                            <div className="text-sm font-medium text-green-600">
-                                                A new verification link has been
-                                                sent to your email address.
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
+                                    {status === "verification-link-sent" && (
+                                        <div className="text-sm font-medium text-green-600">
+                                            A new verification link has been sent to your email
+                                            address.
+                                        </div>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="flex items-center gap-4">
                                 <Button

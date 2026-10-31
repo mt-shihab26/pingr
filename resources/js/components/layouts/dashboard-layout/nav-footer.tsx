@@ -26,10 +26,7 @@ export function NavFooter({
     items: TNavItem[];
 }) {
     return (
-        <SidebarGroup
-            {...props}
-            className={`group-data-[collapsible=icon]:p-0 ${className || ""}`}
-        >
+        <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 ${className || ""}`}>
             <SidebarGroupContent>
                 <SidebarMenu>
                     {items.map((item) => (
@@ -42,9 +39,7 @@ export function NavFooter({
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        {item.icon && (
-                                            <item.icon className="h-5 w-5" />
-                                        )}
+                                        {item.icon && <item.icon className="h-5 w-5" />}
                                         <span>{item.title}</span>
                                     </a>
                                 }

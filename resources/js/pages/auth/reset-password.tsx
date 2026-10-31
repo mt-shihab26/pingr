@@ -15,10 +15,7 @@ type Props = {
 
 export default function ResetPassword({ token, email, passwordRules }: Props) {
     return (
-        <AuthLayout
-            title="Reset password"
-            description="Please enter your new password below"
-        >
+        <AuthLayout title="Reset password" description="Please enter your new password below">
             <Form
                 action={route("password.update")}
                 method="post"
@@ -56,9 +53,7 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password_confirmation">
-                                Confirm password
-                            </Label>
+                            <Label htmlFor="password_confirmation">Confirm password</Label>
                             <PasswordInput
                                 id="password_confirmation"
                                 name="password_confirmation"
@@ -67,9 +62,7 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                                 placeholder="Confirm password"
                                 passwordrules={passwordRules}
                             />
-                            <InputError
-                                message={errors.password_confirmation}
-                            />
+                            <InputError message={errors.password_confirmation} />
                         </div>
 
                         <Button

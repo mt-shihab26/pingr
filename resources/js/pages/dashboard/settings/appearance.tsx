@@ -8,10 +8,7 @@ import type { TAppearance } from "@/hooks/use-appearance";
 import { useAppearance } from "@/hooks/use-appearance";
 import { cn } from "@/lib/utils";
 
-function AppearanceToggleTab({
-    className = "",
-    ...props
-}: HTMLAttributes<HTMLDivElement>) {
+function AppearanceToggleTab({ className = "", ...props }: HTMLAttributes<HTMLDivElement>) {
     const { appearance, updateAppearance } = useAppearance();
 
     const tabs: { value: TAppearance; icon: LucideIcon; label: string }[] = [

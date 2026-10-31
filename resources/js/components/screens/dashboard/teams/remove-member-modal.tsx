@@ -46,15 +46,13 @@ export function RemoveMemberModal({ team, member, open, onOpenChange }: Props) {
                 <DialogHeader>
                     <DialogTitle>Remove team member</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to remove{" "}
-                        <strong>{member?.name}</strong> from this team?
+                        Are you sure you want to remove <strong>{member?.name}</strong> from this
+                        team?
                     </DialogDescription>
                 </DialogHeader>
 
                 <DialogFooter className="gap-2">
-                    <DialogClose
-                        render={<Button variant="secondary">Cancel</Button>}
-                    />
+                    <DialogClose render={<Button variant="secondary">Cancel</Button>} />
 
                     <Button
                         variant="destructive"

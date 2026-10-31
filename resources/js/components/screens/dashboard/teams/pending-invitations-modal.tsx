@@ -26,11 +26,7 @@ type Props = {
     onOpenChange: (open: boolean) => void;
 };
 
-export function PendingInvitationsModal({
-    invitations,
-    open,
-    onOpenChange,
-}: Props) {
+export function PendingInvitationsModal({ invitations, open, onOpenChange }: Props) {
     const [processingCode, setProcessingCode] = useState<string | null>(null);
 
     const acceptInvitation = (invitation: TDashboardInvitation) => {
@@ -68,8 +64,7 @@ export function PendingInvitationsModal({
                 <DialogHeader>
                     <DialogTitle>Pending team invitations</DialogTitle>
                     <DialogDescription>
-                        Accept or decline the teams you have been invited to
-                        join.
+                        Accept or decline the teams you have been invited to join.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -81,12 +76,9 @@ export function PendingInvitationsModal({
                             className="flex flex-col gap-4 rounded-none border p-4"
                         >
                             <div className="space-y-1">
-                                <p className="font-medium">
-                                    {invitation.team.name}
-                                </p>
+                                <p className="font-medium">{invitation.team.name}</p>
                                 <p className="text-sm text-muted-foreground">
-                                    {invitation.inviterName} invited you to join
-                                    this team.
+                                    {invitation.inviterName} invited you to join this team.
                                 </p>
                             </div>
 
@@ -94,21 +86,15 @@ export function PendingInvitationsModal({
                                 <Button
                                     variant="secondary"
                                     data-test="pending-invitation-decline"
-                                    disabled={
-                                        processingCode === invitation.code
-                                    }
-                                    onClick={() =>
-                                        declineInvitation(invitation)
-                                    }
+                                    disabled={processingCode === invitation.code}
+                                    onClick={() => declineInvitation(invitation)}
                                 >
                                     Decline
                                 </Button>
 
                                 <Button
                                     data-test="pending-invitation-accept"
-                                    disabled={
-                                        processingCode === invitation.code
-                                    }
+                                    disabled={processingCode === invitation.code}
                                     onClick={() => acceptInvitation(invitation)}
                                 >
                                     Accept

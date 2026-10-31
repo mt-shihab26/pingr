@@ -11,9 +11,7 @@ export function AppLogo() {
                 <AppLogoIcon className="size-5 fill-current text-white dark:text-black" />
             </div>
             <div className="grid flex-1 text-left text-sm">
-                <span className="truncate leading-tight font-semibold">
-                    {name}
-                </span>
+                <span className="truncate leading-tight font-semibold">{name}</span>
             </div>
         </>
     );

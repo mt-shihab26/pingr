@@ -39,15 +39,12 @@ export function LeaveTeamModal({ team, open, onOpenChange }: Props) {
                 <DialogHeader>
                     <DialogTitle>Leave team</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to leave{" "}
-                        <strong>{team?.name}</strong>?
+                        Are you sure you want to leave <strong>{team?.name}</strong>?
                     </DialogDescription>
                 </DialogHeader>
 
                 <DialogFooter className="gap-2">
-                    <DialogClose
-                        render={<Button variant="secondary">Cancel</Button>}
-                    />
+                    <DialogClose render={<Button variant="secondary">Cancel</Button>} />
 
                     <Button
                         variant="destructive"
