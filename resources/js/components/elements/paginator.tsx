@@ -14,7 +14,7 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
         url.searchParams.set("per_page", String(perPage));
         url.searchParams.set("page", "1");
 
-        router.get(url.toString(), {}, { preserveState: true });
+        router.get(url.toString(), {}, { preserveState: true, preserveScroll: true });
     };
 
     const pageUrl = (page: number) => {
@@ -37,7 +37,7 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                                 variant="ghost"
                                 size="icon"
                                 nativeButton={false}
-                                render={<Link href={pageUrl(1)} aria-label="Go to first page" />}
+                                render={<Link href={pageUrl(1)} preserveScroll aria-label="Go to first page" />}
                             >
                                 <ChevronsLeft />
                             </Button>
@@ -61,6 +61,7 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                                 render={
                                     <Link
                                         href={pagination.prev_page_url}
+                                        preserveScroll
                                         aria-label="Go to previous page"
                                     />
                                 }
@@ -88,6 +89,7 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                                     render={
                                         <Link
                                             href={pageUrl(page)}
+                                            preserveScroll
                                             aria-label={`Go to page ${page}`}
                                             aria-current={
                                                 page === pagination.current_page
@@ -111,6 +113,7 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                                 render={
                                     <Link
                                         href={pagination.next_page_url}
+                                        preserveScroll
                                         aria-label="Go to next page"
                                     />
                                 }
@@ -137,6 +140,7 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                                 render={
                                     <Link
                                         href={pageUrl(pagination.last_page)}
+                                        preserveScroll
                                         aria-label="Go to last page"
                                     />
                                 }
