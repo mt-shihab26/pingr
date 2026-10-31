@@ -20,6 +20,7 @@ declare module "@inertiajs/core" {
                 sidebar: boolean;
                 team: TTeam | null;
                 teams: TTeam[];
+                flash: Record<"success" | "error" | "warning" | "info", string | null>;
             };
         };
     }

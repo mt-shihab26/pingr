@@ -44,6 +44,7 @@ class HandleInertiaRequests extends Middleware
                 'sidebar' => $this->sidebar($request),
                 'team' => fn () => $this->team($request),
                 'teams' => fn () => $this->teams($request),
+                'flash' => fn () => $this->flash($request),
             ],
 
         ];
@@ -83,5 +84,20 @@ class HandleInertiaRequests extends Middleware
     private function teams(Request $request): Collection|array
     {
         return $request->user()?->toUserTeams(includeCurrent: true) ?? [];
+    }
+
+    /**
+     * Get the session flash messages.
+     *
+     * @return array<string, mixed>
+     */
+    private function flash(Request $request): array
+    {
+        return [
+            'info' => $request->session()->get('info'),
+            'warning' => $request->session()->get('warning'),
+            'success' => $request->session()->get('success'),
+            'error' => $request->session()->get('error'),
+        ];
     }
 }
