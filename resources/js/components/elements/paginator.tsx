@@ -29,9 +29,8 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
             <p className="shrink-0 text-xs text-muted-foreground">
                 Showing {pagination.from ?? 0}–{pagination.to ?? 0} of {pagination.total} results
             </p>
-            <PerPageSelector value={pagination.per_page} onChange={changePerPage} />
-            <Pagination className="mx-0 w-auto max-w-full min-w-0 justify-start overflow-x-auto sm:ml-auto">
-                <PaginationContent>
+            <Pagination className="mx-0 w-auto max-w-full min-w-0 justify-start sm:ml-auto">
+                <PaginationContent className="flex-wrap">
                     <PaginationItem>
                         {pagination.current_page > 1 ? (
                             <Button
@@ -157,6 +156,7 @@ export const Paginator = ({ pagination }: { pagination: Omit<TPaginated<unknown>
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
+            <PerPageSelector value={pagination.per_page} onChange={changePerPage} />
         </div>
     );
 };

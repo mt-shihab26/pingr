@@ -31,7 +31,7 @@ const TargetIndex = ({
     filters,
 }: {
     targets: TPaginated<TTarget>;
-    filters: { search: string; per_page: number };
+    filters: { search: string };
 }) => {
     const { team } = useShared();
 
@@ -43,7 +43,10 @@ const TargetIndex = ({
 
         router.get(
             route("dashboard.targets.index", { team }),
-            { search: debouncedSearch, per_page: filters.per_page },
+            {
+                search: debouncedSearch,
+                per_page: targets.per_page,
+            },
             {
                 preserveState: true,
                 preserveScroll: true,

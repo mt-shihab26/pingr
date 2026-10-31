@@ -206,7 +206,7 @@ test('target page size can be filtered', function () {
             ->has('targets.data', 1)
             ->where('targets.per_page', 1)
             ->where('targets.total', 2)
-            ->where('filters.per_page', 1)
+            ->missing('filters.per_page')
         );
 });
 

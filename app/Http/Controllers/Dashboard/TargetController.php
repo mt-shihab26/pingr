@@ -33,7 +33,7 @@ class TargetController extends Controller
 
         return inertia("dashboard/targets/index", [
             'targets' => $targets,
-            'filters' => ['search' => $search, 'per_page' => (int) ($validated['per_page'] ?? 20)],
+            'filters' => ['search' => $search],
         ]);
     }
 

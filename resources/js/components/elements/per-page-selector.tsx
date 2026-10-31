@@ -1,6 +1,5 @@
 import { useId } from "react";
 
-import { Label } from "@/components/ui/label";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 
 export const PerPageSelector = ({
@@ -15,7 +14,6 @@ export const PerPageSelector = ({
 
     return (
         <div className="flex shrink-0 items-center gap-2">
-            <Label htmlFor={id}>Per page</Label>
             <NativeSelect
                 id={id}
                 value={value}
