@@ -16,6 +16,7 @@ const CreateTarget = () => {
                     title: "Back to targets",
                     href: route("dashboard.targets.index", { team }),
                 },
+                { title: "Overview", href: route("dashboard.overview.index", { team }) },
                 { title: "Targets", href: route("dashboard.targets.index", { team }) },
                 { title: "Create", href: route("dashboard.targets.create", { team }) },
             ]}

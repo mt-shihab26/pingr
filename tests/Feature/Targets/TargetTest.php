@@ -105,3 +105,60 @@ test('invalid endpoint values and unsupported checks are rejected', function (ar
     'unsupported check' => [['type' => 'server', 'endpoint' => 'example.com', 'check_broken_links' => true], 'check_broken_links'],
     'missing AI frequency' => [['type' => 'ai', 'endpoint' => 'https://example.com'], 'ai_frequency_value'],
 ]);
+
+test('changing target type clears omitted unsupported checks and preserves supported checks', function (string $type, string $endpoint) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create([
+        'type' => 'website',
+        'endpoint' => 'https://example.com',
+        'check_broken_links' => true,
+        'check_uptime' => true,
+    ]);
+
+    $this->actingAs($user)->patch(route('dashboard.targets.update', ['team' => $team, 'target' => $target]), [
+        'type' => $type,
+        'endpoint' => $endpoint,
+        'ai_frequency_value' => $type === 'ai' ? 1 : null,
+        'ai_frequency_unit' => $type === 'ai' ? 'day' : null,
+    ])->assertSessionHasNoErrors()->assertRedirect();
+
+    expect($target->fresh()->check_broken_links)->toBeFalse()
+        ->and($target->fresh()->check_uptime)->toBe($type !== 'ai');
+})->with([
+    ['server', 'example.com'],
+    ['tcpport', 'example.com:443'],
+    ['ai', 'https://example.com'],
+]);
+
+test('explicit unsupported checks are still rejected on update', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)->patch(route('dashboard.targets.update', ['team' => $team, 'target' => $target]), [
+        'type' => 'server',
+        'endpoint' => 'example.com',
+        'check_broken_links' => true,
+    ])->assertSessionHasErrors('check_broken_links');
+
+    expect($target->fresh()->type->value)->toBe('website');
+});
+
+test('invalid TCP hosts are rejected', function (string $endpoint) {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->post(route('dashboard.targets.store', $user->personalTeam()), [
+        'type' => 'tcpport',
+        'endpoint' => $endpoint,
+    ])->assertSessionHasErrors('endpoint');
+})->with(['[::::]:443', '..:443', '-host.example:443', 'host..example:443', '999.999.999.999:443', "example.com:443\nextra"]);
+
+test('valid TCP hosts are accepted', function (string $endpoint) {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->post(route('dashboard.targets.store', $user->personalTeam()), [
+        'type' => 'tcpport',
+        'endpoint' => $endpoint,
+    ])->assertSessionHasNoErrors()->assertRedirect();
+})->with(['example.com:443', 'localhost:8080', '192.0.2.1:65535', '[2001:db8::1]:443', '[::1]:80']);

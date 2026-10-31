@@ -70,39 +70,7 @@ class StoreTargetRequest extends FormRequest
                     return;
                 }
 
-                $allowedChecks = match ($this->input('type')) {
-                    'website' => [
-                        'uptime',
-                        'certificate_health',
-                        'broken_links',
-                        'mixed_content',
-                        'lighthouse',
-                        'scheduled_tasks',
-                        'application_health',
-                        'sitemap',
-                        'dns',
-                        'domain',
-                        'dns_blocklist',
-                    ],
-
-                    'server' => [
-                        'uptime',
-                        'scheduled_tasks',
-                        'dns',
-                        'domain',
-                        'dns_blocklist',
-                        'open_ports',
-                    ],
-
-                    'tcpport' => [
-                        'uptime',
-                        'dns',
-                        'domain',
-                        'dns_blocklist',
-                    ],
-
-                    default => [],
-                };
+                $allowedChecks = $this->allowedChecks();
 
                 $allChecks = [
                     'uptime',
@@ -134,5 +102,47 @@ class StoreTargetRequest extends FormRequest
                 }
             },
         ];
+    }
+
+    /**
+     * Get the checks supported by the selected target type.
+     *
+     * @return array<int, string>
+     */
+    protected function allowedChecks(): array
+    {
+        return match ($this->input('type')) {
+            'website' => [
+                'uptime',
+                'certificate_health',
+                'broken_links',
+                'mixed_content',
+                'lighthouse',
+                'scheduled_tasks',
+                'application_health',
+                'sitemap',
+                'dns',
+                'domain',
+                'dns_blocklist',
+            ],
+
+            'server' => [
+                'uptime',
+                'scheduled_tasks',
+                'dns',
+                'domain',
+                'dns_blocklist',
+                'open_ports',
+            ],
+
+            'tcpport' => [
+                'uptime',
+                'dns',
+                'domain',
+                'dns_blocklist',
+            ],
+
+            default => [],
+        };
     }
 }

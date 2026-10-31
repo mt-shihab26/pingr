@@ -23,7 +23,13 @@ const TargetIndex = ({ targets }: { targets: TPaginated<TTarget> }) => {
     const { team } = useShared();
 
     return (
-        <DashboardLayout title="Targets">
+        <DashboardLayout
+            title="Targets"
+            breadcrumbs={[
+                { title: "Overview", href: route("dashboard.overview.index", { team }) },
+                { title: "Targets", href: route("dashboard.targets.index", { team }) },
+            ]}
+        >
             <div className="flex items-center justify-between gap-4">
                 <Heading title="Targets" description="Manage your team's monitoring targets." />
                 <Button
