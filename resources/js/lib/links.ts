@@ -60,12 +60,6 @@ export const settingsNavItems: TNavItem[] = [
         href: route("dashboard.settings.security.edit"),
         icon: null,
     },
-
-    {
-        title: "Appearance",
-        href: route("dashboard.settings.appearance.edit"),
-        icon: null,
-    },
     {
         title: "Teams",
         href: route("dashboard.teams.index"),

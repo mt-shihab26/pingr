@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Dashboard\OverviewController;
-use App\Http\Controllers\Dashboard\Settings\AppearanceController;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
 use App\Http\Controllers\Dashboard\Targets\Show;
@@ -94,10 +93,6 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
         Route::prefix("/security")->group(function () {
             Route::get('/', [SecurityController::class, 'edit'])->middleware(RequirePassword::class)->name('dashboard.settings.security.edit');
             Route::put('/password', [SecurityController::class, 'update'])->middleware('throttle:6,1')->name('dashboard.settings.security.password.update');
-        });
-
-        Route::prefix('/appearance')->group(function () {
-            Route::get('/', [AppearanceController::class, 'edit'])->withoutMiddleware('verified')->name('dashboard.settings.appearance.edit');
         });
 
     });
