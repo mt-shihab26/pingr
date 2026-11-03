@@ -196,7 +196,7 @@
 
     .scrollbar-slim,
     .scrollbar-slim-rounded {
-        @apply supports-[not_selector(::-webkit-scrollbar)]:scrollbar-thin supports-[not_selector(::-webkit-scrollbar)]:[scrollbar-color:var(--input)_transparent] [&::-webkit-scrollbar]:size-2 [&::-webkit-scrollbar-button]:hidden [&::-webkit-scrollbar-corner]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-input [&::-webkit-scrollbar-thumb:hover]:bg-muted-foreground/50 [&::-webkit-scrollbar-track]:bg-transparent;
+        @apply supports-[not_selector(::-webkit-scrollbar)]:scrollbar-thin supports-[not_selector(::-webkit-scrollbar)]:[scrollbar-color:var(--muted-foreground)_transparent] [&::-webkit-scrollbar]:size-2 [&::-webkit-scrollbar-button]:hidden [&::-webkit-scrollbar-corner]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-muted-foreground/60 [&::-webkit-scrollbar-thumb:hover]:bg-muted-foreground [&::-webkit-scrollbar-track]:bg-transparent;
     }
 
     .scrollbar-slim-rounded {
