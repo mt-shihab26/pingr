@@ -46,14 +46,12 @@ test('targets can be viewed edited updated and deleted', function (string $type,
     $target = $team->targets()->create(['type' => 'server', 'endpoint' => 'example.com']);
     $params = ['team' => $team, 'target' => $target];
 
-    foreach (['show', 'edit'] as $action) {
-        $this->actingAs($user)->get(route("dashboard.targets.{$action}", $params))
-            ->assertOk()
-            ->assertInertia(fn (Assert $page) => $page
-                ->component("dashboard/targets/{$action}")
-                ->where('target.id', $target->id)
-            );
-    }
+    $this->actingAs($user)->get(route('dashboard.targets.edit', $params))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('dashboard/targets/edit')
+            ->where('target.id', $target->id)
+        );
 
     $this->patch(route('dashboard.targets.update', $params), [
         'type' => $type,

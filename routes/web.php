@@ -5,7 +5,7 @@ use App\Http\Controllers\Dashboard\Settings\AppearanceController;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
 use App\Http\Controllers\Dashboard\TargetController;
-use App\Http\Controllers\Dashboard\Targets\Show\OverviewController as ShowOverviewController;
+use App\Http\Controllers\Dashboard\Targets\Show;
 use App\Http\Controllers\Dashboard\Teams\TeamController;
 use App\Http\Controllers\Dashboard\Teams\TeamInvitationController;
 use App\Http\Controllers\Dashboard\Teams\TeamMemberController;
@@ -29,8 +29,27 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
             Route::get('/', [TargetController::class, "index"])->name('dashboard.targets.index');
             Route::get('/create', [TargetController::class, "create"])->name('dashboard.targets.create');
             Route::post('/', [TargetController::class, "store"])->name('dashboard.targets.store');
-            Route::get('/{target}', [TargetController::class, 'show'])->name('dashboard.targets.show.redirect');
-            Route::get('/{target}/overview', [ShowOverviewController::class, 'show'])->name('dashboard.targets.show.overview');
+
+            Route::prefix('/{target}')->group(function () {
+                Route::get('/', [TargetController::class, 'show'])->name('dashboard.targets.show.redirect');
+                Route::get('/overview', [Show\OverviewController::class, 'show'])->name('dashboard.targets.show.overview');
+                Route::get('/uptime', [Show\UptimeController::class, 'show'])->name('dashboard.targets.show.uptime');
+                Route::get('/certificate-health', [Show\CertificateHealthController::class, 'show'])->name('dashboard.targets.show.certificate-health');
+                Route::get('/broken-links', [Show\BrokenLinksController::class, 'show'])->name('dashboard.targets.show.broken-links');
+                Route::get('/mixed-content', [Show\MixedContentController::class, 'show'])->name('dashboard.targets.show.mixed-content');
+                Route::get('/lighthouse', [Show\LighthouseController::class, 'show'])->name('dashboard.targets.show.lighthouse');
+                Route::get('/dns', [Show\DnsController::class, 'show'])->name('dashboard.targets.show.dns');
+                Route::get('/domain', [Show\DomainController::class, 'show'])->name('dashboard.targets.show.domain');
+                Route::get('/dns-blocklist', [Show\DnsBlocklistController::class, 'show'])->name('dashboard.targets.show.dns-blocklist');
+                Route::get('/monthly-reports', [Show\MonthlyReportsController::class, 'show'])->name('dashboard.targets.show.monthly-reports');
+                Route::get('/run-history', [Show\RunHistoryController::class, 'show'])->name('dashboard.targets.show.run-history');
+                Route::get('/snooze-history', [Show\SnoozeHistoryController::class, 'show'])->name('dashboard.targets.show.snooze-history');
+                Route::get('/notifications', [Show\NotificationsController::class, 'show'])->name('dashboard.targets.show.notifications');
+                Route::get('/maintenance-periods', [Show\MaintenancePeriodsController::class, 'show'])->name('dashboard.targets.show.maintenance-periods');
+                Route::get('/badges', [Show\BadgesController::class, 'show'])->name('dashboard.targets.show.badges');
+                Route::get('/settings', [Show\SettingsController::class, 'show'])->name('dashboard.targets.show.settings');
+            });
+
             Route::get('/{target}/edit', [TargetController::class, 'edit'])->name('dashboard.targets.edit');
             Route::patch('/{target}', [TargetController::class, 'update'])->name('dashboard.targets.update');
             Route::delete('/{target}', [TargetController::class, 'destroy'])->name('dashboard.targets.destroy');

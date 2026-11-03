@@ -83,25 +83,85 @@ export const targetNavItems = (team: TTeam | null, target: TTarget): TNavItem[][
             },
         ],
         [
-            { title: "Uptime", href: "#", icon: Globe },
-            { title: "Certificate health", href: "#", icon: ShieldCheck },
-            { title: "Broken links", href: "#", icon: Unlink },
-            { title: "Mixed content", href: "#", icon: LockOpen },
-            { title: "Lighthouse", href: "#", icon: Gauge },
-            { title: "DNS", href: "#", icon: List },
-            { title: "Domain", href: "#", icon: Flag },
-            { title: "DNS blocklist", href: "#", icon: Ban },
+            {
+                title: "Uptime",
+                href: route("dashboard.targets.show.uptime", { team, target }),
+                icon: Globe,
+            },
+            {
+                title: "Certificate health",
+                href: route("dashboard.targets.show.certificate-health", { team, target }),
+                icon: ShieldCheck,
+            },
+            {
+                title: "Broken links",
+                href: route("dashboard.targets.show.broken-links", { team, target }),
+                icon: Unlink,
+            },
+            {
+                title: "Mixed content",
+                href: route("dashboard.targets.show.mixed-content", { team, target }),
+                icon: LockOpen,
+            },
+            {
+                title: "Lighthouse",
+                href: route("dashboard.targets.show.lighthouse", { team, target }),
+                icon: Gauge,
+            },
+            {
+                title: "DNS",
+                href: route("dashboard.targets.show.dns", { team, target }),
+                icon: List,
+            },
+            {
+                title: "Domain",
+                href: route("dashboard.targets.show.domain", { team, target }),
+                icon: Flag,
+            },
+            {
+                title: "DNS blocklist",
+                href: route("dashboard.targets.show.dns-blocklist", { team, target }),
+                icon: Ban,
+            },
         ],
         [
-            { title: "Monthly reports", href: "#", icon: FileText },
-            { title: "Run History", href: "#", icon: History },
-            { title: "Snooze History", href: "#", icon: AlarmClockOff },
+            {
+                title: "Monthly reports",
+                href: route("dashboard.targets.show.monthly-reports", { team, target }),
+                icon: FileText,
+            },
+            {
+                title: "Run History",
+                href: route("dashboard.targets.show.run-history", { team, target }),
+                icon: History,
+            },
+            {
+                title: "Snooze History",
+                href: route("dashboard.targets.show.snooze-history", { team, target }),
+                icon: AlarmClockOff,
+            },
         ],
         [
-            { title: "Notifications", href: "#", icon: Megaphone },
-            { title: "Maintenance periods", href: "#", icon: Wrench },
-            { title: "Badges", href: "#", icon: Badge },
-            { title: "Settings", href: "#", icon: Settings },
+            {
+                title: "Notifications",
+                href: route("dashboard.targets.show.notifications", { team, target }),
+                icon: Megaphone,
+            },
+            {
+                title: "Maintenance periods",
+                href: route("dashboard.targets.show.maintenance-periods", { team, target }),
+                icon: Wrench,
+            },
+            {
+                title: "Badges",
+                href: route("dashboard.targets.show.badges", { team, target }),
+                icon: Badge,
+            },
+            {
+                title: "Settings",
+                href: route("dashboard.targets.show.settings", { team, target }),
+                icon: Settings,
+            },
         ],
     ];
 };
