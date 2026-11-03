@@ -23,9 +23,9 @@ export const Sidebar = ({ target }: { target: TTarget }) => {
     const groups = targetNavItems(team, target);
 
     return (
-        <SidebarProvider className="min-h-0 w-full shrink-0 md:h-full md:w-(--sidebar-width)">
+        <SidebarProvider className="min-h-0 w-full shrink-0 md:w-(--sidebar-width)">
             <SidebarUI collapsible="none" className="w-full bg-transparent">
-                <div className="scrollbar-slim flex min-h-0 flex-1 flex-col overflow-auto">
+                <div className="flex flex-1 flex-col">
                     {groups.map((items, index) => (
                         <SidebarGroup key={index} className="px-0">
                             <SidebarGroupContent>

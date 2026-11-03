@@ -39,12 +39,9 @@ export const ShowLayout = ({
                 ...breadcrumbs,
             ]}
         >
-            {/* 114px = app header (65px) + breadcrumb bar (49px), 3rem = layout py-6 */}
-            <div className="flex flex-col gap-6 md:h-[calc(100svh-114px-3rem)] md:flex-row">
+            <div className="flex flex-col gap-6 md:flex-row">
                 <Sidebar target={target} />
-                <div className="scrollbar-slim flex min-w-0 flex-1 flex-col gap-6 md:overflow-y-auto">
-                    {children}
-                </div>
+                <div className="flex min-w-0 flex-1 flex-col gap-6">{children}</div>
             </div>
         </DashboardLayout>
     );
