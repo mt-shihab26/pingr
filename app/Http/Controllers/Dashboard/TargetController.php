@@ -83,7 +83,7 @@ class TargetController extends Controller
     {
         abort_unless($target->team_id === $team->id, 404);
 
-        return redirect()->route("dashboard.targets.show.overview");
+        return redirect()->route("dashboard.targets.show.overview", [$team, $target]);
     }
 
     /**
