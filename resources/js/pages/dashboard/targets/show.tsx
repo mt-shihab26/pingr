@@ -9,6 +9,7 @@ import { Link } from "@inertiajs/react";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Heading } from "@/components/elements/heading";
 import { Button } from "@/components/ui/button";
+import { Sidebar } from "@/components/screens/dashboard/targets/show/sidebar";
 
 const ShowTarget = ({ target }: { target: TTarget }) => {
     const { team } = useShared();
@@ -41,44 +42,57 @@ const ShowTarget = ({ target }: { target: TTarget }) => {
                 },
             ]}
         >
-            <Heading title={target.label ?? target.endpoint} />
-            <dl className="space-y-4">
-                <div>
-                    <dt className="text-muted-foreground">Type</dt>
-                    <dd>{types.find((type) => type.key === target.type)?.display.label}</dd>
-                </div>
-                <div>
-                    <dt className="text-muted-foreground">Endpoint</dt>
-                    <dd className="break-all">{target.endpoint}</dd>
-                </div>
-                {target.type === "ai" && (
-                    <div>
-                        <dt className="text-muted-foreground">Frequency</dt>
-                        <dd>
-                            Every {target.ai_frequency_value} {target.ai_frequency_unit}
-                            {target.ai_frequency_value !== 1 ? "s" : ""}
-                        </dd>
+            {/* 114px = app header (65px) + breadcrumb bar (49px), 3rem = layout py-6 */}
+            <div className="flex flex-col gap-6 md:h-[calc(100svh-114px-3rem)] md:flex-row">
+                <Sidebar target={target} />
+                <div className="scrollbar-slim flex min-w-0 flex-1 flex-col gap-6 md:overflow-y-auto">
+                    <Heading title={target.label ?? target.endpoint} />
+                    <dl className="space-y-4">
+                        <div>
+                            <dt className="text-muted-foreground">Type</dt>
+                            <dd>{types.find((type) => type.key === target.type)?.display.label}</dd>
+                        </div>
+                        <div>
+                            <dt className="text-muted-foreground">Endpoint</dt>
+                            <dd className="break-all">{target.endpoint}</dd>
+                        </div>
+                        {target.type === "ai" && (
+                            <div>
+                                <dt className="text-muted-foreground">Frequency</dt>
+                                <dd>
+                                    Every {target.ai_frequency_value} {target.ai_frequency_unit}
+                                    {target.ai_frequency_value !== 1 ? "s" : ""}
+                                </dd>
+                            </div>
+                        )}
+                        {target.type !== "ai" && (
+                            <div>
+                                <dt className="text-muted-foreground">Enabled checks</dt>
+                                <dd>
+                                    {enabledChecks.map((check) => check.label).join(", ") || "None"}
+                                </dd>
+                            </div>
+                        )}
+                    </dl>
+                    <div className="flex gap-2">
+                        <Button
+                            nativeButton={false}
+                            render={
+                                <Link
+                                    href={route("dashboard.targets.edit", {
+                                        team,
+                                        target: target.id,
+                                    })}
+                                />
+                            }
+                        >
+                            Edit target
+                        </Button>
+                        <Button variant="destructive" disabled={deleting} onClick={destroy}>
+                            Delete target
+                        </Button>
                     </div>
-                )}
-                {target.type !== "ai" && (
-                    <div>
-                        <dt className="text-muted-foreground">Enabled checks</dt>
-                        <dd>{enabledChecks.map((check) => check.label).join(", ") || "None"}</dd>
-                    </div>
-                )}
-            </dl>
-            <div className="flex gap-2">
-                <Button
-                    nativeButton={false}
-                    render={
-                        <Link href={route("dashboard.targets.edit", { team, target: target.id })} />
-                    }
-                >
-                    Edit target
-                </Button>
-                <Button variant="destructive" disabled={deleting} onClick={destroy}>
-                    Delete target
-                </Button>
+                </div>
             </div>
         </DashboardLayout>
     );

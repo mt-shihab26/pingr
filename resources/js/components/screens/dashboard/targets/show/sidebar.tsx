@@ -1,0 +1,52 @@
+import {
+    Sidebar as SidebarUI,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+} from "@/components/ui/sidebar";
+
+import type { TTarget } from "@/types/models";
+
+import { targetNavItems } from "@/lib/links";
+import { useShared } from "@/hooks/use-shared";
+import { useCurrentUrl } from "@/hooks/use-current-url";
+
+import { Link } from "@inertiajs/react";
+
+export const Sidebar = ({ target }: { target: TTarget }) => {
+    const { team } = useShared();
+    const { isCurrentUrl } = useCurrentUrl();
+
+    const groups = targetNavItems(team, target);
+
+    return (
+        <SidebarProvider className="min-h-0 w-full shrink-0 md:h-full md:w-(--sidebar-width)">
+            <SidebarUI collapsible="none" className="w-full bg-transparent">
+                <div className="scrollbar-slim flex min-h-0 flex-1 flex-col overflow-auto">
+                    {groups.map((items, index) => (
+                        <SidebarGroup key={index} className="px-0">
+                            <SidebarGroupContent>
+                                <SidebarMenu>
+                                    {items.map((item) => (
+                                        <SidebarMenuItem key={item.title}>
+                                            <SidebarMenuButton
+                                                isActive={isCurrentUrl(item.href)}
+                                                render={<Link href={item.href} />}
+                                            >
+                                                {item.icon && <item.icon />}
+                                                <span>{item.title}</span>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    ))}
+                                </SidebarMenu>
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                    ))}
+                </div>
+            </SidebarUI>
+        </SidebarProvider>
+    );
+};

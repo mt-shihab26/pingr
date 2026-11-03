@@ -1,7 +1,25 @@
 import type { TNavItem } from "@/types/utils";
-import type { TTeam } from "@/types/models";
+import type { TTarget, TTeam } from "@/types/models";
 
-import { FolderGit2, LayoutGrid } from "lucide-react";
+import {
+    AlarmClockOff,
+    Badge,
+    Ban,
+    FileText,
+    Flag,
+    FolderGit2,
+    Gauge,
+    Globe,
+    History,
+    LayoutGrid,
+    List,
+    LockOpen,
+    Megaphone,
+    Settings,
+    ShieldCheck,
+    Unlink,
+    Wrench,
+} from "lucide-react";
 
 export const dashboardNavItems = (team: TTeam | null): TNavItem[] => {
     return [
@@ -54,3 +72,36 @@ export const settingsNavItems: TNavItem[] = [
         icon: null,
     },
 ];
+
+export const targetNavItems = (team: TTeam | null, target: TTarget): TNavItem[][] => {
+    return [
+        [
+            {
+                title: "Overview",
+                href: route("dashboard.targets.show", { team: team?.slug, target: target.id }),
+                icon: LayoutGrid,
+            },
+        ],
+        [
+            { title: "Uptime", href: "#", icon: Globe },
+            { title: "Certificate health", href: "#", icon: ShieldCheck },
+            { title: "Broken links", href: "#", icon: Unlink },
+            { title: "Mixed content", href: "#", icon: LockOpen },
+            { title: "Lighthouse", href: "#", icon: Gauge },
+            { title: "DNS", href: "#", icon: List },
+            { title: "Domain", href: "#", icon: Flag },
+            { title: "DNS blocklist", href: "#", icon: Ban },
+        ],
+        [
+            { title: "Monthly reports", href: "#", icon: FileText },
+            { title: "Run History", href: "#", icon: History },
+            { title: "Snooze History", href: "#", icon: AlarmClockOff },
+        ],
+        [
+            { title: "Notifications", href: "#", icon: Megaphone },
+            { title: "Maintenance periods", href: "#", icon: Wrench },
+            { title: "Badges", href: "#", icon: Badge },
+            { title: "Settings", href: "#", icon: Settings },
+        ],
+    ];
+};
