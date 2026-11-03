@@ -47,7 +47,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     const mainNavItems = dashboardNavItems(team);
 
     return (
-        <>
+        <header className="sticky top-0 z-40 bg-background">
             <div className="flex justify-center border-b border-sidebar-border/80">
                 <div className="flex h-16 w-full items-center gap-2 px-4 md:max-w-7xl lg:gap-6">
                     {/* Mobile Menu */}
@@ -197,6 +197,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     </div>
                 </div>
             )}
-        </>
+        </header>
     );
 }
