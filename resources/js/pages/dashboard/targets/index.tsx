@@ -60,14 +60,18 @@ const TargetIndex = ({
     const changeTab = (tab: TTargetTab) => {
         if (tab === filters.tab) return;
 
-        router.get(route("dashboard.targets.index", { team }), {
-            search: search.trim(),
-            per_page: targets.per_page,
-            tab,
-        }, {
-            preserveState: true,
-            preserveScroll: true,
-        });
+        router.get(
+            route("dashboard.targets.index", { team }),
+            {
+                search: search.trim(),
+                per_page: targets.per_page,
+                tab,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+            },
+        );
     };
 
     return (
@@ -137,10 +141,13 @@ const TargetIndex = ({
                                                 <div className="min-w-0">
                                                     <Link
                                                         className="font-medium hover:underline"
-                                                        href={route("dashboard.targets.show", {
-                                                            team,
-                                                            target: target.id,
-                                                        })}
+                                                        href={route(
+                                                            "dashboard.targets.show.redirect",
+                                                            {
+                                                                team,
+                                                                target,
+                                                            },
+                                                        )}
                                                     >
                                                         {target.label ?? target.endpoint}
                                                     </Link>
@@ -179,15 +186,15 @@ const TargetIndex = ({
                                                 {filters.tab === "issues"
                                                     ? "No issue results yet"
                                                     : filters.search
-                                                    ? "No matching targets"
-                                                    : "No targets yet"}
+                                                      ? "No matching targets"
+                                                      : "No targets yet"}
                                             </p>
                                             <p className="mt-1 text-muted-foreground">
                                                 {filters.tab === "issues"
                                                     ? "Issues will appear here once monitoring results are available."
                                                     : filters.search
-                                                    ? "Try another name or endpoint."
-                                                    : "Add your first target to start monitoring."}
+                                                      ? "Try another name or endpoint."
+                                                      : "Add your first target to start monitoring."}
                                             </p>
                                         </TableCell>
                                     </TableRow>

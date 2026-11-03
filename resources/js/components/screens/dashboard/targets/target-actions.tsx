@@ -38,7 +38,7 @@ export const TargetActions = ({ target }: { target: TTarget }) => {
                     <DropdownMenuItem
                         render={
                             <Link
-                                href={route("dashboard.targets.show", { team, target: target.id })}
+                                href={route("dashboard.targets.show.redirect", { team, target })}
                             />
                         }
                     >

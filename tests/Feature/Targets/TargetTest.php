@@ -84,7 +84,7 @@ test('targets from another team cannot be accessed or changed', function () {
     $params = ['team' => $user->personalTeam(), 'target' => $target];
 
     $this->actingAs($user);
-    $this->get(route('dashboard.targets.show', $params))->assertNotFound();
+    $this->get(route('dashboard.targets.show.redirect', $params))->assertNotFound();
     $this->get(route('dashboard.targets.edit', $params))->assertNotFound();
     $this->patch(route('dashboard.targets.update', $params), ['type' => 'server', 'endpoint' => 'other.example.com'])->assertNotFound();
     $this->delete(route('dashboard.targets.destroy', $params))->assertNotFound();

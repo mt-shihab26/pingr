@@ -79,13 +79,11 @@ class TargetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Team $team, Target $target): Response
+    public function show(Team $team, Target $target): RedirectResponse
     {
         abort_unless($target->team_id === $team->id, 404);
 
-        return inertia("dashboard/targets/show/overview", [
-            'target' => $target,
-        ]);
+        return redirect()->route("dashboard.targets.show.overview");
     }
 
     /**

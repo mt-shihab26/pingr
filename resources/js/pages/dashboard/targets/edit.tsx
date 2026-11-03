@@ -21,7 +21,7 @@ const EditTarget = ({ target }: { target: TTarget }) => {
                 { title: "Targets", href: route("dashboard.targets.index", { team }) },
                 {
                     title: target.label ?? target.endpoint,
-                    href: route("dashboard.targets.show", { team, target: target.id }),
+                    href: route("dashboard.targets.show.redirect", { team, target }),
                 },
                 {
                     title: "Edit",

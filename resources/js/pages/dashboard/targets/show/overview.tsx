@@ -31,7 +31,7 @@ const OverviewShowPage = ({ target }: { target: TTarget }) => {
             breadcrumbs={[
                 {
                     title: "Overview",
-                    href: route("dashboard.targets.show", { team, target }),
+                    href: route("dashboard.targets.show.overview", { team, target }),
                 },
             ]}
         >

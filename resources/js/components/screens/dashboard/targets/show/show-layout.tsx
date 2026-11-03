@@ -34,7 +34,7 @@ export const ShowLayout = ({
                 },
                 {
                     title: target.label ?? target.endpoint,
-                    href: route("dashboard.targets.show", { team, target }),
+                    href: route("dashboard.targets.show.redirect", { team, target }),
                 },
                 ...breadcrumbs,
             ]}
