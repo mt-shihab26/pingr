@@ -83,7 +83,7 @@ class TargetController extends Controller
     {
         abort_unless($target->team_id === $team->id, 404);
 
-        return inertia("dashboard/targets/show", [
+        return inertia("dashboard/targets/show/overview", [
             'target' => $target,
         ]);
     }

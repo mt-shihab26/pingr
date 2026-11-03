@@ -9,13 +9,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import type { InertiaLinkProps } from "@inertiajs/react";
-
-export type TBreadcrumb = {
-    type?: "link" | "back";
-    title: string;
-    href: NonNullable<InertiaLinkProps["href"]>;
-};
+import type { TBreadcrumb } from "@/types/utils";
 
 export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: TBreadcrumb[] }) {
     return (

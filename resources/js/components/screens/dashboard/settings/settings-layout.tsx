@@ -7,7 +7,7 @@ import { useShared } from "@/hooks/use-shared";
 import { cn, toUrl } from "@/lib/utils";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import type { ReactNode } from "react";
-import type { TBreadcrumb } from "@/components/layouts/dashboard-layout/breadcrumbs";
+import type { TBreadcrumb } from "@/types/utils";
 import { settingsNavItems } from "@/lib/links";
 
 export function SettingsLayout({

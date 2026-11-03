@@ -8,6 +8,12 @@ export type TNavItem = {
     isActive?: boolean;
 };
 
+export type TBreadcrumb = {
+    type?: "link" | "back";
+    title: string;
+    href: NonNullable<InertiaLinkProps["href"]>;
+};
+
 export type TPaginated<T> = {
     data: T[];
     total: number;

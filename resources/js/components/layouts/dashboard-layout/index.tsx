@@ -1,4 +1,4 @@
-import type { TBreadcrumb } from "./breadcrumbs";
+import type { TBreadcrumb } from "@/types/utils";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";

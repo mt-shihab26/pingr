@@ -1,4 +1,4 @@
-import type { TBreadcrumb } from "./breadcrumbs";
+import type { TBreadcrumb } from "@/types/utils";
 
 import { Breadcrumbs } from "./breadcrumbs";
 import { SidebarTrigger } from "@/components/ui/sidebar";

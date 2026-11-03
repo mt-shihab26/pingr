@@ -78,7 +78,7 @@ export const targetNavItems = (team: TTeam | null, target: TTarget): TNavItem[][
         [
             {
                 title: "Overview",
-                href: route("dashboard.targets.show", { team: team?.slug, target: target.id }),
+                href: route("dashboard.targets.show", { team, target }),
                 icon: LayoutGrid,
             },
         ],

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { TBreadcrumb } from "./breadcrumbs";
+import type { TBreadcrumb } from "@/types/utils";
 
 import { AppContent } from "./app-content";
 import { AppShell } from "./app-shell";

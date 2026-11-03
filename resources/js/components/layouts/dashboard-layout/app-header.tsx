@@ -1,8 +1,9 @@
+import type { TBreadcrumb } from "@/types/utils";
 import { Link } from "@inertiajs/react";
 import { Menu, Search } from "lucide-react";
 import { AppLogo } from "./app-logo";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
-import { Breadcrumbs, type TBreadcrumb } from "./breadcrumbs";
+import { Breadcrumbs } from "./breadcrumbs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
