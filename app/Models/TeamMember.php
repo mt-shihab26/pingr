@@ -20,16 +20,21 @@ use Illuminate\Support\Carbon;
  * @property-read User $user
  */
 #[Fillable(['team_id', 'user_id', 'role'])]
-class Membership extends Pivot
+class TeamMember extends Pivot
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'team_members';
-
     use HasUuids;
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'role' => TeamRole::class,
+        ];
+    }
 
     /**
      * Get the team that the membership belongs to.
@@ -49,17 +54,5 @@ class Membership extends Pivot
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'role' => TeamRole::class,
-        ];
     }
 }

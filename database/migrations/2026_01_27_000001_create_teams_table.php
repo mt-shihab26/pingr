@@ -27,7 +27,7 @@ return new class extends Migration
                 ->nullOnDelete();
         });
 
-        Schema::create('team_members', function (Blueprint $table) {
+        Schema::create('team_member', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('team_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
@@ -60,7 +60,7 @@ return new class extends Migration
         });
 
         Schema::dropIfExists('team_invitations');
-        Schema::dropIfExists('team_members');
+        Schema::dropIfExists('team_member');
         Schema::dropIfExists('teams');
     }
 };

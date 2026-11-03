@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Enums\TeamRole;
 use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -24,7 +24,7 @@ use Illuminate\Support\Str;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read Collection<int, TeamInvitation> $invitations
- * @property-read Collection<int, Membership> $memberships
+ * @property-read Collection<int, TeamMember> $memberships
  * @property-read Collection<int, User> $members
  */
 #[Fillable(['name', 'slug', 'is_personal'])]
@@ -34,17 +34,57 @@ class Team extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_personal' => 'boolean',
+        ];
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
+     * Bootstrap the model and its traits.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (Team $team) {
+            if (empty($team->slug)) {
+                $team->slug = static::generateUniqueTeamSlug($team->name);
+            }
+        });
+
+        static::updating(function (Team $team) {
+            if ($team->isDirty('name')) {
+                $team->slug = static::generateUniqueTeamSlug($team->name, $team->id);
+            }
+        });
+    }
+
+    /**
      * Generate a unique slug for the team.
      */
     protected static function generateUniqueTeamSlug(string $name, ?string $excludeId = null): string
     {
         $defaultSlug = Str::slug($name);
 
-        $query = static::withTrashed()
-            ->where(function ($query) use ($defaultSlug) {
-                $query->where('slug', $defaultSlug)
-                    ->orWhere('slug', 'like', $defaultSlug.'-%');
-            });
+        $query = static::query()
+            ->withTrashed()
+            ->where(fn ($query) => $query
+                ->where('slug', $defaultSlug)
+                ->orWhere('slug', 'like', $defaultSlug.'-%'));
 
         if ($excludeId) {
             $query->where('id', '!=', $excludeId);
@@ -71,26 +111,6 @@ class Team extends Model
     }
 
     /**
-     * Bootstrap the model and its traits.
-     */
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(function (Team $team) {
-            if (empty($team->slug)) {
-                $team->slug = static::generateUniqueTeamSlug($team->name);
-            }
-        });
-
-        static::updating(function (Team $team) {
-            if ($team->isDirty('name')) {
-                $team->slug = static::generateUniqueTeamSlug($team->name, $team->id);
-            }
-        });
-    }
-
-    /**
      * Get the team owner.
      */
     public function owner(): ?Model
@@ -103,12 +123,12 @@ class Team extends Model
     /**
      * Get all members of this team.
      *
-     * @return BelongsToMany<User, $this, Membership, 'pivot'>
+     * @return BelongsToMany<User, $this, TeamMember, 'pivot'>
      */
     public function members(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'team_members', 'team_id', 'user_id')
-            ->using(Membership::class)
+        return $this->belongsToMany(User::class, 'team_member', 'team_id', 'user_id')
+            ->using(TeamMember::class)
             ->withPivot(['role'])
             ->withTimestamps();
     }
@@ -116,11 +136,11 @@ class Team extends Model
     /**
      * Get all memberships for this team.
      *
-     * @return HasMany<Membership, $this>
+     * @return HasMany<TeamMember, $this>
      */
     public function memberships(): HasMany
     {
-        return $this->hasMany(Membership::class);
+        return $this->hasMany(TeamMember::class);
     }
 
     /**
@@ -141,25 +161,5 @@ class Team extends Model
     public function invitations(): HasMany
     {
         return $this->hasMany(TeamInvitation::class);
-    }
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'is_personal' => 'boolean',
-        ];
-    }
-
-    /**
-     * Get the route key for the model.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
     }
 }

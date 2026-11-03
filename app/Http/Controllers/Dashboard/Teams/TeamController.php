@@ -7,7 +7,7 @@ use App\Enums\TeamRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Teams\DeleteTeamRequest;
 use App\Http\Requests\Dashboard\Teams\SaveTeamRequest;
-use App\Models\Membership;
+use App\Models\TeamMember;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -55,7 +55,7 @@ class TeamController extends Controller
                 'isPersonal' => $team->is_personal,
             ],
             'members' => $team->members()->get()->map(function (User $member) {
-                /** @var Membership $membership */
+                /** @var TeamMember $membership */
                 $membership = $member->getRelation('pivot');
 
                 return [

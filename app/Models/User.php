@@ -37,7 +37,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $updated_at
  * @property-read Team|null $currentTeam
  * @property-read Collection<int, Team> $ownedTeams
- * @property-read Collection<int, Membership> $teamMemberships
+ * @property-read Collection<int, TeamMember> $teamMemberships
  * @property-read Collection<int, Team> $teams
  */
 #[Fillable(['name', 'email', 'password', 'current_team_id'])]
@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      */
     public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class, 'team_members', 'user_id', 'team_id')
+        return $this->belongsToMany(Team::class, 'team_member', 'user_id', 'team_id')
             ->withPivot(['role'])
             ->withTimestamps();
     }
@@ -62,28 +62,28 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     /**
      * Get all of the teams the user owns.
      *
-     * @return HasManyThrough<Team, Membership, $this>
+     * @return HasManyThrough<Team, TeamMember, $this>
      */
     public function ownedTeams(): HasManyThrough
     {
         return $this->hasManyThrough(
             Team::class,
-            Membership::class,
+            TeamMember::class,
             'user_id',
             'id',
             'id',
             'team_id',
-        )->where('team_members.role', TeamRole::Owner->value);
+        )->where('team_member.role', TeamRole::Owner->value);
     }
 
     /**
      * Get all of the memberships for the user.
      *
-     * @return HasMany<Membership, $this>
+     * @return HasMany<TeamMember, $this>
      */
     public function teamMemberships(): HasMany
     {
-        return $this->hasMany(Membership::class, 'user_id');
+        return $this->hasMany(TeamMember::class, 'user_id');
     }
 
     /**
