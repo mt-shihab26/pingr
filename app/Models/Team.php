@@ -34,6 +34,26 @@ class Team extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     /**
+     * Bootstrap the model and its traits.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (Team $team) {
+            if (empty($team->slug)) {
+                $team->slug = self::generateUniqueTeamSlug($team->name);
+            }
+        });
+
+        static::updating(function (Team $team) {
+            if ($team->isDirty('name')) {
+                $team->slug = self::generateUniqueTeamSlug($team->name, $team->id);
+            }
+        });
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -54,29 +74,62 @@ class Team extends Model
     }
 
     /**
-     * Bootstrap the model and its traits.
+     * Get all members of this team.
+     *
+     * @return BelongsToMany<User, $this, TeamMember, 'pivot'>
      */
-    protected static function boot(): void
+    public function members(): BelongsToMany
     {
-        parent::boot();
+        return $this->belongsToMany(User::class, 'team_member', 'team_id', 'user_id')
+            ->using(TeamMember::class)
+            ->withPivot(['role'])
+            ->withTimestamps();
+    }
 
-        static::creating(function (Team $team) {
-            if (empty($team->slug)) {
-                $team->slug = static::generateUniqueTeamSlug($team->name);
-            }
-        });
+    /**
+     * Get all team member records for this team.
+     *
+     * @return HasMany<TeamMember, $this>
+     */
+    public function teamMembers(): HasMany
+    {
+        return $this->hasMany(TeamMember::class);
+    }
 
-        static::updating(function (Team $team) {
-            if ($team->isDirty('name')) {
-                $team->slug = static::generateUniqueTeamSlug($team->name, $team->id);
-            }
-        });
+    /**
+     * Get all invitations for this team.
+     *
+     * @return HasMany<TeamInvitation, $this>
+     */
+    public function teamInvitations(): HasMany
+    {
+        return $this->hasMany(TeamInvitation::class);
+    }
+
+    /**
+     * Get all targets for this team.
+     *
+     * @return HasMany<Target, $this>
+     */
+    public function targets(): HasMany
+    {
+        return $this->hasMany(Target::class);
+    }
+
+    /**
+     * Get the team owner.
+     */
+    public function owner(): ?Model
+    {
+        return $this->members()
+            ->wherePivot('role', TeamRole::Owner->value)
+            ->first();
     }
 
     /**
      * Generate a unique slug for the team.
      */
-    protected static function generateUniqueTeamSlug(string $name, ?string $excludeId = null): string
+    private static function generateUniqueTeamSlug(string $name, ?string $excludeId = null): string
     {
         $defaultSlug = Str::slug($name);
 
@@ -108,58 +161,5 @@ class Team extends Model
         return $existingSlugs->isEmpty()
             ? $defaultSlug
             : $defaultSlug.'-'.($maxSuffix + 1);
-    }
-
-    /**
-     * Get all team member records for this team.
-     *
-     * @return HasMany<TeamMember, $this>
-     */
-    public function teamMembers(): HasMany
-    {
-        return $this->hasMany(TeamMember::class);
-    }
-
-    /**
-     * Get all targets for this team.
-     *
-     * @return HasMany<Target, $this>
-     */
-    public function targets(): HasMany
-    {
-        return $this->hasMany(Target::class);
-    }
-
-    /**
-     * Get all invitations for this team.
-     *
-     * @return HasMany<TeamInvitation, $this>
-     */
-    public function teamInvitations(): HasMany
-    {
-        return $this->hasMany(TeamInvitation::class);
-    }
-
-    /**
-     * Get the team owner.
-     */
-    public function owner(): ?Model
-    {
-        return $this->members()
-            ->wherePivot('role', TeamRole::Owner->value)
-            ->first();
-    }
-
-    /**
-     * Get all members of this team.
-     *
-     * @return BelongsToMany<User, $this, TeamMember, 'pivot'>
-     */
-    public function members(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'team_member', 'team_id', 'user_id')
-            ->using(TeamMember::class)
-            ->withPivot(['role'])
-            ->withTimestamps();
     }
 }

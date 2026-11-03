@@ -6,9 +6,9 @@ use App\Enums\TeamRole;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -48,6 +48,20 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     use HasFactory, HasUuids, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'two_factor_confirmed_at' => 'datetime',
+        ];
+    }
+
+    /**
      * Get all of the teams the user belongs to.
      *
      * @return BelongsToMany<Team, $this>
@@ -77,16 +91,6 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     }
 
     /**
-     * Get all team member records for the user.
-     *
-     * @return HasMany<TeamMember, $this>
-     */
-    public function teamMembers(): HasMany
-    {
-        return $this->hasMany(TeamMember::class, 'user_id');
-    }
-
-    /**
      * Get the user's current team.
      *
      * @return BelongsTo<Team, $this>
@@ -94,6 +98,16 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     public function currentTeam(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'current_team_id');
+    }
+
+    /**
+     * Get all team member records for the user.
+     *
+     * @return HasMany<TeamMember, $this>
+     */
+    public function teamMembers(): HasMany
+    {
+        return $this->hasMany(TeamMember::class, 'user_id');
     }
 
     /**
@@ -157,9 +171,25 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     }
 
     /**
+     * Determine if the user has the given permission on the team.
+     */
+    public function hasTeamPermission(Team $team, string $permission): bool
+    {
+        return $this->teamRole($team)?->hasPermission($permission) ?? false;
+    }
+
+    public function fallbackTeam(?Team $excluding = null): ?Team
+    {
+        return $this->teams()
+            ->when($excluding, fn ($query) => $query->where('teams.id', '!=', $excluding->id))
+            ->orderByRaw('LOWER(teams.name)')
+            ->first();
+    }
+
+    /**
      * Get the user's teams as a collection of arrays.
      *
-     * @return SupportCollection<int, array{id: int, name: string, slug: string, isPersonal: bool, role: ?string, roleLabel: ?string, isCurrent: bool}>
+     * @return SupportCollection<int, array{id: string, name: string, slug: string, isPersonal: bool, role: ?string, roleLabel: ?string, isCurrent: bool}>
      */
     public function toUserTeams(bool $includeCurrent = false): SupportCollection
     {
@@ -173,7 +203,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     /**
      * Get the user's team as an array.
      *
-     * @return array{id: int, name: string, slug: string, isPersonal: bool, role: ?string, roleLabel: ?string, isCurrent: bool}
+     * @return array{id: string, name: string, slug: string, isPersonal: bool, role: ?string, roleLabel: ?string, isCurrent: bool}
      */
     public function toUserTeam(Team $team): array
     {
@@ -207,36 +237,6 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
             'canRemoveMember' => $role?->hasPermission('member:remove') ?? false,
             'canCreateInvitation' => $role?->hasPermission('invitation:create') ?? false,
             'canCancelInvitation' => $role?->hasPermission('invitation:cancel') ?? false,
-        ];
-    }
-
-    public function fallbackTeam(?Team $excluding = null): ?Team
-    {
-        return $this->teams()
-            ->when($excluding, fn ($query) => $query->where('teams.id', '!=', $excluding->id))
-            ->orderByRaw('LOWER(teams.name)')
-            ->first();
-    }
-
-    /**
-     * Determine if the user has the given permission on the team.
-     */
-    public function hasTeamPermission(Team $team, string $permission): bool
-    {
-        return $this->teamRole($team)?->hasPermission($permission) ?? false;
-    }
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
         ];
     }
 }
