@@ -17,6 +17,7 @@ import type { TAppearance } from "@/hooks/use-appearance";
 import { useAppearance } from "@/hooks/use-appearance";
 import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
 import type { TUser } from "@/types/models";
+import { ThemeSelector } from "./theme-selector";
 
 const themes: { value: TAppearance; icon: LucideIcon; label: string }[] = [
     { value: "light", icon: Sun, label: "Light" },
@@ -75,26 +76,7 @@ export function UserMenuContent({ user }: Props) {
                         </Link>
                     }
                 />
-                <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                        <SunMoon />
-                        Theme
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuSubContent>
-                        <DropdownMenuRadioGroup value={appearance}>
-                            {themes.map(({ value, icon: Icon, label }) => (
-                                <DropdownMenuRadioItem
-                                    key={value}
-                                    value={value}
-                                    onClick={() => updateAppearance(value)}
-                                >
-                                    <Icon />
-                                    {label}
-                                </DropdownMenuRadioItem>
-                            ))}
-                        </DropdownMenuRadioGroup>
-                    </DropdownMenuSubContent>
-                </DropdownMenuSub>
+                <ThemeSelector />
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} data-test="logout-button">
