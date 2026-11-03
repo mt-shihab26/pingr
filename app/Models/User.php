@@ -37,7 +37,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $updated_at
  * @property-read Team|null $currentTeam
  * @property-read Collection<int, Team> $ownedTeams
- * @property-read Collection<int, TeamMember> $teamMemberships
+ * @property-read Collection<int, TeamMember> $teamMembers
  * @property-read Collection<int, Team> $teams
  */
 #[Fillable(['name', 'email', 'password', 'current_team_id'])]
@@ -77,11 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     }
 
     /**
-     * Get all of the memberships for the user.
+     * Get all team member records for the user.
      *
      * @return HasMany<TeamMember, $this>
      */
-    public function teamMemberships(): HasMany
+    public function teamMembers(): HasMany
     {
         return $this->hasMany(TeamMember::class, 'user_id');
     }
@@ -150,7 +150,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      */
     public function teamRole(Team $team): ?TeamRole
     {
-        return $this->teamMemberships()
+        return $this->teamMembers()
             ->where('team_id', $team->id)
             ->first()
             ?->role;
