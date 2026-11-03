@@ -42,7 +42,7 @@ const activeItemStyles = "text-neutral-900 dark:bg-neutral-800 dark:text-neutral
 
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const { user, team } = useShared();
-    const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
+    const { isCurrentOrParentUrl } = useCurrentUrl();
     const dashboardHref = dashboardUrl(team);
     const mainNavItems = dashboardNavItems(team);
 
@@ -120,14 +120,14 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                             href={item.href}
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
-                                                whenCurrentUrl(item.href, activeItemStyles),
+                                                isCurrentOrParentUrl(item.href) && activeItemStyles,
                                                 "h-9 cursor-pointer gap-2 px-3",
                                             )}
                                         >
                                             {item.icon && <item.icon className="h-4 w-4" />}
                                             {item.title}
                                         </Link>
-                                        {isCurrentUrl(item.href) && (
+                                        {isCurrentOrParentUrl(item.href) && (
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
                                         )}
                                     </NavigationMenuItem>
