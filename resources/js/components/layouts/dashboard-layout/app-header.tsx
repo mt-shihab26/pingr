@@ -4,7 +4,6 @@ import { Menu, Search } from "lucide-react";
 import { AppLogo } from "./app-logo";
 import { AppLogoIcon } from "@/components/icons/app-logo-icon";
 import { Breadcrumbs } from "./breadcrumbs";
-import { ThemeSwitcher } from "./theme-switcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -146,7 +145,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             >
                                 <Search className="size-5! opacity-80 group-hover:opacity-100" />
                             </Button>
-                            <ThemeSwitcher />
                             <div className="hidden gap-1 lg:flex">
                                 {resourceLinks.map((item) => (
                                     <TooltipProvider key={item.title} delay={0}>
