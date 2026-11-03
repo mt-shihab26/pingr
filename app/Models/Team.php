@@ -23,8 +23,8 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, TeamInvitation> $invitations
- * @property-read Collection<int, TeamMember> $memberships
+ * @property-read Collection<int, TeamInvitation> $teamInvitations
+ * @property-read Collection<int, TeamMember> $teamMembers
  * @property-read Collection<int, User> $members
  */
 #[Fillable(['name', 'slug', 'is_personal'])]
@@ -111,6 +111,36 @@ class Team extends Model
     }
 
     /**
+     * Get all team member records for this team.
+     *
+     * @return HasMany<TeamMember, $this>
+     */
+    public function teamMembers(): HasMany
+    {
+        return $this->hasMany(TeamMember::class);
+    }
+
+    /**
+     * Get all targets for this team.
+     *
+     * @return HasMany<Target, $this>
+     */
+    public function targets(): HasMany
+    {
+        return $this->hasMany(Target::class);
+    }
+
+    /**
+     * Get all invitations for this team.
+     *
+     * @return HasMany<TeamInvitation, $this>
+     */
+    public function teamInvitations(): HasMany
+    {
+        return $this->hasMany(TeamInvitation::class);
+    }
+
+    /**
      * Get the team owner.
      */
     public function owner(): ?Model
@@ -131,35 +161,5 @@ class Team extends Model
             ->using(TeamMember::class)
             ->withPivot(['role'])
             ->withTimestamps();
-    }
-
-    /**
-     * Get all memberships for this team.
-     *
-     * @return HasMany<TeamMember, $this>
-     */
-    public function memberships(): HasMany
-    {
-        return $this->hasMany(TeamMember::class);
-    }
-
-    /**
-     * Get all targets for this team.
-     *
-     * @return HasMany<Target, $this>
-     */
-    public function targets(): HasMany
-    {
-        return $this->hasMany(Target::class);
-    }
-
-    /**
-     * Get all invitations for this team.
-     *
-     * @return HasMany<TeamInvitation, $this>
-     */
-    public function invitations(): HasMany
-    {
-        return $this->hasMany(TeamInvitation::class);
     }
 }

@@ -22,7 +22,7 @@ class TeamMemberController extends Controller
 
         $newRole = TeamRole::from($request->validated('role'));
 
-        $team->memberships()
+        $team->teamMembers()
             ->where('user_id', $user->id)
             ->firstOrFail()
             ->update(['role' => $newRole]);
@@ -41,7 +41,7 @@ class TeamMemberController extends Controller
 
         abort_if($team->owner()?->is($user), 403, __('The team owner cannot be removed.'));
 
-        $team->memberships()
+        $team->teamMembers()
             ->where('user_id', $user->id)
             ->delete();
 

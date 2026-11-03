@@ -20,7 +20,7 @@ class CreateTeam
                 'is_personal' => $isPersonal,
             ]);
 
-            $team->memberships()->create([
+            $team->teamMembers()->create([
                 'user_id' => $user->id,
                 'role' => TeamRole::Owner,
             ]);

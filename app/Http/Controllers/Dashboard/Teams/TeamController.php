@@ -67,7 +67,7 @@ class TeamController extends Controller
                     'role_label' => $membership->role->label(),
                 ];
             }),
-            'invitations' => $team->invitations()
+            'invitations' => $team->teamInvitations()
                 ->whereNull('accepted_at')
                 ->get()
                 ->map(fn ($invitation) => [
@@ -132,7 +132,7 @@ class TeamController extends Controller
             ? $user->fallbackTeam($team)
             : null;
 
-        $team->memberships()
+        $team->teamMembers()
             ->where('user_id', $user->id)
             ->delete();
 
@@ -160,8 +160,8 @@ class TeamController extends Controller
                 ->where('id', '!=', $user->id)
                 ->each(fn (User $affectedUser) => $affectedUser->switchTeam($affectedUser->personalTeam()));
 
-            $team->invitations()->delete();
-            $team->memberships()->delete();
+            $team->teamInvitations()->delete();
+            $team->teamMembers()->delete();
             $team->delete();
         });
 

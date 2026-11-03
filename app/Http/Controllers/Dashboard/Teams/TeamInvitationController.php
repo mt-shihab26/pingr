@@ -24,7 +24,7 @@ class TeamInvitationController extends Controller
     {
         abort_unless($request->user()->hasTeamPermission($team, 'invitation:create'), 403);
 
-        $invitation = $team->invitations()->create([
+        $invitation = $team->teamInvitations()->create([
             'email' => $request->validated('email'),
             'role' => TeamRole::from($request->validated('role')),
             'invited_by' => $request->user()->id,
@@ -65,7 +65,7 @@ class TeamInvitationController extends Controller
         DB::transaction(function () use ($user, $invitation) {
             $team = $invitation->team;
 
-            $team->memberships()->firstOrCreate(
+            $team->teamMembers()->firstOrCreate(
                 ['user_id' => $user->id],
                 ['role' => $invitation->role],
             );
