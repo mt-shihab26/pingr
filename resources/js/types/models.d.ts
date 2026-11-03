@@ -1,7 +1,7 @@
 import type { TTeamRole, TTargetType, TTargetAIFrequencyUnit } from "./enums";
 
 export type TUser = {
-    id: number;
+    id: string;
     name: string;
     email: string;
     avatar?: string;
@@ -12,7 +12,7 @@ export type TUser = {
 };
 
 export type TTeam = {
-    id: number;
+    id: string;
     name: string;
     slug: string;
     isPersonal: boolean;
@@ -22,7 +22,7 @@ export type TTeam = {
 };
 
 export type TTeamMember = {
-    id: number;
+    id: string;
     name: string;
     email: string;
     avatar?: string | null;
@@ -39,8 +39,8 @@ export type TTeamInvitation = {
 };
 
 export type TTarget = {
-    id: number;
-    team_id: number;
+    id: string;
+    team_id: string;
     type: TTargetType;
     label: string | null;
     endpoint: string;

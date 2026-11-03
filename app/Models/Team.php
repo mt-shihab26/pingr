@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\TeamRole;
 use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
- * @property int $id
+ * @property string $id
  * @property string $name
  * @property string $slug
  * @property bool $is_personal
@@ -30,12 +31,12 @@ use Illuminate\Support\Str;
 class Team extends Model
 {
     /** @use HasFactory<TeamFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes;
 
     /**
      * Generate a unique slug for the team.
      */
-    protected static function generateUniqueTeamSlug(string $name, ?int $excludeId = null): string
+    protected static function generateUniqueTeamSlug(string $name, ?string $excludeId = null): string
     {
         $defaultSlug = Str::slug($name);
 

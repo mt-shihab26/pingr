@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('targets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('team_id')->constrained()->cascadeOnDelete();
             $table->string('type');
             $table->string('label')->nullable();
             $table->string('endpoint', 2048);

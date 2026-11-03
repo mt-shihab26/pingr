@@ -6,14 +6,15 @@ use App\Enums\TargetAIFrequencyUnit;
 use App\Enums\TargetType;
 use Database\Factories\TargetFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property int $team_id
+ * @property string $id
+ * @property string $team_id
  * @property TargetType $type
  * @property string|null $label
  * @property string $endpoint
@@ -57,7 +58,7 @@ use Illuminate\Support\Carbon;
 class Target extends Model
 {
     /** @use HasFactory<TargetFactory> */
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * Get the attributes that should be cast.
@@ -67,8 +68,8 @@ class Target extends Model
     protected function casts(): array
     {
         return [
-            'id' => 'integer',
-            'team_id' => 'integer',
+            'id' => 'string',
+            'team_id' => 'string',
             'type' => TargetType::class,
             'label' => 'string',
             'endpoint' => 'string',

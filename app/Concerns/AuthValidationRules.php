@@ -24,7 +24,7 @@ trait AuthValidationRules
      *
      * @return array<int, ValidationRule|array<mixed>|string>
      */
-    protected function emailRules(?int $userId = null): array
+    protected function emailRules(?string $userId = null): array
     {
         return [
             'required',
