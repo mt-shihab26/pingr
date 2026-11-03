@@ -1,37 +1,22 @@
-import { Link, router } from "@inertiajs/react";
-import type { LucideIcon } from "lucide-react";
-import { LogOut, Monitor, Moon, Settings, Sun, SunMoon, Users } from "lucide-react";
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuSeparator,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserInfo } from "./user-info";
-import type { TAppearance } from "@/hooks/use-appearance";
-import { useAppearance } from "@/hooks/use-appearance";
-import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
+
 import type { TUser } from "@/types/models";
+
+import { router } from "@inertiajs/react";
+import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
+
+import { Link } from "@inertiajs/react";
+import { LogOut, Settings, Users } from "lucide-react";
+import { UserInfo } from "./user-info";
 import { ThemeSelector } from "./theme-selector";
 
-const themes: { value: TAppearance; icon: LucideIcon; label: string }[] = [
-    { value: "light", icon: Sun, label: "Light" },
-    { value: "dark", icon: Moon, label: "Dark" },
-    { value: "system", icon: Monitor, label: "System" },
-];
-
-type Props = {
-    user: TUser;
-};
-
-export function UserMenuContent({ user }: Props) {
+export const UserMenuContent = ({ user }: { user: TUser }) => {
     const cleanup = useMobileNavigation();
-    const { appearance, updateAppearance } = useAppearance();
 
     const handleLogout = () => {
         cleanup();
@@ -85,4 +70,4 @@ export function UserMenuContent({ user }: Props) {
             </DropdownMenuItem>
         </>
     );
-}
+};
