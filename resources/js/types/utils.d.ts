@@ -42,3 +42,8 @@ export type TTargetCheck =
     | "domain"
     | "dns_blocklist"
     | "open_ports";
+
+export type TTargetCheckItem = {
+    key: TTargetCheck;
+    label: string;
+};

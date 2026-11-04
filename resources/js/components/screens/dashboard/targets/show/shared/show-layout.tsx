@@ -7,7 +7,7 @@ import { useShared } from "@/hooks/use-shared";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Heading } from "@/components/elements/heading";
 
-import { Sidebar } from "./sidebar";
+import { Sidebar } from "../sidebar";
 
 export const ShowLayout = ({
     target,
@@ -45,7 +45,7 @@ export const ShowLayout = ({
             <div className="flex flex-col gap-6 md:flex-row">
                 <Sidebar target={target} />
                 <div className="flex min-w-0 flex-1 flex-col gap-6">
-                    <Heading title={title} />
+                    <Heading title={target.label ?? target.endpoint} />
                     {children}
                 </div>
             </div>

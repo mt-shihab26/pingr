@@ -2,7 +2,7 @@ import type { TTarget } from "@/types/models";
 
 import { useShared } from "@/hooks/use-shared";
 
-import { ShowLayout } from "@/components/screens/dashboard/targets/show/show-layout";
+import { ShowLayout } from "@/components/screens/dashboard/targets/show/shared/show-layout";
 
 const UptimeShowPage = ({ target }: { target: TTarget }) => {
     const { team } = useShared();
