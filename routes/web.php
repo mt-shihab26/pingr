@@ -40,9 +40,13 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
                 Route::get('/broken-links', [Show\BrokenLinksController::class, 'show'])->name('dashboard.targets.show.broken-links');
                 Route::get('/mixed-content', [Show\MixedContentController::class, 'show'])->name('dashboard.targets.show.mixed-content');
                 Route::get('/lighthouse', [Show\LighthouseController::class, 'show'])->name('dashboard.targets.show.lighthouse');
+                Route::get('/scheduled-tasks', [Show\ScheduledTasksController::class, 'show'])->name('dashboard.targets.show.scheduled-tasks');
+                Route::get('/application-health', [Show\ApplicationHealthController::class, 'show'])->name('dashboard.targets.show.application-health');
+                Route::get('/sitemap', [Show\SitemapController::class, 'show'])->name('dashboard.targets.show.sitemap');
                 Route::get('/dns', [Show\DnsController::class, 'show'])->name('dashboard.targets.show.dns');
                 Route::get('/domain', [Show\DomainController::class, 'show'])->name('dashboard.targets.show.domain');
                 Route::get('/dns-blocklist', [Show\DnsBlocklistController::class, 'show'])->name('dashboard.targets.show.dns-blocklist');
+                Route::get('/open-ports', [Show\OpenPortsController::class, 'show'])->name('dashboard.targets.show.open-ports');
                 Route::get('/monthly-reports', [Show\MonthlyReportsController::class, 'show'])->name('dashboard.targets.show.monthly-reports');
                 Route::get('/run-history', [Show\RunHistoryController::class, 'show'])->name('dashboard.targets.show.run-history');
                 Route::get('/snooze-history', [Show\SnoozeHistoryController::class, 'show'])->name('dashboard.targets.show.snooze-history');

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { TBreadcrumb } from "@/types/utils";
 
 import { useShared } from "@/hooks/use-shared";
+import { types } from "@/lib/targets";
 
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Heading } from "@/components/elements/heading";
@@ -45,7 +46,10 @@ export const ShowLayout = ({
             <div className="flex flex-col gap-6 md:flex-row">
                 <Sidebar target={target} />
                 <div className="flex min-w-0 flex-1 flex-col gap-6">
-                    <Heading title={target.label ?? target.endpoint} />
+                    <Heading
+                        title={target.label ?? target.endpoint}
+                        description={types.find((type) => type.key === target.type)?.display.label}
+                    />
                     {children}
                 </div>
             </div>

@@ -220,18 +220,21 @@ export const details = (
                 "As soon as one of your scheduled tasks isn't running on time, or errors, we'll send you a notification.",
             stats: ["Tasks", "Failing"],
             advanced: true,
+            href: route("dashboard.targets.show.scheduled-tasks", { team, target }),
         },
         check_application_health: {
             description:
                 "We monitor critical parts of your server and application, like disk space, queues and the APIs you depend on.",
             stats: ["Checks", "Failing"],
             advanced: true,
+            href: route("dashboard.targets.show.application-health", { team, target }),
         },
         check_sitemap: {
             description:
                 "We check the format of your sitemap and notify you whenever we detect any problems with it.",
             stats: ["URLs in sitemap", "Issues"],
             advanced: true,
+            href: route("dashboard.targets.show.sitemap", { team, target }),
         },
         check_dns: {
             description: "We monitor your DNS records and notify you when they change.",
@@ -251,6 +254,7 @@ export const details = (
         check_open_ports: {
             description: "We scan your server and notify you when unexpected ports are open.",
             stats: ["Open ports"],
+            href: route("dashboard.targets.show.open-ports", { team, target }),
         },
     };
 };
