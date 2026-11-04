@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -35,6 +36,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Team $team
+ * @property-read Uptime|null $uptime
  */
 #[Fillable([
     'type',
@@ -100,5 +102,15 @@ class Target extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    /**
+     * Get the uptime settings for the target.
+     *
+     * @return HasOne<Uptime, $this>
+     */
+    public function uptime(): HasOne
+    {
+        return $this->hasOne(Uptime::class);
     }
 }
