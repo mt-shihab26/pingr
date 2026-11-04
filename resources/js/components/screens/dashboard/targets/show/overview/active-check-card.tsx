@@ -12,6 +12,7 @@ import type { TTargetCheckItem } from "@/types/utils";
 
 import { useShared } from "@/hooks/use-shared";
 import { details } from "@/lib/targets";
+import { router } from "@inertiajs/react";
 
 import { CheckActions } from "./check-actions";
 
@@ -26,6 +27,14 @@ export const ActiveCheckCard = ({
 
     const { stats, href } = details(team, target)[check.key];
 
+    const disable = () => {
+        router.patch(
+            route("dashboard.targets.show.toggle", { team, target }),
+            { check: check.key },
+            { preserveScroll: true },
+        );
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -35,7 +44,7 @@ export const ActiveCheckCard = ({
                 </CardTitle>
                 <CardDescription>We haven't checked this yet.</CardDescription>
                 <CardAction>
-                    <CheckActions href={href} />
+                    <CheckActions href={href} onDisable={disable} />
                 </CardAction>
             </CardHeader>
             <CardContent>

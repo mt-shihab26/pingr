@@ -56,3 +56,46 @@ test('the target show route redirects to the overview page', function () {
         ->get(route('dashboard.targets.show.redirect', ['team' => $team, 'target' => $target]))
         ->assertRedirect(route('dashboard.targets.show.overview', ['team' => $team, 'target' => $target]));
 });
+
+test('target checks can be toggled from the overview page', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+    $params = ['team' => $team, 'target' => $target];
+
+    $this->actingAs($user)
+        ->from(route('dashboard.targets.show.overview', [...$params, 'tab' => 'disabled']))
+        ->patch(route('dashboard.targets.show.toggle', $params), ['check' => 'check_sitemap'])
+        ->assertRedirect(route('dashboard.targets.show.overview', [...$params, 'tab' => 'disabled']))
+        ->assertSessionHas('success', 'Check enabled.');
+
+    expect($target->fresh()->check_sitemap)->toBeTrue();
+
+    $this->patch(route('dashboard.targets.show.toggle', $params), ['check' => 'check_sitemap'])
+        ->assertSessionHas('success', 'Check disabled.');
+
+    expect($target->fresh()->check_sitemap)->toBeFalse();
+});
+
+test('unsupported or invalid checks cannot be toggled', function (string $check) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'tcpport', 'endpoint' => 'example.com:443']);
+
+    $this->actingAs($user)
+        ->patch(route('dashboard.targets.show.toggle', ['team' => $team, 'target' => $target]), ['check' => $check])
+        ->assertSessionHasErrors('check');
+
+    expect($target->fresh()->check_broken_links)->toBeFalse();
+})->with(['check_broken_links', 'type', 'unknown']);
+
+test('checks of another team target cannot be toggled', function () {
+    $user = User::factory()->create();
+    $target = Team::factory()->create()->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->patch(route('dashboard.targets.show.toggle', ['team' => $user->personalTeam(), 'target' => $target]), ['check' => 'check_sitemap'])
+        ->assertNotFound();
+
+    expect($target->fresh()->check_sitemap)->toBeFalse();
+});

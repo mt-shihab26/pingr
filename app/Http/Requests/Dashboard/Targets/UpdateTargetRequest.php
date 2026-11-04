@@ -16,7 +16,7 @@ class UpdateTargetRequest extends StoreTargetRequest
         foreach (array_keys(parent::rules()) as $field) {
             if (
                 str_starts_with($field, 'check_')
-                && ! in_array(substr($field, 6), $allowedChecks, true)
+                && ! in_array($field, $allowedChecks, true)
                 && ! $this->exists($field)
             ) {
                 $this->merge([$field => false]);

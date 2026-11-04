@@ -30,18 +30,18 @@ export type TPaginated<T> = {
 export type TTargetTab = "all" | "issues";
 
 export type TTargetCheck =
-    | "uptime" //
-    | "certificate_health"
-    | "broken_links"
-    | "mixed_content"
-    | "lighthouse"
-    | "scheduled_tasks"
-    | "application_health"
-    | "sitemap"
-    | "dns"
-    | "domain"
-    | "dns_blocklist"
-    | "open_ports";
+    | "check_uptime" //
+    | "check_certificate_health"
+    | "check_broken_links"
+    | "check_mixed_content"
+    | "check_lighthouse"
+    | "check_scheduled_tasks"
+    | "check_application_health"
+    | "check_sitemap"
+    | "check_dns"
+    | "check_domain"
+    | "check_dns_blocklist"
+    | "check_open_ports";
 
 export type TTargetCheckItem = {
     key: TTargetCheck;

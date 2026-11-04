@@ -1,10 +1,9 @@
 import type { TTarget } from "@/types/models";
 import type { TTargetAIFrequencyUnit, TTargetType } from "@/types/enums";
-import type { TTargetCheck } from "@/types/utils";
 
 import { aiFrequencyUnits, checks, types } from "@/lib/targets";
 import { useForm } from "@inertiajs/react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useShared } from "@/hooks/use-shared";
 import { cn } from "cn";
 
@@ -117,15 +116,11 @@ export const TargetForm = ({ target }: { target?: TTarget }) => {
         return types.find((type) => type.key === data.type)!;
     }, [data.type]);
 
-    const checkField = useCallback((check: TTargetCheck) => {
-        return `check_${check}` as Extract<keyof typeof data, `check_${TTargetCheck}`>;
-    }, []);
-
     const toggleAllChecks = () => {
-        const checked = !selectedType.checks.every((key) => data[checkField(key)]);
+        const checked = !selectedType.checks.every((key) => data[key]);
         setData((d) => ({
             ...d,
-            ...Object.fromEntries(selectedType.checks.map((key) => [checkField(key), checked])),
+            ...Object.fromEntries(selectedType.checks.map((key) => [key, checked])),
         }));
     };
 
@@ -248,7 +243,7 @@ export const TargetForm = ({ target }: { target?: TTarget }) => {
                     <div className="flex items-center justify-between">
                         <Label>Checks</Label>
                         <Button type="button" variant="link" size="xs" onClick={toggleAllChecks}>
-                            {selectedType.checks.every((key) => data[checkField(key)])
+                            {selectedType.checks.every((key) => data[key])
                                 ? "Deselect all"
                                 : "Select all"}
                         </Button>
@@ -259,17 +254,15 @@ export const TargetForm = ({ target }: { target?: TTarget }) => {
                             .map((check) => (
                                 <Label key={check.key} className="cursor-pointer">
                                     <Checkbox
-                                        checked={data[checkField(check.key)]}
-                                        onCheckedChange={(checked) =>
-                                            setData(checkField(check.key), checked)
-                                        }
+                                        checked={data[check.key]}
+                                        onCheckedChange={(checked) => setData(check.key, checked)}
                                     />
                                     {check.label}
                                 </Label>
                             ))}
                     </div>
                     {selectedType.checks.map((key) => (
-                        <InputError key={key} message={errors[checkField(key)]} />
+                        <InputError key={key} message={errors[key]} />
                     ))}
                 </div>
             )}

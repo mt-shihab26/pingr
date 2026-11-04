@@ -4,7 +4,7 @@ import type { TTargetCheckItem } from "@/types/utils";
 import { useShared } from "@/hooks/use-shared";
 import { details } from "@/lib/targets";
 
-import { Link } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,6 +20,14 @@ export const DisabledCheckCard = ({
 
     const { description, advanced } = details(team, target)[check.key];
 
+    const enable = () => {
+        router.patch(
+            route("dashboard.targets.show.toggle", { team, target }),
+            { check: check.key },
+            { preserveScroll: true },
+        );
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -31,11 +39,7 @@ export const DisabledCheckCard = ({
                 <CardDescription>{description}</CardDescription>
             </CardHeader>
             <CardFooter className="mt-auto">
-                <Button
-                    variant="outline"
-                    nativeButton={false}
-                    render={<Link href={route("dashboard.targets.edit", { team, target })} />}
-                >
+                <Button variant="outline" onClick={enable}>
                     Enable
                 </Button>
             </CardFooter>

@@ -31,7 +31,10 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
 
             Route::prefix('/{target}')->group(function () {
                 Route::get('/', [TargetController::class, 'show'])->name('dashboard.targets.show.redirect');
+
                 Route::get('/overview', [Show\OverviewController::class, 'show'])->name('dashboard.targets.show.overview');
+                Route::patch('/overview/toggle', [Show\OverviewController::class, 'toggle'])->name('dashboard.targets.show.toggle');
+
                 Route::get('/uptime', [Show\UptimeController::class, 'show'])->name('dashboard.targets.show.uptime');
                 Route::get('/certificate-health', [Show\CertificateHealthController::class, 'show'])->name('dashboard.targets.show.certificate-health');
                 Route::get('/broken-links', [Show\BrokenLinksController::class, 'show'])->name('dashboard.targets.show.broken-links');

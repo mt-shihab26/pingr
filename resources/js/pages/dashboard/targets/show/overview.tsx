@@ -17,13 +17,9 @@ const OverviewShowPage = ({ target, tab }: { target: TTarget; tab: "active" | "d
 
     const supported = types.find((type) => type.key === target.type)?.checks ?? [];
 
-    const active = checks.filter(
-        (check) => supported.includes(check.key) && target[`check_${check.key}`],
-    );
+    const active = checks.filter((check) => supported.includes(check.key) && target[check.key]);
 
-    const disabled = checks.filter(
-        (check) => supported.includes(check.key) && !target[`check_${check.key}`],
-    );
+    const disabled = checks.filter((check) => supported.includes(check.key) && !target[check.key]);
 
     return (
         <ShowLayout

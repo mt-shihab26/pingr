@@ -11,7 +11,7 @@ import { ChartPie, CircleStop, EllipsisVertical, RefreshCw } from "lucide-react"
 
 import { Button } from "@/components/ui/button";
 
-export const CheckActions = ({ href }: { href?: string }) => {
+export const CheckActions = ({ href, onDisable }: { href?: string; onDisable: () => void }) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger
@@ -34,7 +34,7 @@ export const CheckActions = ({ href }: { href?: string }) => {
                     Check again
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive">
+                <DropdownMenuItem variant="destructive" onClick={onDisable}>
                     <CircleStop />
                     Disable
                 </DropdownMenuItem>

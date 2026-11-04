@@ -37,17 +37,17 @@ export const types: {
             maxLength: 2048,
         },
         checks: [
-            "uptime",
-            "certificate_health",
-            "broken_links",
-            "mixed_content",
-            "lighthouse",
-            "scheduled_tasks",
-            "application_health",
-            "sitemap",
-            "dns",
-            "domain",
-            "dns_blocklist",
+            "check_uptime",
+            "check_certificate_health",
+            "check_broken_links",
+            "check_mixed_content",
+            "check_lighthouse",
+            "check_scheduled_tasks",
+            "check_application_health",
+            "check_sitemap",
+            "check_dns",
+            "check_domain",
+            "check_dns_blocklist",
         ],
     },
     {
@@ -64,7 +64,14 @@ export const types: {
             minLength: 4,
             maxLength: 253,
         },
-        checks: ["uptime", "scheduled_tasks", "dns", "domain", "dns_blocklist", "open_ports"],
+        checks: [
+            "check_uptime",
+            "check_scheduled_tasks",
+            "check_dns",
+            "check_domain",
+            "check_dns_blocklist",
+            "check_open_ports",
+        ],
     },
     {
         key: "tcpport",
@@ -80,7 +87,7 @@ export const types: {
             minLength: 6,
             maxLength: 259,
         },
-        checks: ["uptime", "dns", "domain", "dns_blocklist"],
+        checks: ["check_uptime", "check_dns", "check_domain", "check_dns_blocklist"],
     },
     {
         key: "ai",
@@ -103,51 +110,51 @@ export const types: {
 
 export const checks: TTargetCheckItem[] = [
     {
-        key: "uptime",
+        key: "check_uptime",
         label: "Uptime",
     },
     {
-        key: "certificate_health",
+        key: "check_certificate_health",
         label: "Certificate Health",
     },
     {
-        key: "broken_links",
+        key: "check_broken_links",
         label: "Broken Links",
     },
     {
-        key: "mixed_content",
+        key: "check_mixed_content",
         label: "Mixed Content",
     },
     {
-        key: "lighthouse",
+        key: "check_lighthouse",
         label: "Lighthouse",
     },
     {
-        key: "scheduled_tasks",
+        key: "check_scheduled_tasks",
         label: "Scheduled Tasks",
     },
     {
-        key: "application_health",
+        key: "check_application_health",
         label: "Application Health",
     },
     {
-        key: "sitemap",
+        key: "check_sitemap",
         label: "Sitemap",
     },
     {
-        key: "dns",
+        key: "check_dns",
         label: "DNS",
     },
     {
-        key: "domain",
+        key: "check_domain",
         label: "Domain",
     },
     {
-        key: "dns_blocklist",
+        key: "check_dns_blocklist",
         label: "DNS Blocklist",
     },
     {
-        key: "open_ports",
+        key: "check_open_ports",
         label: "Open Ports",
     },
 ];
@@ -183,65 +190,65 @@ export const details = (
     }
 > => {
     return {
-        uptime: {
+        check_uptime: {
             description: "We check if your target is up and notify you as soon as it goes down.",
             stats: ["Past 7 days", "Past 14 days", "Past 30 days"],
             href: route("dashboard.targets.show.uptime", { team, target }),
         },
-        certificate_health: {
+        check_certificate_health: {
             description: "We check your SSL certificate and notify you before it expires.",
             stats: ["Expires in"],
             href: route("dashboard.targets.show.certificate-health", { team, target }),
         },
-        broken_links: {
+        check_broken_links: {
             description: "We crawl your site and notify you when we find broken links.",
             stats: ["Broken links", "URLs crawled"],
             href: route("dashboard.targets.show.broken-links", { team, target }),
         },
-        mixed_content: {
+        check_mixed_content: {
             description: "We crawl your site and notify you when we find insecure resources.",
             stats: ["Pieces of mixed content", "URLs crawled"],
             href: route("dashboard.targets.show.mixed-content", { team, target }),
         },
-        lighthouse: {
+        check_lighthouse: {
             description: "We run Lighthouse audits and notify you when your scores drop.",
             stats: ["Performance", "Accessibility", "SEO"],
             href: route("dashboard.targets.show.lighthouse", { team, target }),
         },
-        scheduled_tasks: {
+        check_scheduled_tasks: {
             description:
                 "As soon as one of your scheduled tasks isn't running on time, or errors, we'll send you a notification.",
             stats: ["Tasks", "Failing"],
             advanced: true,
         },
-        application_health: {
+        check_application_health: {
             description:
                 "We monitor critical parts of your server and application, like disk space, queues and the APIs you depend on.",
             stats: ["Checks", "Failing"],
             advanced: true,
         },
-        sitemap: {
+        check_sitemap: {
             description:
                 "We check the format of your sitemap and notify you whenever we detect any problems with it.",
             stats: ["URLs in sitemap", "Issues"],
             advanced: true,
         },
-        dns: {
+        check_dns: {
             description: "We monitor your DNS records and notify you when they change.",
             stats: ["Records"],
             href: route("dashboard.targets.show.dns", { team, target }),
         },
-        domain: {
+        check_domain: {
             description: "We check your domain registration and notify you before it expires.",
             stats: ["Expires in"],
             href: route("dashboard.targets.show.domain", { team, target }),
         },
-        dns_blocklist: {
+        check_dns_blocklist: {
             description: "We check if your domain or IP appears on any DNS blocklist.",
             stats: ["Blocklists checked", "Listed on"],
             href: route("dashboard.targets.show.dns-blocklist", { team, target }),
         },
-        open_ports: {
+        check_open_ports: {
             description: "We scan your server and notify you when unexpected ports are open.",
             stats: ["Open ports"],
         },
