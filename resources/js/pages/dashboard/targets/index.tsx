@@ -19,7 +19,7 @@ import { router } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 import { Paginator } from "@/components/elements/paginator";
 import { Filter, Plus, Activity, SearchX, CircleDashed } from "lucide-react";
-import { TargetActions } from "@/components/screens/dashboard/targets/target-actions";
+import { TargetActions } from "@/components/screens/dashboard/targets/index/target-actions";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

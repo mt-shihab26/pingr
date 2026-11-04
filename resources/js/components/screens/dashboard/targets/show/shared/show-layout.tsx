@@ -7,7 +7,7 @@ import { useShared } from "@/hooks/use-shared";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Heading } from "@/components/elements/heading";
 
-import { Sidebar } from "../sidebar";
+import { Sidebar } from "./sidebar";
 
 export const ShowLayout = ({
     target,

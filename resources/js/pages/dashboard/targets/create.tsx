@@ -1,6 +1,6 @@
 import { useShared } from "@/hooks/use-shared";
 
-import { TargetForm } from "@/components/screens/dashboard/targets/target-form";
+import { TargetForm } from "@/components/screens/dashboard/targets/shared/target-form";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Heading } from "@/components/elements/heading";
 
