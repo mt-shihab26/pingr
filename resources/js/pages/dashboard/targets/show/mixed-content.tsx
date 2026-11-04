@@ -2,7 +2,6 @@ import type { TTarget } from "@/types/models";
 
 import { useShared } from "@/hooks/use-shared";
 
-import { Heading } from "@/components/elements/heading";
 import { ShowLayout } from "@/components/screens/dashboard/targets/show/show-layout";
 
 const MixedContentShowPage = ({ target }: { target: TTarget }) => {
@@ -11,15 +10,14 @@ const MixedContentShowPage = ({ target }: { target: TTarget }) => {
     return (
         <ShowLayout
             target={target}
+            title="Mixed content"
             breadcrumbs={[
                 {
                     title: "Mixed content",
                     href: route("dashboard.targets.show.mixed-content", { team, target }),
                 },
             ]}
-        >
-            <Heading title="Mixed content" />
-        </ShowLayout>
+        />
     );
 };
 

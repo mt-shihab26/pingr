@@ -2,7 +2,6 @@ import type { TTarget } from "@/types/models";
 
 import { useShared } from "@/hooks/use-shared";
 
-import { Heading } from "@/components/elements/heading";
 import { ShowLayout } from "@/components/screens/dashboard/targets/show/show-layout";
 
 const SnoozeHistoryShowPage = ({ target }: { target: TTarget }) => {
@@ -11,15 +10,14 @@ const SnoozeHistoryShowPage = ({ target }: { target: TTarget }) => {
     return (
         <ShowLayout
             target={target}
+            title="Snooze History"
             breadcrumbs={[
                 {
                     title: "Snooze History",
                     href: route("dashboard.targets.show.snooze-history", { team, target }),
                 },
             ]}
-        >
-            <Heading title="Snooze History" />
-        </ShowLayout>
+        />
     );
 };
 

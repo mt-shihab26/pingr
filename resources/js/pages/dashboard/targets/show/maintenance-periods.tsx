@@ -2,7 +2,6 @@ import type { TTarget } from "@/types/models";
 
 import { useShared } from "@/hooks/use-shared";
 
-import { Heading } from "@/components/elements/heading";
 import { ShowLayout } from "@/components/screens/dashboard/targets/show/show-layout";
 
 const MaintenancePeriodsShowPage = ({ target }: { target: TTarget }) => {
@@ -11,15 +10,14 @@ const MaintenancePeriodsShowPage = ({ target }: { target: TTarget }) => {
     return (
         <ShowLayout
             target={target}
+            title="Maintenance periods"
             breadcrumbs={[
                 {
                     title: "Maintenance periods",
                     href: route("dashboard.targets.show.maintenance-periods", { team, target }),
                 },
             ]}
-        >
-            <Heading title="Maintenance periods" />
-        </ShowLayout>
+        />
     );
 };
 

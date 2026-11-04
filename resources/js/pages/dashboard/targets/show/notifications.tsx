@@ -2,7 +2,6 @@ import type { TTarget } from "@/types/models";
 
 import { useShared } from "@/hooks/use-shared";
 
-import { Heading } from "@/components/elements/heading";
 import { ShowLayout } from "@/components/screens/dashboard/targets/show/show-layout";
 
 const NotificationsShowPage = ({ target }: { target: TTarget }) => {
@@ -11,15 +10,14 @@ const NotificationsShowPage = ({ target }: { target: TTarget }) => {
     return (
         <ShowLayout
             target={target}
+            title="Notifications"
             breadcrumbs={[
                 {
                     title: "Notifications",
                     href: route("dashboard.targets.show.notifications", { team, target }),
                 },
             ]}
-        >
-            <Heading title="Notifications" />
-        </ShowLayout>
+        />
     );
 };
 

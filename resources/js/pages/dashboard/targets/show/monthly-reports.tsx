@@ -2,7 +2,6 @@ import type { TTarget } from "@/types/models";
 
 import { useShared } from "@/hooks/use-shared";
 
-import { Heading } from "@/components/elements/heading";
 import { ShowLayout } from "@/components/screens/dashboard/targets/show/show-layout";
 
 const MonthlyReportsShowPage = ({ target }: { target: TTarget }) => {
@@ -11,15 +10,14 @@ const MonthlyReportsShowPage = ({ target }: { target: TTarget }) => {
     return (
         <ShowLayout
             target={target}
+            title="Monthly reports"
             breadcrumbs={[
                 {
                     title: "Monthly reports",
                     href: route("dashboard.targets.show.monthly-reports", { team, target }),
                 },
             ]}
-        >
-            <Heading title="Monthly reports" />
-        </ShowLayout>
+        />
     );
 };
 

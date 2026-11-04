@@ -5,23 +5,26 @@ import type { TBreadcrumb } from "@/types/utils";
 import { useShared } from "@/hooks/use-shared";
 
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
+import { Heading } from "@/components/elements/heading";
 
 import { Sidebar } from "./sidebar";
 
 export const ShowLayout = ({
     target,
+    title,
     children,
     breadcrumbs = [],
 }: {
     target: TTarget;
-    children: ReactNode;
+    title: string;
+    children?: ReactNode;
     breadcrumbs?: TBreadcrumb[];
 }) => {
     const { team } = useShared();
 
     return (
         <DashboardLayout
-            title={target.label ?? target.endpoint}
+            title={`${title} - ${target.label ?? target.endpoint}`}
             breadcrumbs={[
                 {
                     type: "back",
@@ -41,7 +44,10 @@ export const ShowLayout = ({
         >
             <div className="flex flex-col gap-6 md:flex-row">
                 <Sidebar target={target} />
-                <div className="flex min-w-0 flex-1 flex-col gap-6">{children}</div>
+                <div className="flex min-w-0 flex-1 flex-col gap-6">
+                    <Heading title={title} />
+                    {children}
+                </div>
             </div>
         </DashboardLayout>
     );

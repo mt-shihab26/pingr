@@ -6,7 +6,6 @@ import { checks, types } from "@/lib/targets";
 import { router } from "@inertiajs/react";
 
 import { Link } from "@inertiajs/react";
-import { Heading } from "@/components/elements/heading";
 import { Button } from "@/components/ui/button";
 import { ShowLayout } from "@/components/screens/dashboard/targets/show/show-layout";
 
@@ -28,6 +27,7 @@ const OverviewShowPage = ({ target }: { target: TTarget }) => {
     return (
         <ShowLayout
             target={target}
+            title={"Overview"}
             breadcrumbs={[
                 {
                     title: "Overview",
@@ -35,7 +35,6 @@ const OverviewShowPage = ({ target }: { target: TTarget }) => {
                 },
             ]}
         >
-            <Heading title={target.label ?? target.endpoint} />
             <dl className="space-y-4">
                 <div>
                     <dt className="text-muted-foreground">Type</dt>
