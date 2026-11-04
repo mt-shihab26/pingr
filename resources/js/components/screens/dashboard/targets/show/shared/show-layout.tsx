@@ -8,7 +8,7 @@ import { types } from "@/lib/targets";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Heading } from "@/components/elements/heading";
 
-import { Sidebar } from "./sidebar";
+import { ShowSidebar } from "./show-sidebar";
 
 export const ShowLayout = ({
     target,
@@ -44,7 +44,7 @@ export const ShowLayout = ({
             ]}
         >
             <div className="flex flex-col gap-6 md:flex-row">
-                <Sidebar target={target} />
+                <ShowSidebar target={target} />
                 <div className="flex min-w-0 flex-1 flex-col gap-6">
                     <Heading
                         title={target.label ?? target.endpoint}

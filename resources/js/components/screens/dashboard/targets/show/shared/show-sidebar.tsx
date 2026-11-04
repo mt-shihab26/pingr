@@ -1,5 +1,5 @@
 import {
-    Sidebar as SidebarUI,
+    Sidebar,
     SidebarGroup,
     SidebarGroupContent,
     SidebarMenu,
@@ -16,7 +16,7 @@ import { useCurrentUrl } from "@/hooks/use-current-url";
 
 import { Link } from "@inertiajs/react";
 
-export const Sidebar = ({ target }: { target: TTarget }) => {
+export const ShowSidebar = ({ target }: { target: TTarget }) => {
     const { team } = useShared();
     const { isCurrentUrl } = useCurrentUrl();
 
@@ -24,7 +24,7 @@ export const Sidebar = ({ target }: { target: TTarget }) => {
 
     return (
         <SidebarProvider className="min-h-0 w-full shrink-0 md:w-(--sidebar-width)">
-            <SidebarUI collapsible="none" className="w-full bg-transparent">
+            <Sidebar collapsible="none" className="w-full bg-transparent">
                 <div className="flex flex-1 flex-col">
                     {groups.map((items, index) => (
                         <SidebarGroup key={index} className="px-0">
@@ -46,7 +46,7 @@ export const Sidebar = ({ target }: { target: TTarget }) => {
                         </SidebarGroup>
                     ))}
                 </div>
-            </SidebarUI>
+            </Sidebar>
         </SidebarProvider>
     );
 };
