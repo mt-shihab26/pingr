@@ -22,7 +22,10 @@ export const UrlTab = ({ statusPage }: { statusPage: TStatusPage }) => {
     const [slug, setSlug] = useState(statusPage.slug);
     const [domain, setDomain] = useState(statusPage.customDomain ?? "");
 
-    const publicUrl = `https://pingr.app/status-page/${slug || "your-slug"}`;
+    const publicUrl = route("status.show", { slug: slug || "your-slug" });
+    const prefix = `${route("home")
+        .replace(/^https?:\/\//, "")
+        .replace(/\/$/, "")}/status/`;
 
     return (
         <div className="flex flex-col gap-4">
@@ -34,7 +37,7 @@ export const UrlTab = ({ statusPage }: { statusPage: TStatusPage }) => {
                     <FieldLabel htmlFor="status-page-slug">Pingr URL</FieldLabel>
                     <InputGroup>
                         <InputGroupAddon>
-                            <InputGroupText>pingr.app/status-page/</InputGroupText>
+                            <InputGroupText>{prefix}</InputGroupText>
                         </InputGroupAddon>
                         <InputGroupInput
                             id="status-page-slug"
@@ -48,7 +51,14 @@ export const UrlTab = ({ statusPage }: { statusPage: TStatusPage }) => {
                     </InputGroup>
                     <FieldDescription>
                         Your status page will be available on our domain at{" "}
-                        <code className="text-foreground">{publicUrl}</code>
+                        <a
+                            href={publicUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="font-mono text-foreground underline"
+                        >
+                            {publicUrl}
+                        </a>
                     </FieldDescription>
                 </Field>
             </SettingsSection>

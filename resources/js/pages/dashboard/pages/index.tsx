@@ -25,8 +25,13 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
+import type { TStatusPage } from "@/components/screens/dashboard/pages/status-pages-data";
+
 import { statusPages } from "@/components/screens/dashboard/pages/status-pages-data";
 import { CreateStatusPageDialog } from "@/components/screens/dashboard/pages/index/create-status-page-dialog";
+
+const publicUrl = (page: TStatusPage) =>
+    page.customDomain ? `https://${page.customDomain}` : route("status.show", { slug: page.slug });
 
 const StatusPagesIndex = () => {
     const { team } = useShared();
@@ -100,7 +105,14 @@ const StatusPagesIndex = () => {
                                         {page.monitors.length}
                                     </TableCell>
                                     <TableCell className="pr-4 font-mono text-muted-foreground">
-                                        {page.customDomain ?? `pingr.app/status-page/${page.slug}`}
+                                        <a
+                                            href={publicUrl(page)}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="hover:underline"
+                                        >
+                                            {publicUrl(page)}
+                                        </a>
                                     </TableCell>
                                 </TableRow>
                             ))}
