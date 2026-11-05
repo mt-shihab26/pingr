@@ -427,3 +427,28 @@ test('invalid monthly reports tabs are rejected', function () {
         ->assertUnprocessable()
         ->assertJsonValidationErrors('tab');
 });
+
+test('the notifications page is filtered by tab', function (?string $tab, string $expected) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->get(route('dashboard.targets.show.notifications', array_filter(['team' => $team, 'target' => $target, 'tab' => $tab])))
+        ->assertOk()
+        ->assertInertia(fn (Assert $inertia) => $inertia->where('tab', $expected));
+})->with([
+    'default' => [null, 'notifications'],
+    'preferences' => ['preferences', 'preferences'],
+]);
+
+test('invalid notifications tabs are rejected', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->getJson(route('dashboard.targets.show.notifications', ['team' => $team, 'target' => $target, 'tab' => 'unknown']))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('tab');
+});
