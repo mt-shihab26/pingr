@@ -17,7 +17,9 @@ export function UserInfo({
     return (
         <>
             <Avatar className="h-8 w-8 overflow-hidden rounded-none after:rounded-none">
-                {showAvatar ? <AvatarImage className="rounded-none" src={user.avatar} alt={user.name} /> : null}
+                {showAvatar ? (
+                    <AvatarImage className="rounded-none" src={user.avatar} alt={user.name} />
+                ) : null}
                 <AvatarFallback className="rounded-none text-black dark:text-white">
                     {formatInitials(user.name)}
                 </AvatarFallback>
