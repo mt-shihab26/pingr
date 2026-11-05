@@ -44,7 +44,7 @@ export const ActiveCheckCard = ({
                 </CardTitle>
                 <CardDescription>We haven't checked this yet.</CardDescription>
                 <CardAction>
-                    <CheckActions href={href} onDisable={disable} />
+                    <CheckActions check={check} href={href} onDisable={disable} />
                 </CardAction>
             </CardHeader>
             <CardContent>
