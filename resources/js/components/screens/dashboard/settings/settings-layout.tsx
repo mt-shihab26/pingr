@@ -47,7 +47,7 @@ export function SettingsLayout({
             <div className="flex flex-col gap-6 lg:flex-row lg:gap-12">
                 <aside className="w-full max-w-xl lg:w-48">
                     <nav className="flex flex-col gap-1" aria-label="Settings">
-                        {settingsNavItems.map((item, index) => (
+                        {settingsNavItems().map((item, index) => (
                             <Button
                                 key={`${toUrl(item.href)}-${index}`}
                                 size="sm"

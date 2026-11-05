@@ -53,23 +53,25 @@ export const resourceLinks: TNavItem[] = [
     },
 ];
 
-export const settingsNavItems: TNavItem[] = [
-    {
-        title: "Profile",
-        href: route("dashboard.settings.profile.edit"),
-        icon: null,
-    },
-    {
-        title: "Security",
-        href: route("dashboard.settings.security.edit"),
-        icon: null,
-    },
-    {
-        title: "Teams",
-        href: route("dashboard.teams.index"),
-        icon: null,
-    },
-];
+export const settingsNavItems = (): TNavItem[] => {
+    return [
+        {
+            title: "Profile",
+            href: route("dashboard.settings.profile.edit"),
+            icon: null,
+        },
+        {
+            title: "Security",
+            href: route("dashboard.settings.security.edit"),
+            icon: null,
+        },
+        {
+            title: "Teams",
+            href: route("dashboard.teams.index"),
+            icon: null,
+        },
+    ];
+};
 
 export const targetNavItems = (team: TTeam | null, target: TTarget): TNavItem[][] => {
     return [
