@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\Teams\TeamController;
 use App\Http\Controllers\Dashboard\Teams\TeamInvitationController;
 use App\Http\Controllers\Dashboard\Teams\TeamMemberController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StatusPageController;
 use App\Http\Controllers\WellKnownController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Auth\Middleware\RequirePassword;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, "index"])->name('home');
 
 Route::get('.well-known/passkey-endpoints', [WellKnownController::class, "passkeys"])->name('well-known.passkeys');
+
+Route::get('/status/{slug}', [StatusPageController::class, "show"])->name('status.show');
 
 Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [OverviewController::class, "redirect"])->withoutMiddleware("verified")->name('dashboard.index');

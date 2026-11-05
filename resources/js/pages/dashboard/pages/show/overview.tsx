@@ -59,7 +59,18 @@ const OverviewStatusPage = ({ statusPageId }: { statusPageId: string }) => {
                         />
                     </CardContent>
                     <CardFooter>
-                        <Button variant="link" className="px-0">
+                        <Button
+                            variant="link"
+                            className="px-0"
+                            nativeButton={false}
+                            render={
+                                <a
+                                    href={route("status.show", { slug: statusPage.slug })}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                />
+                            }
+                        >
                             Preview status page
                         </Button>
                     </CardFooter>

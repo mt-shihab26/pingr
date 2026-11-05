@@ -14,7 +14,7 @@ export const statusPages: TStatusPage[] = [
         name: "Shihab",
         slug: "shihab",
         active: true,
-        monitors: [],
+        monitors: ["developershihab.com", "tic-tac-toe.developershihab.com"],
         customDomain: null,
         autoUpdates: true,
     },
@@ -31,3 +31,6 @@ export const statusPages: TStatusPage[] = [
 
 export const findStatusPage = (id: string): TStatusPage =>
     statusPages.find((page) => page.id === id) ?? { ...statusPages[0], id };
+
+export const findStatusPageBySlug = (slug: string): TStatusPage | undefined =>
+    statusPages.find((page) => page.slug === slug);
