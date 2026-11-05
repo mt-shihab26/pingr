@@ -213,3 +213,31 @@ test('invalid mixed content tabs are rejected', function () {
         ->assertUnprocessable()
         ->assertJsonValidationErrors('tab');
 });
+
+test('the lighthouse page is filtered by tab', function (?string $tab, string $expected) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->get(route('dashboard.targets.show.lighthouse', array_filter(['team' => $team, 'target' => $target, 'tab' => $tab])))
+        ->assertOk()
+        ->assertInertia(fn (Assert $inertia) => $inertia->where('tab', $expected));
+})->with([
+    'default' => [null, 'latest'],
+    'history' => ['history', 'history'],
+    'snooze' => ['snooze', 'snooze'],
+    'settings' => ['settings', 'settings'],
+    'troubleshooting' => ['troubleshooting', 'troubleshooting'],
+]);
+
+test('invalid lighthouse tabs are rejected', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->getJson(route('dashboard.targets.show.lighthouse', ['team' => $team, 'target' => $target, 'tab' => 'unknown']))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('tab');
+});
