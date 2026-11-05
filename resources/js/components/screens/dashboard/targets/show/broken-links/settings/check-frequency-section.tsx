@@ -11,12 +11,13 @@ const frequencies = [
     { value: "10080", label: "1 week" },
 ];
 
-export const CheckFrequencySection = () => {
+export const CheckFrequencySection = ({
+    description = "Configure how often we should run the broken links and mixed content checks.",
+}: {
+    description?: string;
+}) => {
     return (
-        <SettingsSection
-            title="Check frequency"
-            description="Configure how often we should run the broken links and mixed content checks."
-        >
+        <SettingsSection title="Check frequency" description={description}>
             <Field>
                 <FieldLabel>Run check every</FieldLabel>
                 <SimpleSelect items={frequencies} defaultValue="1440" />
