@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Dashboard\OverviewController;
+use App\Http\Controllers\Dashboard\Pages\PageController;
+use App\Http\Controllers\Dashboard\Pages\Show as PageShow;
 use App\Http\Controllers\Dashboard\Settings\ProfileController;
 use App\Http\Controllers\Dashboard\Settings\SecurityController;
 use App\Http\Controllers\Dashboard\Targets\Show;
@@ -61,7 +63,21 @@ Route::prefix("/dashboard")->middleware(['auth', 'verified'])->group(function ()
             Route::delete('/{target}', [TargetController::class, 'destroy'])->name('dashboard.targets.destroy');
         });
 
-        Route::get('/pages', [OverviewController::class, "index"])->name('dashboard.pages.index');
+        Route::prefix('/pages')->group(function () {
+            Route::get('/', [PageController::class, 'index'])->name('dashboard.pages.index');
+
+            Route::prefix('/{statusPage}')->group(function () {
+                Route::get('/', [PageController::class, 'show'])->name('dashboard.pages.show.redirect');
+
+                Route::get('/overview', [PageShow\OverviewController::class, 'show'])->name('dashboard.pages.show.overview');
+                Route::get('/updates', [PageShow\UpdatesController::class, 'show'])->name('dashboard.pages.show.updates');
+                Route::get('/monitors', [PageShow\MonitorsController::class, 'show'])->name('dashboard.pages.show.monitors');
+                Route::get('/display', [PageShow\DisplayController::class, 'show'])->name('dashboard.pages.show.display');
+                Route::get('/content', [PageShow\ContentController::class, 'show'])->name('dashboard.pages.show.content');
+                Route::get('/notifications', [PageShow\NotificationsController::class, 'show'])->name('dashboard.pages.show.notifications');
+                Route::get('/settings', [PageShow\SettingsController::class, 'show'])->name('dashboard.pages.show.settings');
+            });
+        });
     });
 
     Route::prefix('/teams')->group(function () {
