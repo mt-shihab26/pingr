@@ -1,7 +1,15 @@
 import { useState } from "react";
+import { History } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+    Empty,
+    EmptyDescription,
+    EmptyHeader,
+    EmptyMedia,
+    EmptyTitle,
+} from "@/components/ui/empty";
 import {
     Table,
     TableBody,
@@ -88,6 +96,17 @@ export const CheckHistoryTab = ({
                     ))}
                 </TableBody>
             </Table>
+            {filtered.length === 0 && (
+                <Empty>
+                    <EmptyHeader>
+                        <EmptyMedia variant="icon">
+                            <History />
+                        </EmptyMedia>
+                        <EmptyTitle>No runs found.</EmptyTitle>
+                        <EmptyDescription>Check runs will show up here.</EmptyDescription>
+                    </EmptyHeader>
+                </Empty>
+            )}
         </Card>
     );
 };

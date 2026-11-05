@@ -9,12 +9,13 @@ const units = [
     { value: "hours", label: "hours" },
 ];
 
-export const CheckFrequencySection = () => {
+export const CheckFrequencySection = ({
+    description = "Configure how often we check your uptime.",
+}: {
+    description?: string;
+}) => {
     return (
-        <SettingsSection
-            title="Check frequency"
-            description="Configure how often we check your uptime."
-        >
+        <SettingsSection title="Check frequency" description={description}>
             <Field>
                 <FieldLabel>Run check every</FieldLabel>
                 <div className="flex gap-2">

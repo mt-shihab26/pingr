@@ -7,14 +7,17 @@ import { Input } from "@/components/ui/input";
 
 import { SettingsSection } from "@/components/screens/dashboard/targets/show/uptime/settings/settings-section";
 
-export const RequestHeadersSection = ({ endpoint }: { endpoint: string }) => {
+export const RequestHeadersSection = ({
+    endpoint,
+    description = `These headers will be sent with every HTTP request made by broken links, mixed content and sitemap crawlers to ${endpoint}.`,
+}: {
+    endpoint: string;
+    description?: string;
+}) => {
     const [headers, setHeaders] = useState<number[]>([]);
 
     return (
-        <SettingsSection
-            title="Request headers"
-            description={`These headers will be sent with every HTTP request made by broken links, mixed content and sitemap crawlers to ${endpoint}.`}
-        >
+        <SettingsSection title="Request headers" description={description}>
             <FieldGroup className="gap-2">
                 <FieldDescription>
                     We can add extra headers to requests to your site.

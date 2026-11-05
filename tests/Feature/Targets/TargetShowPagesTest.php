@@ -267,3 +267,30 @@ test('invalid scheduled tasks tabs are rejected', function () {
         ->assertUnprocessable()
         ->assertJsonValidationErrors('tab');
 });
+
+test('the application health page is filtered by tab', function (?string $tab, string $expected) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->get(route('dashboard.targets.show.application-health', array_filter(['team' => $team, 'target' => $target, 'tab' => $tab])))
+        ->assertOk()
+        ->assertInertia(fn (Assert $inertia) => $inertia->where('tab', $expected));
+})->with([
+    'default' => [null, 'checks'],
+    'history' => ['history', 'history'],
+    'snooze' => ['snooze', 'snooze'],
+    'settings' => ['settings', 'settings'],
+]);
+
+test('invalid application health tabs are rejected', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->getJson(route('dashboard.targets.show.application-health', ['team' => $team, 'target' => $target, 'tab' => 'unknown']))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('tab');
+});
