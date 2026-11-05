@@ -130,3 +130,31 @@ test('invalid uptime tabs are rejected', function () {
         ->assertUnprocessable()
         ->assertJsonValidationErrors('tab');
 });
+
+test('the certificate health page is filtered by tab', function (?string $tab, string $expected) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->get(route('dashboard.targets.show.certificate-health', array_filter(['team' => $team, 'target' => $target, 'tab' => $tab])))
+        ->assertOk()
+        ->assertInertia(fn (Assert $inertia) => $inertia->where('tab', $expected));
+})->with([
+    'default' => [null, 'report'],
+    'detected certificates' => ['detected-certificates', 'detected-certificates'],
+    'history' => ['history', 'history'],
+    'snooze' => ['snooze', 'snooze'],
+    'settings' => ['settings', 'settings'],
+]);
+
+test('invalid certificate health tabs are rejected', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->getJson(route('dashboard.targets.show.certificate-health', ['team' => $team, 'target' => $target, 'tab' => 'unknown']))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('tab');
+});
