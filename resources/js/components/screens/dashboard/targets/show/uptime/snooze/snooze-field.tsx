@@ -18,7 +18,15 @@ const durations = [
     { value: "1440", label: "for 1 day" },
 ];
 
-export const SnoozeField = ({ label, action }: { label: string; action: string }) => {
+export const SnoozeField = ({
+    label,
+    action,
+    description = "We'll silence these alerts (both problems & recoveries) until the selected time runs out.",
+}: {
+    label: string;
+    action: string;
+    description?: string;
+}) => {
     const [duration, setDuration] = useState("5");
 
     return (
@@ -43,10 +51,7 @@ export const SnoozeField = ({ label, action }: { label: string; action: string }
                 </Select>
                 <Button variant="outline">{action}</Button>
             </div>
-            <FieldDescription>
-                We'll silence these alerts (both problems & recoveries) until the selected time runs
-                out.
-            </FieldDescription>
+            <FieldDescription>{description}</FieldDescription>
         </Field>
     );
 };
