@@ -402,3 +402,28 @@ test('invalid dns blocklist tabs are rejected', function () {
         ->assertUnprocessable()
         ->assertJsonValidationErrors('tab');
 });
+
+test('the monthly reports page is filtered by tab', function (?string $tab, string $expected) {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->get(route('dashboard.targets.show.monthly-reports', array_filter(['team' => $team, 'target' => $target, 'tab' => $tab])))
+        ->assertOk()
+        ->assertInertia(fn (Assert $inertia) => $inertia->where('tab', $expected));
+})->with([
+    'default' => [null, 'settings'],
+    'archive' => ['archive', 'archive'],
+]);
+
+test('invalid monthly reports tabs are rejected', function () {
+    $user = User::factory()->create();
+    $team = $user->personalTeam();
+    $target = $team->targets()->create(['type' => 'website', 'endpoint' => 'https://example.com']);
+
+    $this->actingAs($user)
+        ->getJson(route('dashboard.targets.show.monthly-reports', ['team' => $team, 'target' => $target, 'tab' => 'unknown']))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('tab');
+});
